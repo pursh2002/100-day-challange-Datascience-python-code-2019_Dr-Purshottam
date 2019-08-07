@@ -1,3 +1,4 @@
+https://www.freecodecamp.org/news/how-to-combine-multiple-csv-files-with-8-lines-of-code-265183e0854/
 If all the files have the same table structure (same headers & number of columns), let this tiny Python script do the work.
 Step 1: Import packages and set the working directory
 import os
@@ -9,19 +10,6 @@ extension = 'csv'
 all_filenames = [i for i in glob.glob('*.{}'.format(extension))]
 
 
-
-But imagine if you have 100+ files to concatenate — are you willing to do it manually?
-Doing this repetitively is tedious and error-prone.
-
-If all the files have the same table structure (same headers & number of columns), let this tiny Python script do the work.
-
-Step 1: Import packages and set the working directory
-Change “/mydir” to your desired working directory.
-
-import os
-import glob
-import pandas as pd
-os.chdir("/mydir")
 Step 2: Use glob to match the pattern ‘csv’
 Match the pattern (‘csv’) and save the list of file names in the ‘all_filenames’ variable. You can check out this link to learn more about regular expression matching.
 
