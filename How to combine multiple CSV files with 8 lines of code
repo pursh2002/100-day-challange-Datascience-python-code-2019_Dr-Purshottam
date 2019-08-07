@@ -8,29 +8,10 @@ Step 2: Use glob to match the pattern ‘csv’
 extension = 'csv'
 all_filenames = [i for i in glob.glob('*.{}'.format(extension))]
 
-Learn
-Forum
-News
-1 FEBRUARY 2019
-/
-#PYTHON
-How to combine multiple CSV files with 8 lines of code
-Ekapope Viriyakovithya
-Ekapope Viriyakovithya
-Love to automate routine stuff, former oil field engineer. https://ekapope.github.io/
 
 
- Tweet this to your followers
-
-Email this to a friend
-
-Share this with your friends
-How to combine multiple CSV files with 8 lines of code
-Why do you need this?
-Manually copy-pasting is fine if you don’t have too many files to work with.
-
-But imagine if you have 100+ files to concatenate — are you willing to do it manually? Doing this repetitively is tedious and error-prone.
-
+But imagine if you have 100+ files to concatenate — are you willing to do it manually?
+Doing this repetitively is tedious and error-prone.
 
 If all the files have the same table structure (same headers & number of columns), let this tiny Python script do the work.
 
