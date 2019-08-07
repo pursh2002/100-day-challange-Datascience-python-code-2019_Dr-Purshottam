@@ -1,1 +1,83 @@
+1. From scientific fields like meteorology and climatology, through to the software on our smartphones like Google Maps and 
+Facebook check-ins, geographic data is always present in our everyday lives. Raw geographic data like latitudes and longitudes
+are difficult to understand using the data charts and plots we've discussed so far. To explore this kind of data, you'll need to learn how to visualize the data on maps.
+data http://openflights.org/data.html
+Read in the 3 CSV files into 3 separate dataframe objects - airlines, airports, and routes.
+Use the DataFrame.iloc[] method to return the first row in each dataframe as a neat table.
+Display the first rows for all dataframes using the print() function. Try to answer the following questions:
+What's the best way to link the data from these 3 different datasets together?
+What are the formats of the latitude and longitude values?
 
+import pandas as pd
+routes = pd.read_csv("routes.csv")
+airlines = pd.read_csv("airlines.csv")
+airports = pd.read_csv("airports.csv")
+routes.iloc[0]
+airlines.iloc[0]
+airports.iloc[0]
+
+A geographic coordinate system allows us to locate any point on Earth using latitude and longitude coordinates.
+base map toolkit  http://matplotlib.org/basemap/ - Basemap is an extension to Matplotlib that makes it easier 
+to work with geographic data. conda install basemap
+The Basemap library has some external dependencies that Anaconda handles the installation for. 
+To test the installation, run the following import code:from mpl_toolkits.basemap import Basemap
+
+Here's what the general workflow will look like when working with two-dimensional maps:
+Create a new basemap instance with the specific map projection we want to use and how much of the map we want included.
+Convert spherical coordinates to Cartesian coordinates using the basemap instance.
+Use the matplotlib and basemap methods to customize the map.Display the map.
+Let's focus on the first step and create a new basemap instance. To create a new instance of the basemap class, 
+we call the basemap constructor and pass in values for the required parameters:projection: the map projection.
+llcrnrlat: latitude of lower left hand corner of the desired map domain
+urcrnrlat: latitude of upper right hand corner of the desired map domain
+llcrnrlon: longitude of lower left hand corner of the desired map domain
+urcrnrlon: longitude of upper right hand corner of the desired map domain
+e.g
+from mpl_toolkits.basemap import Basemap
+>>> import numpy as np
+>>> import matplotlib.pyplot as plt
+>>> # read in topo data (on a regular lat/lon grid)
+>>> etopo = np.loadtxt('etopo20data.gz')
+>>> lons  = np.loadtxt('etopo20lons.gz')
+>>> lats  = np.loadtxt('etopo20lats.gz')
+>>> # create Basemap instance for Robinson projection.
+>>> m = Basemap(projection='robin',lon_0=0.5*(lons[0]+lons[-1]))
+>>> # compute map projection coordinates for lat/lon grid.
+>>> x, y = m(*np.meshgrid(lons,lats))
+>>> # make filled contour plot.
+>>> cs = m.contourf(x,y,etopo,30,cmap=plt.cm.jet)
+>>> m.drawcoastlines() # draw coastlines
+>>> m.drawmapboundary() # draw a line around the map region
+>>> m.drawparallels(np.arange(-90.,120.,30.),labels=[1,0,0,0]) # draw parallels
+>>> m.drawmeridians(np.arange(0.,420.,60.),labels=[0,0,0,1]) # draw meridians
+>>> plt.title('Robinson Projection') # add a title
+>>> plt.show()
+
+Convert the longitude values from spherical to Cartesian and assign the resulting list to x.
+Convert the latitude values from spherical to 
+and assign the resulting list to y.
+
+m = Basemap(projection='merc', llcrnrlat=-80, urcrnrlat=80, llcrnrlon=-180, urcrnrlon=180)
+m = Basemap(projection='merc', llcrnrlat=-80, urcrnrlat=80, llcrnrlon=-180, urcrnrlon=180)
+longitudes = airports["longitude"].tolist()
+latitudes = airports["latitude"].tolist()
+x, y = m(longitudes, latitudes)
+
+
+2. we can plot the coordinates on a map. A scatter plot is the simplest way to plot points on a map, 
+where each point is represented as an (x, y) coordinate pair.
+To create a scatter plot from a list of x and y coordinates, we use the basemap.scatter() method.
+The basemap.scatter() method has similar parameters to the pyplot.scatter(). For example, 
+we can customize the size of each marker using the s parameter:
+# Large markers.
+m.scatter(x,y,s=10)
+# Smaller markers.
+m.scatter(x,y,s=5)
+plt.show()
+
+Create a scatter plot using the converted latitude and longitude values using a marker size of 1.
+Display the scatter plot.
+m = Basemap(projection='merc', llcrnrlat=-80, urcrnrlat=80, llcrnrlon=-180, urcrnrlon=180)
+x, y = m(longitudes, latitudes)
+m.scatter(x,y,s=1)
+plt.show()
