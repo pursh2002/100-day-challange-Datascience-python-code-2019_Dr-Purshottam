@@ -81,3 +81,67 @@ m = Basemap(projection='merc', llcrnrlat=-80, urcrnrlat=80, llcrnrlon=-180, urcr
 x, y = m(longitudes, latitudes)
 m.scatter(x,y,s=1)
 plt.show()
+
+3. You'll notice that the outlines of the coasts for each continent are missing from the map above. 
+We can display the coast lines using the basemap.drawcoastlines() method.
+m = Basemap(projection='merc', llcrnrlat=-80, urcrnrlat=80, llcrnrlon=-180, urcrnrlon=180)
+longitudes = airports["longitude"].tolist()
+latitudes = airports["latitude"].tolist()
+x, y = m(longitudes, latitudes)
+m.scatter(x, y, s=1)
+m.drawcoastlines()
+plt.show()
+
+
+4. Because basemap uses matplotlib under the hood, we can interact with the matplotlib classes that basemap 
+uses directly to customize the appearance of the map.
+
+We can add code that:
+
+uses pyplot.subplots() to specify the figsize parameter
+returns the Figure and Axes object for a single subplot and assigns to fig and ax respectively
+use the Axes.set_title() method to set the map title
+Before creating the basemap instance and generating the scatter plot, add code that:
+creates a figure with a height of 20 inches and a width of 15 inches
+sets the title of the scatter plot to "Scaled Up Earth With Coastlines"
+
+fig,ax = plt.subplots(figsize = (15,20))
+ax.set_title("Scaled Up Earth With Coastlines")
+m = Basemap(projection='merc', llcrnrlat=-80, urcrnrlat=80, llcrnrlon=-180, urcrnrlon=180)
+longitudes = airports["longitude"].tolist()
+latitudes = airports["latitude"].tolist()
+x, y = m(longitudes, latitudes)
+m.scatter(x, y, s=1)
+m.drawcoastlines()
+plt.show()
+
+
+5. 
+
+geo_routes = pd.read_csv("geo_routes.csv")
+print(geo_routes.info())
+print(geo_routes.head(5))
+
+6. We use the basemap.drawgreatcircle() method to display a great circle between 2 points. 
+The basemap.drawgreatcircle() method requires four parameters in the following order:
+
+lon1 - longitude of the starting point.
+lat1 - latitude of the starting point.
+lon2 - longitude of the ending point.
+lat2 - latitude of the ending point.
+
+Write a function, named create_great_circles() that draws a great circle for each route that has an absolute difference in the latitude and longitude values less than 180. This function should:
+Accept a dataframe as the sole parameter
+Iterate over the rows in the dataframe using DataFrame.iterrows()
+For each row:
+Draw a great circle using the four geographic coordinates only if:
+The absolute difference between the latitude values (end_lat and start_lat) is less than 180.
+If the absolute difference between the longitude values (end_lon and start_lon) is less than 180.
+Create a filtered dataframe containing just the routes that start at the DFW airport.
+Select only the rows in geo_routes where the value for the source column equals "DFW".
+Assign the resulting dataframe to dfw.
+Pass dfw into create_great_circles() and display the plot using the pyplot.show() function.
+Uncomment the first three lines of code.
+
+
+
