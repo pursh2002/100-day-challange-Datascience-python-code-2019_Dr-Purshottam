@@ -31,6 +31,11 @@ plt.show()
 3. kernel density plot, we use the seaborn.kdeplot()
 sns.kdeplot(titanic["Age"])
 
+Generate a kernel density plot:
+Using the values in the "Age" column
+With the area under the curve shaded
+Set the x-axis label to "Age" using pyplot.xlabel().
+
 import seaborn as sns 
 import matplotlib.pyplot as plt 
 sns.kdeplot(titanic["Age"],shade = True)
