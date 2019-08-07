@@ -83,4 +83,13 @@ g.map(sns.kdeplot, "Age", shade=True)
 sns.despine(left=True, bottom=True)
 plt.show()
 
+7. When subsetting data using two conditions, the rows in the grid represented one condition while the columns represented 
+another. We can express a third condition by generating multiple plots on the same subplot in the grid and color 
+them differently. Thankfully, we can add a condition just by setting the hue parameter to the column name from the dataframe.
 
+g = sns.FacetGrid(titanic, col="Survived", row="Pclass", hue ="Sex",size = 3)
+g.map(sns.kdeplot, "Age", shade=True)
+sns.despine(left=True, bottom=True)
+plt.show()
+
+8. 
