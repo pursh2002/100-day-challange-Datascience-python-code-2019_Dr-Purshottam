@@ -1,1 +1,37 @@
+1. Read train.csv into a DataFrame named titanic. Keep only the following columns:
+"Survived"
+"Pclass"
+"Sex"
+"Age"
+"SibSp"
+"Parch"
+"Fare"
+"Embarked"
+Use the DataFrame.dropna() method to remove rows containing missing values.
 
+import pandas as pd
+
+titanic = pd.read_csv('train.csv')
+titanic = titanic.drop(['Name','Ticket','PassengerId','Cabin'],axis = 1)
+titanic = titanic.dropna()
+
+2. To get familiar with seaborn, we'll start by creating the familiar histogram. We can generate a 
+histogram of the Fare column using the seaborn.distplot() function:
+
+import seaborn as sns 
+import matplotlib.pyplot as plt 
+sns.distplot(titanic["Age"])
+plt.show()
+
+import seaborn as sns    
+import matplotlib.pyplot as plt
+sns.distplot(titanic["Fare"])
+plt.show()
+
+3. kernel density plot, we use the seaborn.kdeplot()
+sns.kdeplot(titanic["Age"])
+
+import seaborn as sns 
+import matplotlib.pyplot as plt 
+sns.kdeplot(titanic["Age"],shade = True)
+plt.xlabel("Age")
