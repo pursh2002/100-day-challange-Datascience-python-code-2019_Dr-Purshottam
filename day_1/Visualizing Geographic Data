@@ -143,5 +143,14 @@ Assign the resulting dataframe to dfw.
 Pass dfw into create_great_circles() and display the plot using the pyplot.show() function.
 Uncomment the first three lines of code.
 
+In this mission, we learned how to visualize geographic data using basemap. 
+This is the last mission in the Storytelling Through Data Visualization course.
+You should now have a solid foundation in data visualization for exploring data and communicating insights. 
+We encourage you to keep exploring data visualization on your own. Here are some suggestions for what to do next:
 
-
+Plotting tools:
+https://plot.ly/python/3d-scatter-plots/
+http://bokeh.pydata.org/en/latest/
+http://python-visualization.github.io/folium/
+https://www.amazon.com/Visual-Display-Quantitative-Information/dp/0961392142
+https://www.amazon.com/Visual-Explanations-Quantities-Evidence-Narrative/dp/0961392126
