@@ -40,3 +40,47 @@ import seaborn as sns
 import matplotlib.pyplot as plt 
 sns.kdeplot(titanic["Age"],shade = True)
 plt.xlabel("Age")
+
+4. sns.set_style("darkgrid")
+Set the style to the style sheet that hides the coordinate grid and sets the background color to white.
+Generate a kernel density plot of the "Age" column, with the area under the curve shaded.
+Set the x-axis label to "Age".
+Despine all of the axes.
+To remove the axis spines for the top and right axes, we use the seaborn.despine() function:
+By default, only the top and right axes will be despined, or have their spines removed. 
+To despine the other two axes, we need to set the left and bottom parameters to True.
+sns.set_style("white")
+sns.kdeplot(titanic["Age"], shade = True)
+plt.xlabel("Age")
+sns.despine(left = True , bottom = True)
+
+5. In seaborn, we can create a small multiple by specifying the conditioning criteria and the type of data visualization 
+we want. For example, we can visualize the differences in age distributions between passengers who survived and those who 
+didn't by creating a pair of kernel density plots. One kernel density plot would visualize the distribution of values in the 
+"Age" column where Survived equalled 0 and the other would visualize the distribution of values in the "Age" column where 
+Survived equalled 1.FacetGrid is another word for "subset".
+g = sns.FacetGrid(titanic,col = "Survived", size= 6)
+g.map(sns.kdeplot,"Age",shade = True)
+For example, we can map matplotlib histograms to the grid:
+g.map(plt.hist,"Age")
+
+Use a FacetGrid instance to generate three plots on the same row:
+One for each unique value of Pclass.
+Each plot should be a kernel density plot of the "Age" column, with the area under the curve shaded.
+Each plot should have a height of 6 inches.
+Remove all of the spines using seaborn.despine().
+Display the plots.
+g = sns.FacetGrid(titanic, col = 'Pclass', size = 6)
+g.map(sns.kdeplot,"Age",shade = True)
+sns.despine(left = True, bottom = True)
+plt.show()
+
+6. We can use two conditions to generate a grid of plots, each containing a subset of the data with a unique combination of
+each condition. When creating a FacetGrid, we use the row parameter to specify the column in the dataframe we want used to 
+subset across the rows in the grid. 
+g = sns.FacetGrid(titanic, col="Survived", row="Sex")
+g.map(sns.kdeplot, "Age", shade=True)
+sns.despine(left=True, bottom=True)
+plt.show()
+
+
