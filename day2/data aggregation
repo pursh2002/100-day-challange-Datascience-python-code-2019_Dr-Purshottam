@@ -43,3 +43,49 @@ the data for each region.
 In this mission, we'll learn how to perform different kinds of aggregations, applying a statistical operation to groups 
 of our data, and create visualizations like the one above.
 
+Create an empty dictionary named mean_happiness to store the results of this exercise.
+Use the Series.unique() method to create an array of unique values for the Region column.
+Use a for loop to iterate over the unique region values from the Region column.
+Assign the rows belonging to the current region to a variable named region_group.
+Use the Series.mean() method to calculate the mean happiness score for region_group.
+Assign the mean value to the mean_happiness dictionary, using the region name as the 
+key and the mean happiness score as the value.
+mean_happiness = {}
+r = happiness2015['Region'].unique()
+for i in r:
+    region_group = happiness2015[happiness2015['Region'] == i]
+    
+    region_mean = region_group['Happiness Score'].mean()
+    mean_happiness[i] = region_mean
+    
+
+3. Let's break down the code we wrote in the previous screen into three steps:
+
+-Split the dataframe into groups.
+-Apply a function to each group.
+-Combine the results into one data structure.
+mean_happiness = {}
+regions = happiness2015['Region'].unique()
+
+for r in regions:
+    #1. Split the dataframe into groups.
+    region_group = happiness2015[happiness2015['Region'] == r]
+    #2. Apply a function to each group.
+    region_mean = region_group['Happiness Score'].mean()
+    #3. Combine the results into one data structure.
+    
+ The groupby operation performs the "split-apply-combine" process on a dataframe, but condenses it into two steps:
+Create a GroupBy object.
+Call a function on the GroupBy object.
+
+df.groupby('col')
+where col is the column you want to use to group the data set. Note that you can also group the data set on 
+multiple columns by passing a list  into the DataFrame.groupby() method.
+ 
+Series.value_counts()
+Let's confirm the number of regions and the number of unique values in each region for the entire dataframe
+with the Series.value_counts() method next:
+happiness2015['Region'].value_counts()
+
+
+
