@@ -1,0 +1,59 @@
+
+import plotly.express as px
+iris = px.data.iris()
+fig = px.scatter_3d(iris, x='sepal_length', y='sepal_width', z='petal_width',
+              color='species')
+fig.show()
+
+
+
+import plotly.express as px
+iris = px.data.iris()
+fig = px.scatter_3d(iris, x='sepal_length', y='sepal_width', z='petal_width',
+                    color='petal_length', symbol='species')
+fig.show()
+
+
+import plotly.express as px
+iris = px.data.iris()
+fig = px.scatter_3d(iris, x='sepal_length', y='sepal_width', z='petal_width',
+              color='petal_length', size='petal_length', size_max=18,
+              symbol='species', opacity=0.7)
+
+# tight layout
+fig.update_layout(margin=dict(l=0, r=0, b=0, t=0))
+
+
+import plotly.graph_objects as go
+import numpy as np
+
+# Helix equation
+t = np.linspace(0, 10, 50)
+x, y, z = np.cos(t), np.sin(t), t
+
+fig = go.Figure(data=[go.Scatter3d(x=x, y=y, z=z,
+                                   mode='markers')])
+fig.show()
+
+
+import plotly.graph_objects as go
+import numpy as np
+
+# Helix equation
+t = np.linspace(0, 20, 100)
+x, y, z = np.cos(t), np.sin(t), t
+
+fig = go.Figure(data=[go.Scatter3d(
+    x=x,
+    y=y,
+    z=z,
+    mode='markers',
+    marker=dict(
+        size=12,
+        color=z,                # set color to an array/list of desired values
+        colorscale='Viridis',   # choose a colorscale
+        opacity=0.8
+    )
+)])
+
+https://plot.ly/python/3d-scatter-plots/
