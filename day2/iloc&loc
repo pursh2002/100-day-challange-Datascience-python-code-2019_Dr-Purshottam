@@ -1,0 +1,71 @@
+http://104.236.88.249/wp-content/uploads/2016/10/Pandas-selections-and-indexing.png
+
+https://www.shanelynn.ie/select-pandas-dataframe-rows-and-columns-using-iloc-loc-and-ix/
+
+# Single selections using iloc and DataFrame
+# Rows:
+data.iloc[0] # first row of data frame (Aleshia Tomkiewicz) - Note a Series data type output.
+data.iloc[1] # second row of data frame (Evan Zigomalas)
+data.iloc[-1] # last row of data frame (Mi Richan)
+# Columns:
+data.iloc[:,0] # first column of data frame (first_name)
+data.iloc[:,1] # second column of data frame (last_name)
+data.iloc[:,-1] # last column of data frame (id)
+
+
+# Multiple row and column selections using iloc and DataFrame
+data.iloc[0:5] # first five rows of dataframe
+data.iloc[:, 0:2] # first two columns of data frame with all rows
+data.iloc[[0,3,6,24], [0,5,6]] # 1st, 4th, 7th, 25th row + 1st 6th 7th columns.
+data.iloc[0:5, 5:8] # first 5 rows and 5th, 6th, 7th columns of data frame (county -> phone1).
+
+
+The Pandas loc indexer can be used with DataFrames for two different use cases:
+
+a.) Selecting rows by label/index
+b.) Selecting rows with a boolean / conditional lookup
+2a. Label-based / Index-based indexing using .loc
+
+http://104.236.88.249/wp-content/uploads/2016/09/pandas-loc-indexing-based-on-index-labels.png
+
+http://104.236.88.249/wp-content/uploads/2016/09/pandas-loc-indexing-based-on-index-labels.png
+http://104.236.88.249/wp-content/uploads/2016/10/named_column_selection_loc.png
+
+# Select rows with index values 'Andrade' and 'Veness', with all columns between 'city' and 'email'
+data.loc[['Andrade', 'Veness'], 'city':'email']
+# Select same rows, with just 'first_name', 'address' and 'city' columns
+data.loc['Andrade':'Veness', ['first_name', 'address', 'city']]
+ 
+# Change the index to be based on the 'id' column
+data.set_index('id', inplace=True)
+# select the row with 'id' = 487
+
+
+2b. Boolean / Logical indexing using .loc
+
+
+	
+# Select rows with first name Antonio, # and all columns between 'city' and 'email'
+data.loc[data['first_name'] == 'Antonio', 'city':'email']
+ 
+# Select rows where the email column ends with 'hotmail.com', include all columns
+data.loc[data['email'].str.endswith("hotmail.com")]   
+ 
+# Select rows with last_name equal to some values, all columns
+data.loc[data['first_name'].isin(['France', 'Tyisha', 'Eric'])]   
+       
+# Select rows with first name Antonio AND hotmail email addresses
+data.loc[data['email'].str.endswith("gmail.com") & (data['first_name'] == 'Antonio')] 
+ 
+# select rows with id column between 100 and 200, and just return 'postal' and 'web' columns
+data.loc[(data['id'] > 100) & (data['id'] <= 200), ['postal', 'web']] 
+ 
+# A lambda function that yields True/False values can also be used.
+# Select rows where the company name has 4 words in it.
+data.loc[data['company_name'].apply(lambda x: len(x.split(' ')) == 4)] 
+ 
+# Selections can be achieved outside of the main .loc for clarity:
+# Form a separate variable with your selections:
+idx = data['company_name'].apply(lambda x: len(x.split(' ')) == 4)
+# Select only the True values in 'idx' and only the 3 columns specified:
+data.loc[idx, ['email', 'first_name', 'company']]
