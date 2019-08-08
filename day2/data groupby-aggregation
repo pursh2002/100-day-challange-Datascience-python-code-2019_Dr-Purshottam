@@ -142,5 +142,59 @@ north_america = happiness2015.iloc[[4,14]]
 na_group = grouped.get_group('North America')
 equal = north_america == na_group
 
+7. In order to aggregate our data, we must call a function on the GroupBy object.
+A basic example of aggregation is computing the number of rows for each of the groups. We can use the GroupBy.size() method to 
+confirm the size of each region group:
+grouped = happiness2015.groupby('Region')
+grouped.size()
 
+Region
+Australia and New Zealand           2
+Central and Eastern Europe         29
+Eastern Asia                        6
+Latin America and Caribbean        22
+Middle East and Northern Africa    20
+North America                       2
+Southeastern Asia                   9
+Southern Asia                       7
+Sub-Saharan Africa                 40
+Western Europe                     21 
+dtype: int64
 
+Notice that the result is a Series and contains just one value for each group. Each value represents the number of 
+rows in each group. For example, the 'Australia and New Zealand' group contains two rows.
+Pandas has built in a number of other common aggregation methods:
+Methods	Description
+mean()	Calculates the mean of groups.
+sum()	Calculates the sum of group values.
+size()	Calculates the size of the groups.
+count()	Calculates the count of values in groups.
+min()	Calculates the minimum of group values.
+max()	Calculates the maximum of group values.
+
+8. In some cases, we may only wish to aggregate one particular column in the original dataframe. 
+GroupBy objects actually support column indexing, just like dataframes. 
+You can select specific columns for a GroupBy object the same way you would for a dataframe:
+
+Select by Label	Syntax
+Single column	GroupBy["col1"]
+List of columns	GroupBy[["col1", "col2"]]
+
+grouped = happiness2015.groupby('Region')
+happy_grouped = grouped['Happiness Score']
+happy_mean = happy_grouped.mean()
+
+9. However, what if we wanted to apply more than one kind of aggregation to a column at a time?
+
+For example, suppose we wanted to calculate both the mean and maximum happiness score for each region
+
+Luckily, however, the GroupBy.agg() method can perform both aggregations at once.
+GroupBy.agg([func_name1,func_name2,func_name3])
+
+import numpy as np
+grouped = happiness2015.groupby('Region')
+happy_grouped = grouped['Happiness Score']
+def dif(group):
+    return (group.max() - group.mean())
+happy_mean_max = happy_grouped.agg([np.mean, np.max])
+mean_max_dif = happy_grouped.agg(dif)
