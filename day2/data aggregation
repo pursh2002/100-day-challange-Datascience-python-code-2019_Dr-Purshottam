@@ -87,5 +87,20 @@ Let's confirm the number of regions and the number of unique values in each regi
 with the Series.value_counts() method next:
 happiness2015['Region'].value_counts()
 
+Since there's a small number of groups and each group contains more than one unique value,
+we can confirm the Region column is a good candidate to group by.
+
+1. let's create a Groupby object and group the dataframe by the Region column:
+happiness2015.groupby('Region')
+
+Before our we start aggregating data, we'll build some intuition around GroupBy objects. 
+We'll start by using the GroupBy.get_group() method to select data for a certain group.
+As an example, to select the data for just the North America group, we'd pass 'North America' 
+into the get_group() method as follows:
+grouped = happiness2015.groupby('Region')
+grouped.get_group('North America')
+
+
+
 
 
