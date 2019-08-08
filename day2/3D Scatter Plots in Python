@@ -1,4 +1,4 @@
-
+https://plot.ly/python/3d-scatter-plots/#dash-app
 import plotly.express as px
 iris = px.data.iris()
 fig = px.scatter_3d(iris, x='sepal_length', y='sepal_width', z='petal_width',
