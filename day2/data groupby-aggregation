@@ -198,3 +198,40 @@ def dif(group):
     return (group.max() - group.mean())
 happy_mean_max = happy_grouped.agg([np.mean, np.max])
 mean_max_dif = happy_grouped.agg(dif)
+
+11. In the last exercise, we learned we can use the GroupBy.agg() method to:
+Perform more than one aggregation at once.
+Compute custom aggregations.
+However, if you read through other teaching resources, you may see instances in which the statements are combined:
+
+happiness2015.groupby('Region')['Happiness Score'].agg(dif)
+
+When you printed happiness_means, you should've seen that the values in the Region column are the index of the resulting 
+dataframe and the Happiness Score column contained the values that would be aggregated:
+regin -- index 
+happiness score - index 
+
+df.pivot_table(
+Index and values are actually arguments used in another method used to aggregate data - the DataFrame.pivot_table() method. 
+This df.pivot_table() methodcan perform the same kinds of aggregations as the df.groupby method and make the code for
+complex aggregations easier to read.
+
+g=happiness2015.pivot_table(values='Happiness Score',index='Region',aggfunc=np.mean)
+Keep in mind that this method returns a dataframe, so normal dataframe filtering and methods can be applied to the result
+g.plot()
+Note that we exclude aggfunc below because the mean is the default aggregation function of df.pivot_table()
+pv_happiness = happiness2015.pivot_table('Happiness Score', 'Region')
+pv_happiness.plot(kind='barh', title='Mean Happiness Scores by Region', xlim=(0,10), legend=False)
+
+We've already updated pv_happiness by setting the margins parameter equal to True.
+Plot the resulting dataframe, pv_happiness, using the df.plot() method. Set kind to barh, 
+xlim to (0,10), title to 'Mean Happiness Scores by Region', and legend to False. What do you notice about this results?
+Calculate the mean of the Happiness Score column in the original happiness 2015 data set. Assign the result to 
+world_mean_happiness.
+Does world_mean_happiness equal the value for the All group? If you can't figure out the answer, 
+don't worry! We'll review this question on the next screen.
+
+pv_happiness = happiness2015.pivot_table(values='Happiness Score', index='Region', aggfunc=np.mean, margins=True)
+pv_happiness.plot(kind = 'barh',xlim =(0,10),title ='Mean Happiness Scores by Region',legend = False)
+world_mean_happiness = happiness2015['Happiness Score'].mean()
+
