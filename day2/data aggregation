@@ -1,0 +1,45 @@
+https://www.kaggle.com/unsdsn/world-happiness
+
+The data set is a CSV file called World_Happiness_2015.csv. Below are descriptions for some of the columns we'll be working with:
+
+Country - Name of the country.
+Region - Name of the region the country belongs to.
+Happiness Rank - The rank of the country, as determined by its happiness score.
+Happiness Score - A score assigned to each country based on the answers to a poll question that asks respondents to rate their happiness on a scale of 0-10.
+Family - The estimated extent to which family contributes to the happiness score.
+Freedom - The estimated extent to which freedom contributes to the happiness score.
+Generosity - The estimated extent to which generosity contributes to the happiness score.
+
+1. Use the pd.read_csv() function to read the World_Happiness_2015.csv file into a dataframe called happiness2015.
+Store the first five rows of the dataframe in a variable called first_5.
+Use the DataFrame.info() method to print information about the dataframe.
+After you have run your code, use the variable inspector to look at the variable first_5 and the output to get
+familiar with the data.
+
+happiness2015 = pd.read_csv("World_Happiness_2015.csv")
+first_5 = happiness2015.head(5)
+happiness2015.info()
+
+2. First, let's visualize the happiness score of each country in happiness2015:
+happiness2015['Happiness Score'].plot(kind='bar', title='Happiness Scores', ylim=(0,10))
+happiness2015['Region'].unique()
+
+"array(['Western Europe', 'North America', 'Australia and New Zealand',
+       'Middle East and Northern Africa', 'Latin America and Caribbean',
+       'Southeastern Asia', 'Central and Eastern Europe', 'Eastern Asia',
+       'Sub-Saharan Africa', 'Southern Asia'], dtype=object)"
+       
+       
+ Let's try plotting just one region next:
+ 
+so_asia = happiness2015[happiness2015['Region'] == 'Southern Asia']
+so_asia.plot(x='Country', y='Happiness Score', kind='barh', title='Southern Asia Happiness Scores', xlim=(0,10))
+https://s3.amazonaws.com/dq-content/343/asia_happiness.png
+
+It's much easier to read this visualization - we can clearly see the labels and values. However, 
+we wouldn't know if the Southern Asia region is representative of the entire world unless we look at the other regions. 
+What we really want is to create a visualization that uses one number, a summary statistic like the mean, to summarize
+the data for each region.
+In this mission, we'll learn how to perform different kinds of aggregations, applying a statistical operation to groups 
+of our data, and create visualizations like the one above.
+
