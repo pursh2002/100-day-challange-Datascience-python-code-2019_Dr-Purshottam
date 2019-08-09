@@ -1,3 +1,3 @@
 # 100-days-of-python-code-
 
-## Worked from Dataquest Data Scintiest exercises 
+## Worked from open web,hackerranks,Dataquest Data Scintiest exercises 
