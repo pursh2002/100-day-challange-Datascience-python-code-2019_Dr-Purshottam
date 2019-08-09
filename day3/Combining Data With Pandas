@@ -130,3 +130,106 @@ merged = pd.merge(left=three_2015, right=three_2016, on='Country')
 merged_left = pd.merge(left=three_2015, right=three_2016, on='Country', how = 'left')
 merged_left_updated = pd.merge(right=three_2015,left = three_2016, on='Country', how = 'left')
 
+7. Let's summarize what we learned in the last exercise:
+
+Changing the join type from an inner join to a left join resulted in a dataframe with more rows and created NaNs.
+When using a left join, interchanging the dataframes assigned to the left and right parameters changes the results.
+
+In summary, we'd use a left join when we don't want to drop any data from the left dataframe.
+
+Note that a right join works the same as a left join, except it includes all of the rows from the "right" dataframe. 
+its common to use left join 
+Update merged to use the suffixes _2015 and _2016. Set the suffixes parameter to ('_2015', '_2016') in merge(). Assign the result to merged_suffixes.
+Update merged_updated to use the suffixes _2015 and _2016. Notice that the "left" dataframe is three_2016 and the "right" dataframe is three_2015. Assign the result to merged_updated_suffixes.
+
+three_2015 = happiness2015[['Country','Happiness Rank','Year']].iloc[2:5]
+three_2016 = happiness2016[['Country','Happiness Rank','Year']].iloc[2:5]
+merged = pd.merge(left=three_2015, right=three_2016, how='left', on='Country')
+merged_updated = pd.merge(left=three_2016, right=three_2015, how = 'left', on='Country')
+merged_suffixes = pd.merge(left = three_2015,right=three_2016,how='left',on='Country', suffixes = ('_2015', '_2016'))
+merged_updated_suffixes = pd.merge(left=three_2016, right=three_2015, how = 'left', on='Country'suffixes = ('_2015', '_2016'))
+three_2015 = happiness2015[['Country','Happiness Rank','Year']].iloc[2:5]
+three_2016 = happiness2016[['Country','Happiness Rank','Year']].iloc[2:5]
+merged = pd.merge(left=three_2015, right=three_2016, how='left', on='Country')
+merged_updated = pd.merge(left=three_2016, right=three_2015, how = 'left', on='Country')
+merged_suffixes = pd.merge(left = three_2015,right=three_2016,how='left',on='Country', suffixes = ('_2015', '_2016'))
+merged_updated_suffixes = pd.merge(left=three_2016, right=three_2015, how = 'left', on='Country',suffixes =('_2016','_2015'))
+
+8. another way to join dataframes - on the index.
+https://s3.amazonaws.com/dq-content/344/Index.svg
+In this screen, we'll work with the following two subsets of happiness2015 and happiness2016:
+four_2015 = happiness2015[['Country','Happiness Rank','Year']].iloc[2:6]
+three_2016 = happiness2016[['Country','Happiness Rank','Year']].iloc[2:5]
+We'll join happiness2015 and happiness2016 on index using an inner join, so that the
+result contains only the elements in the key that appear in BOTH dataframes
+pd.merge(left=four_2015, right=three_2016, left_index=True, right_index=True, suffixes=('_2015','_2016'))
+We've already saved four_2015 and three_2016. In this exercise, we'll use a left join to combine four_2015 and three_2016.
+Predict the number of rows and columns the resulting dataframe will have. Assign the number of rows to a variable called rows and the number of columns to a variable called columns.
+To change the join type used in merge_index to a left join, set the how parameter equal to 'left'. Save the result to merge_index_left.
+Update rows and columns so that each contains the correct number of rows and columns in merge_index_left.
+
+import pandas as pd
+four_2015 = happiness2015[['Country','Happiness Rank','Year']].iloc[2:6]
+three_2016 = happiness2016[['Country','Happiness Rank','Year']].iloc[2:5]
+merge_index = pd.merge(left = four_2015,right = three_2016, left_index = True, right_index = True, suffixes = ('_2015','_2016'))
+rows = 4
+columns =6
+merge_index_left = pd.merge(left = four_2015,right = three_2016,left_index = True,right_index = True, suffixes = ('_2015','_2016'), how = 'left')
+
+9. summaries
+
+                                                  pd.concat()	pd.merge()
+Default Join Type	                           Outer	Inner
+Can Combine More Than Two Dataframes at a Time?	       Yes	No
+Can Combine Dataframes Vertically
+(axis=0) or Horizontally (axis=1)?
+                                                     Both	Horizontally
+
+Syntax	                                    Concat (Vertically)
+                                          concat([df1,df2,df3])
+
+                                          Concat (Horizontally)
+                                 concat([df1,df2,df3], axis = 1)
+
+
+
+                                                                       Merge (Join on Columns)
+                                                                      merge(left = df1, right = df2, how = 'join_type', on = 'Col')
+
+                                                                      Merge (Join on Index)
+                                                                    merge(left = df1, right = df2, how = 'join_type', left_index = True, right_index = True)
+
+
+9. 
+You may still be wondering about when to use each of the functions and methods we've learned. 
+This table can help you understand the limitations of each, but that decision will mostly depend on the problem you're trying to solve.
+
+Let's review our original question next:
+
+Did world happiness increase, decrease, or stay about the same from 2015 to 2017?
+
+To answer this question, we'll create a bar plot in which each bar represented the mean happiness score for one of the years. 
+We completed a similar task in the last mission when we calculated the mean happiness score for each region using the df.pivot_table() method:
+#Use a pivot table to aggregate the data according to Region.
+means = happiness2015.pivot_table('Happiness Score', 'Region', aggfunc=np.mean)
+
+#Use the `df.plot()` method to plot the results.
+means.plot(kind='barh', title='Mean Happiness Scores by Region', xlim=(0,10))
+Let's repeat the same steps, but this time, we'll group the data by the Year column. First, let's rename the Happiness.
+Score column so it matches the colum name in happiness2015 and happiness2016:
+happiness2017.rename(columns={'Happiness.Score': 'Happiness Score'}, inplace=True)
+Next, we need to combine happiness2015, happiness2016, and happiness2017, 
+so that we can group the result by the Year column.
+
+We've already created a Year column in happiness2017 and renamed the Happiness.Score column to Happiness Score.
+Use either the pd.concat() function or the pd.merge() function to combine happiness2015, happiness2016, and happiness2017. Assign the result to combined.
+Think about whether you need to combine the data horizontally or vertically in order to create a dataframe that can be grouped by year, and decide which function (pd.concat() or pd.merge()) you can use to combine the data.
+Use the df.pivot_table() method to create a pivot table from the combined dataframe. Set Year as the index and Happiness Score as the values. Assign the result to pivot_table_combined.
+Use the df.plot() method to create a bar chart of the results. Set the kind parameter to barh, the title to 'Mean Happiness Scores by Year', and the xlim parameter to (0,10).
+Try to answer the following question based on the results of this exercise: Did world happiness increase, decrease, or stay about the same from 2015 to 2017?
+
+happiness2017.rename(columns={'Happiness.Score': 'Happiness Score'}, inplace=True)
+combined = pd.concat([happiness2015,happiness2016,happiness2017],axis = 0)
+pivot_table_combined = combined.pivot_table(index = 'Year',values = 'Happiness Score')
+pivot_table_combined.plot(kind='barh', title = 'Mean Happiness Scores by Year', xlim = (0,10))
+
