@@ -235,3 +235,41 @@ pv_happiness = happiness2015.pivot_table(values='Happiness Score', index='Region
 pv_happiness.plot(kind = 'barh',xlim =(0,10),title ='Mean Happiness Scores by Region',legend = False)
 world_mean_happiness = happiness2015['Happiness Score'].mean()
 
+12. In the last exercise, we learned that when we set the margins parameter equal to True,All will be added to the index of
+the resulting dataframe and the corresponding value will be the 
+result of applying the aggregation method to the entire column. 
+In our example, All is the mean of the Happiness Score column.
+The pivot_table method also allows us to aggregate multiple columns and apply multiple functions at once.
+
+Below, we aggregate both the 'Happiness Score' and 'Family' columns in happiness2015 and group by the 'Region' column:
+happiness2015.pivot_table(['Happiness Score', 'Family'], 'Region')
+
+	                      Family	Happiness Score
+Region		
+Australia and New Zealand	1.314450	7.285000
+Central and Eastern Europe	1.053042	5.332931
+Eastern Asia	1.099427	5.626167
+Latin America and Caribbean	1.104720	6.144682
+Middle East and Northern Africa	0.920490	5.406900
+North America	1.284860	7.273000
+Southeastern Asia	0.940468	5.317444
+Southern Asia	0.645321	4.580857
+Sub-Saharan Africa	0.809085	4.202800
+Western Europe	1.247302	6.689619
+
+To apply multiple functions, we can pass a list of the functions into the aggfunc parameter:
+happiness.pivot_table('Happiness Score', 'Region', aggfunc=[np.max,np.min,np.mean],margins=True)
+	                 mean	amin	amax
+Happiness Score	Happiness Score	Happiness Score
+Region			
+Australia and New Zealand	7.285000	7.284	7.286
+Central and Eastern Europe	5.332931	4.218	6.505
+Eastern Asia	5.626167	4.874	6.298
+Latin America and Caribbean	6.144682	4.518	7.226
+Middle East and Northern Africa	5.406900	3.006	7.278
+North America	7.273000	7.119	7.427
+Southeastern Asia	5.317444	3.819	6.798
+Southern Asia	4.580857	3.575	5.253
+Sub-Saharan Africa	4.202800	2.839	5.477
+Western Europe	6.689619	4.857	7.587
+All	5.375734	2.839	7.587
