@@ -1,1 +1,27 @@
 https://www.youtube.com/watch?v=AkU1XwQvlro&t=10s&fbclid=IwAR1BmRQ8_ChWqObuUaPoZVqr9dy8ELeNs2E7mSrlLhXygI7SrnvbmbPv1QA
+e.g how rainfall affect the yield 
+how does income changes as u age 
+
+per capita and life expecancy logarithim of percapita gdp the data does not fit the model
+but the liner transformation does the work 
+the mean of the the life expectancy| logarithim of per capta gdp approximat a straight line 
+
+some of teh data does not fit properly 
+
+liner regression cannot interpret beta cofficient r^2 is not great t test is non significant 
+
+no straight line fit the model 
+
+simple variation in liner regression 
+add power to the x variable 
+
+y = bx+b^2+X^3...
+
+transformation can be tried 
+x^2, x^3
+log x
+log x^2
+
+mean squared error is minimum that model should be final that should be used for prediction equilent to choosing higher r^@
+
+with regards to comparing polynomial regression radj^2
