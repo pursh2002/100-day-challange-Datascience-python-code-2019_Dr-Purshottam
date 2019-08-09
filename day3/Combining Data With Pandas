@@ -233,3 +233,10 @@ combined = pd.concat([happiness2015,happiness2016,happiness2017],axis = 0)
 pivot_table_combined = combined.pivot_table(index = 'Year',values = 'Happiness Score')
 pivot_table_combined.plot(kind='barh', title = 'Mean Happiness Scores by Year', xlim = (0,10))
 
+In this mission, we learned how to combine data using the pd.concat() and pd.merge() functions. 
+In your travels with pandas, you may happen upon the df.append() and df.join() methods, which are basically shortcuts 
+for the concat() and merge() functions. We didn't cover them in this mission, as the differences are few, but if you
+want to learn more about 
+them, check out this documentation.
+
+https://pandas.pydata.org/pandas-docs/stable/user_guide/merging.html
