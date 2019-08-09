@@ -54,9 +54,23 @@ question1 = concat_axis0.shape[0]
 question2 = concat_axis1.shape[0]
 
 https://i.stack.imgur.com/3FXuI.png -- DataFrame.count(self, axis=0, level=None, numeric_only=False)[source]
+total_rows=len(df.axes[0])
+total_cols=len(df.axes[1])
 row counts len(df),df.shape[0],len(df.index)
 column counts len(def.columns), df.shape[1]
 group count- df.count, df.sixe
 
-3. 
+3. We've already created the head_2015 and head_2016 variables.
+Use the pd.concat() function to combine head_2015 and head_2016 along axis = 0. Remember to pass the head_2015 and head_2016 into the function as a list. Assign the result to concat_axis0.
+Use the variable inspector to view concat_axis0.
+Assign the number of rows in concat_axis0 to a variable called rows.
+Assign the number of columns in concat_axis0 to a variable called columns.
+
+
+head_2015 = happiness2015[['Year','Country','Happiness Score', 'Standard Error']].head(4)
+head_2016 = happiness2016[['Country','Happiness Score', 'Year']].head(3)
+
+concat_axis0 = pd.concat([head_2015,head_2016], axis = 0)
+rows = len(concat_axis0.axes[0])
+columns = len(concat_axis0.axes[1])
 
