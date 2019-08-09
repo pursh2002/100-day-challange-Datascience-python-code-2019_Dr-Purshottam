@@ -43,3 +43,15 @@ Use the variable inspector to view concat_axis0 and concat_axis1.
 Assign the number of rows in concat_axis0 to a variable called question1.
 Assign the number of rows in concat_axis1 to a variable called question2.
 
+head_2015 = happiness2015[['Country','Happiness Score', 'Year']].head(3)
+head_2016 = happiness2016[['Country','Happiness Score', 'Year']].head(3)
+concat_axis0 = pd.concat([head_2015,head_2016],axis = 0)
+
+concat_axis1 =pd.concat([head_2015,head_2016],axis = 1)
+
+question1 = concat_axis0.shape[0]
+
+question2 = concat_axis1.shape[0]
+
+
+
