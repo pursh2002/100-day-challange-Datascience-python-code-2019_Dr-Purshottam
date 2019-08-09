@@ -1,0 +1,40 @@
+listend to https://www.youtube.com/watch?v=S_3BblVHIXM
+
+logit  model
+used in dicotomous or binary , pas or fsil, sucess or failure 
+why cannot we use multiple regression ?
+errors will be non-normal
+errors will no more be homoscedastic
+resulting baised estimate, invalid standerd error,hypothessis test , cannot interpret t significance 
+the b slop and intercept cannot be explained with full confidence 
+
+modelling 
+probaility of surviving after an heart attack
+probability of customer default the loan 
+probability fo student passing the exam
+
+model 
+is the log P/1-p probabil of event occuring / prob of event not occuring = a+bx linear combination of independent variable 
+
+independent variale can be any continous/catogorical/nominal/binary
+
+when we take log on the right hand side it becomes exponential of linear equation 
+ p/1-p = e^a+bx 
+ 
+ P = e^a+bx/ 1- e^a+bx 
+ 
+ objective is to find the value of P
+ can plot logistic curve 
+ 
+ y = prob of event occuring range from 0 to 1
+ x = independent value whic can range from + to - infinity
+ 
+ estimation is done through max likelihood method
+ chisquared in place of t 
+ model fit is through concordance and KS statistics, no r square pseodo r square(not imortant)
+ 
+ 
+ if there is more then two outcome 
+ multinomial logistic regression for nominal
+ ordered logistic for ordered data 
+ 
