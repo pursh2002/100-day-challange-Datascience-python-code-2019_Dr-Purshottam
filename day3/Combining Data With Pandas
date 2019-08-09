@@ -73,4 +73,60 @@ head_2016 = happiness2016[['Country','Happiness Score', 'Year']].head(3)
 concat_axis0 = pd.concat([head_2015,head_2016], axis = 0)
 rows = len(concat_axis0.axes[0])
 columns = len(concat_axis0.axes[1])
+	Country	Happiness Score	Standard Error	Year
+0	Switzerland	7.587	0.03411	2015
+1	Iceland	7.561	0.04884	2015
+2	Denmark	7.527	0.03328	2015
+3	Norway	7.522	0.03880	2015
+0	Denmark	7.526	NaN	2016
+1	Switzerland	7.509	NaN	2016
+2	Iceland	7.501	NaN	2016
+
+Note that because the Standard Error column didn't exist in head_2016, NaN values
+were created to signify those values are missing.
+ignore_index.....
+Luckily, the concat function has a parameter, ignore_index, that can be used to clear the existing
+index and reset it in the result.
+head_2015 = happiness2015[['Year','Country','Happiness Score', 'Standard Error']].head(4)
+head_2016 = happiness2016[['Country','Happiness Score', 'Year']].head(3)
+concat_update_index = pd.concat([head_2015,head_2016],axis = 0 , ignore_index = True)
+
+5. pd.merge() function ---a function that can execute high performance database-style joins
+the merge function only combines dataframes horizontally (axis=1) and can only combine two dataframes at a time. 
+valuable when we need to combine very large dataframes quickly
+With the merge() function, we'll combine dataframes on a key, a shared index or column.
+pd.merge(left = df1, right = df2, on 'Col_Name')
+
+We've already saved three rows from happiness2015 and happiness2016 to variables named three_2015 and three_2016.
+Use the pd.merge() function to join three_2015 and three_2016 on the Country column. Assign the result to merged.
+three_2015 = happiness2015[['Country','Happiness Rank','Year']].iloc[2:5]
+three_2016 = happiness2016[['Country','Happiness Rank','Year']].iloc[2:5]
+merged = pd.merge(left=three_2015, right = three_2016, on = "Country" )
+
+Joining three_2015 and three_2016 in the last exercise resulted in a dataframe with just one row:
+Country	Happiness Rank_x	Year_x	Happiness Rank_y	Year_y
+0	Norway	4	2015	4	2016
+Let's look back to three_2015 and three_2016 to understand why. Since we joined the dataframes on the Country column,
+or used it as the key, the merge() function looked to match elements in the Country column in BOTH dataframes.
+his way of combining, or joining, data is called an inner join. An inner join returns only the intersection of the keys, 
+or the elements that appear in both dataframes with a common key.
+
+There are actually four different types of joins:
+
+Inner: only includes elements that appear in both dataframes with a common key
+Outer: includes all data from both dataframes
+Left: includes all of the rows from the "left" dataframe along with any rows from the "right" dataframe with a common key; 
+the result retains all columns from both of the original dataframes
+Right: includes all of the rows from the "right" dataframe along with any rows from the "left" dataframe with a common key; 
+the result retains all columns from both of the original dataframes
+
+Update merged to use a left join instead of an inner join. Set the how parameter to 'left' in merge(). Assign the result to merged_left.
+Update merged_left so that the left parameter equals three_2016 and the right parameter equals three_2015. Assign the result to merged_left_updated.
+Based on the results of this exercise, when using a left join, does changing the dataframe assigned to the left and right parameters change the result? 
+Try to answer this question before moving onto the next screen.
+three_2015 = happiness2015[['Country','Happiness Rank','Year']].iloc[2:5]
+three_2016 = happiness2016[['Country','Happiness Rank','Year']].iloc[2:5]
+merged = pd.merge(left=three_2015, right=three_2016, on='Country')
+merged_left = pd.merge(left=three_2015, right=three_2016, on='Country', how = 'left')
+merged_left_updated = pd.merge(right=three_2015,left = three_2016, on='Country', how = 'left')
 
