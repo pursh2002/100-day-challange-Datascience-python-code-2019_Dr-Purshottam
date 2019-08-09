@@ -273,3 +273,8 @@ Southern Asia	4.580857	3.575	5.253
 Sub-Saharan Africa	4.202800	2.839	5.477
 Western Europe	6.689619	4.857	7.587
 All	5.375734	2.839	7.587
+
+
+12 grouped = happiness2015.groupby('Region')[['Happiness Score','Family']]
+happy_family_stats = grouped.agg([np.min, np.max, np.mean])
+pv_happy_family_stats = happiness2015.pivot_table(['Happiness Score', 'Family'], 'Region', aggfunc=[np.min, np.max, np.mean], margins=True)
