@@ -1,7 +1,7 @@
 http://104.236.88.249/wp-content/uploads/2016/10/Pandas-selections-and-indexing.png
 
 https://www.shanelynn.ie/select-pandas-dataframe-rows-and-columns-using-iloc-loc-and-ix/
-
+http://104.236.88.249/wp-content/uploads/2016/10/Pandas-selections-and-indexing.png
 # Single selections using iloc and DataFrame
 # Rows:
 data.iloc[0] # first row of data frame (Aleshia Tomkiewicz) - Note a Series data type output.
