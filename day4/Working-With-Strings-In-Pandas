@@ -46,4 +46,314 @@ leading nationality. For example, instead of "Danish krone" or "Norwegian krone"
 If we wanted to complete this task for just one of the strings, we could use Python's string.split() method:
 
 words = 'Danish krone'
+​
+#Use the string.split() method to return the following list: ['Danish', 'krone']
+listwords = words.split()
+​
+#Use the index -1 to return the last word of the list.
+listwords[-1]
 
+2. 
+Write a function called extract_last_word with the following criteria:
+The function should accept one parameter called element.
+Use the string.split() method to split the object into a list. First convert element to a string as follows: str(element).
+Return the last word of the list.
+Use the Series.apply() method to apply the function to the CurrencyUnit column. Save the result to merged['Currency Apply'].
+Use the Series.head() method to print the first five rows in merged['Currency Apply'].
+
+def extract_last_word(element):
+    element = str(element)
+    listwords = element.split()
+    return listwords[-1]
+merged['Currency Apply'] = merged['CurrencyUnit'].apply(extract_last_word)
+merged['Currency Apply'].head(5)
+
+3. 
+instead of the Series.apply() method for performance reasons.
+
+Instead, we could've split each element in the CurrencyUnit column into a list of strings with the Series.str.split() 
+method, the vectorized equivalent of Python's string.split() method:
+https://pandas.pydata.org/pandas-docs/stable/user_guide/text.html
+Below are some common vectorized string methods,
+Method	                 Description
+Series.str.split()	Splits each element in the Series.
+Series.str.strip()	Strips whitespace from each string in the Series.
+Series.str.lower()	Converts strings in the Series to lowercase.
+Series.str.upper()	Converts strings in the Series to uppercase.
+Series.str.get()	Retrieves the ith element of each element in the Series.
+Series.str.replace()	Replaces a regex or string in the Series with another string.
+Series.str.cat()	Concatenates strings in a Series.
+Series.str.extract()	Extracts substrings from the Series matching a regex pattern.
+
+https://pandas.pydata.org/pandas-docs/stable/user_guide/text.html
+We access these vectorized string methods by adding a str between the Series name and method name:
+
+series.str.method_name()
+
+
+It's also good to know that vectorized string methods can be chained. For example, suppose we needed to 
+split each element in the CurrencyUnit column into a list of strings using the Series.str.split() 
+method and capitalize the letters using the Series.str.upper() method. You can use the following syntax to
+apply more than one method at once:
+
+Use the Series.str.split() method to split the CurrencyUnit column into a list of words and then 
+use the Series.str.get() method to select just the last word. Assign the result to merged['Currency Vectorized'].
+Use the Series.head() method to print the first five rows in merged['Currency Vectorized'].
+
+merged['CurrencyUnit'].str.upper().str.split()
+
+merged['Currency Vectorized'] = merged['CurrencyUnit'].str.split().str.get(-1)
+merged['Currency Vectorized'].head(5)
+
+4. 
+Let's explore another benefit of using vectorized string methods next. Suppose we wanted to compute the 
+length of each string in the CurrencyUnit column. If we use the Series.apply() method, what happens to the 
+missing values in the column?
+First, let's use the Series.isnull() method to confirm if there are any missing values in the column:
+merged['CurrencyUnit'].isnull().sum()
+
+So, we know that the CurrencyUnit column has 13 missing values.
+
+Next, let's create a function to return the length of each currency unit and apply it to the CurrencyUnit column:
+def compute_length(element):
+  return len(str(element))
+length_apply['CurruncyUnit'].apply(compute_lengths)
+
+Then, we can check the number of missing values in the result by setting the dropna parameter 
+in the Series.value_counts() method to False:
+lengths_apply.value_counts(dropna=False)
+
+
+Since the original column had 13 missing values and NaN doesn't appear in the list of unique values above, 
+we know our function must have treated NaN as a string and returned a length of 3 for each NaN value.
+This doesn't make sense - missing values shouldn't be treated as strings.
+They should instead have been excluded from the calculation.
+
+If we wanted to exclude missing values, we'd have to update our function to something like this:
+if compute_length(element):
+  if pd.isnull(element):
+      pass
+  else:
+      return len(str(element)
+lenght_apply = merged['CuruncyUnit').apply(compute_lengths)
+
+Use the Series.str.len() method to return the length of each element in the CurrencyUnit column. Assign the result to lengths.
+Use the Series.value_counts() method to return the count of unique values in lengths. Set the dropna parameter to False 
+so NaNs are counted, too. Assign the result to value_counts.
+If value_counts contains NaNs, it means the Series.str.len() method excluded them and didn't treat them as strings.
+
+lengths = merged['CurrencyUnit'].str.len()
+value_counts = lengths.value_counts(dropna= False)
+
+5.
+
+In the last exercise, we identified a third benefit of using vectorized string methods - they exclude missing values:
+
+Better performance
+Code that is easier to read and write
+Automatically excludes missing values
+
+If we wanted to determine how many comments contain this phrase, could we split them into lists? 
+Since the formats are different, 
+how could we tell which element contains the "national accounts" phrase?
+
+We can handle problems like this with regular expressions, or regex for short.
+A regular expression is a sequence of characters that describes a search pattern, used to match characters in a string:
+https://docs.python.org/3.4/library/re.html
+
+In pandas, regular expressions is integrated with vectorized string methods to make finding and extracting patterns of
+characters easier. 
+However, the rules for creating regular expressions can be quite complex, so don't worry about memorizing them.
+
+We've already saved the regex to a variable called pattern. The brackets, [], indicate that either "national accounts"
+or "National accounts" should produce a match.
+Use the Series.str.contains() method to search for pattern in the SpecialNotes column. 
+Assign the result to national_accounts.
+Use the Series.head() method to print the first five rows in national_accounts.
+
+pattern = r"[Nn]ational accounts"
+national_accounts = merged['SpecialNotes'].str.contains(pattern)
+national_accounts.head(5)
+
+6. 
+national_accounts = merged['SpecialNotes'].str.contains(r"[Nn]ational accounts")
+
+#Return the value counts for each value in the Series, including missing values.
+national_accounts.value_counts(dropna=False)
+NaN      65
+True     54
+False    39
+Name: SpecialNotes, dtype: int64
+Now, we should be able to use boolean indexing to return only the rows that contain "national accounts" or 
+"National accounts" in the SpecialNotes column:
+merged[national_accounts]
+
+It looks like we got an error now because of the NaN values! One way we could fix this is to 
+change the NaN values to False in national_accounts.
+
+Use the Series.str.contains() method to search for pattern in the SpecialNotes column again.
+This time, also pass in the na parameter and set it to False. Assign the result to national_accounts.
+Use national_accounts to index merged, so that only rows that contain "national 
+accounts" or "National accounts" in the SpecialNotes column are returned. 
+Assign the result to merged_national_accounts.
+Use the DataFrame.head() method to print the first five rows in merged_national_accounts.
+
+pattern = r"[Nn]ational accounts"
+
+national_accounts = merged['SpecialNotes'].str.contains(pattern, na = False)
+
+merged_national_accounts = merged[national_accounts]
+
+merged_national_accounts.head(5)
+
+7. 
+
+ Let's continue exploring the versatility of regular expressions while learning a new task - extracting characters from strings.
+ Suppose we wanted to extract any year mentioned in the SpecialNotes column. Notice that the characters.
+ 2018
+ The first digit can be either 1 or 2, while the last three digits can be any number between 0 and 9.
+ With regular expressions, we use the following syntax to indicate a character could be a range of numbers:
+ pattern = r"[0-9]"
+ #lowercase letters
+pattern1 = r"[a-z]"
+
+#uppercase letters
+pattern2 = r"[A-Z]"
+
+We could also make these ranges more restrictive. For example, if we wanted to find a three character 
+substring in a column that starts with a number between 1 and 6 and ends with two letters of any kind, 
+we could use the following syntax:
+
+pattern = r"[1-6][a-z][a-z]"
+ 
+ in a year follow a specific pattern:
+ 
+If we have a pattern that repeats, we can also use curly brackets { and } to indicate the number of times it repeats:
+
+pattern = r"[1-6][a-z][a-z]" = r"[1-6][a-z]{2}"
+https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.extract.html
+
+Create a regular expression that will match years and assign it to the variable pattern. 
+Note: we've already set up the pattern variable. Insert your answer inside the parantheses: "(your_answer)".
+
+Use pattern and the Series.str.extract() method to extract years from the SpecialNotes column. 
+Assign the resulting Series to years.
+
+pattern =r"()"
+pattern =r"([1-2][0-9]{3})"
+years = merged['SpecialNotes'].str.extract(pattern)
+
+Use pattern and the Series.str.extract() method to extract years from the SpecialNotes column again, 
+but this time, set the expand parameter to 
+True to return the results as a dataframe. Assign the resulting dataframe to years.
+pattern = r"([1-2][0-9]{3})"
+years = merged['SpecialNotes'].str.extract(pattern, expand = True)
+
+9. 
+In the last screen, we learned we could use the Series.str.extract() method to extract a pattern of 
+characters from a column as a dataframe by setting the expand parameter equal to True. 
+However, the Series.str.extract() method will only extract the first match of the pattern.
+If we wanted to extract all of the matches, we can use the Series.str.extractall() method.
+
+https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.set_index.html
+
+We'll demonstrate this method but, first, let's make the results easier
+to read by using the df.set_index() method to set the Country column as the index.
+merged = merged.set_index('Country')
+
+Next, let's use the same regular expression from the last screen to extract all the years from the Special Notes column, except this time, we'll use a named capturing group. Using a named capturing group means that we can refer to the group by the specified name instead of just a number. We can use the following syntax to add a name: (?P<Column_Name>...).
+
+Below, we name the capturing group Years:
+
+pattern = r"(?P&#60;Years&#62;[1-2][0-9]{3})"
+merged['SpecialNotes'].str.extractall(pattern)
+
+Let's look at the IESurvey column next. This column has years in two different formats:
+
+Integrated household survey (IHS), 2012
+Integrated household survey (IHS), 2010/11
+
+pattern = r"(?P<Years>[1-2][0-9]{3})"
+
+years = merged['IESurvey'].str.extractall(pattern)
+value_counts = years['Years'].value_counts()
+
+Since you named the column of years you extracted Years, apply the Series.value_counts() method to years['Years'].
+
+10
+If we wanted to extract the second, abbreviated year, we'd have to specify two more groups -
+one to extract the / and one to extract the last two digits.
+pattern = r"(?P&#60;First_Year&#62;[1-2][0-9]{3})(/)?(?P&#60;Second_Year&#62;[0-9]{2})?"
+years = merged['IESurvey'].str.extractall(pattern)
+
+Note that we also added a question mark, ?, after each of the two new groups to indicate that a
+match for those groups is optional. 
+This allows us to extract years listed in the yyyy format AND the yyyy/yy format at once.
+If we sort the values, we can confirm that we also extracted years in the yyyy/yy format:
+
+years.sort_values('Second_Year')
+
+The dataframe returned has three columns - one for each capturing group specified in pattern.
+Because we didn't name the second group, (/), the capturing group number, 
+1, was used as the column  name.
+
+pattern = r"(?P<First_Year>[1-2][0-9]{3})/?(?P<Second_Year>[0-9]{2})?"
+
+years = merged['IESurvey'].str.extractall(pattern)
+
+first_two_year = years['First_Year'].str[0:2]
+years['Second_Year'] = first_two_year + years['Second_Year'] 
+
+
+11,
+Let's summarize what we learned about the Series.str.extractall() method and pandas string operations in the last exercise:
+
+If part of the regex isn't grouped using parantheses, (), it won't be extracted.
+When we add a string to a column using the plus sign, +, pandas will add that string to every value in the column.
+Note that the strings will be added together without any spaces.
+Unfortunately, there are too many possible string cleaning tasks for us to review each one in detail. However, 
+now that we have a general understanding of how string methods operate, 
+we can apply our knowledge to tasks we haven't covered explicitly in this mission.
+
+Next, we'll group merged by the IncomeGroup column and plot the results. First, however, we would like to 
+clean the values in the IncomeGroup column to a standardized format shown in the table below.
+
+pv_incomes = merged.pivot_table(values='Happiness Score', index='IncomeGroup')
+
+	Happiness Score
+IncomeGroup	
+HIGH OECD	6.674000
+HIGH NONOECD	6.250765
+LOW	3.925625
+LOWER MIDDLE	4.927971
+UPPER MIDDLE	5.426718
+
+Finally, we'll plot the results as follows:
+
+pv_incomes.plot(kind='bar', rot=30, ylim=(0,10))
+
+Let's use some of the vectorized string methods below to update the values in the IncomeGroup column next:
+
+Method	Description
+Series.str.split()	Splits each element in the Series.
+Series.str.strip()	Strips whitespace from each string in the Series.
+Series.str.lower()	Converts strings in the Series to lowercase.
+Series.str.upper()	Converts strings in the Series to uppercase.
+Series.str.get()	Retrieves the ith element of each element in the Series.
+Series.str.replace()	Replaces a regex or string in the Series with another string.
+Series.str.cat()	Concatenates strings in a Series.
+Series.str.extract()	Extracts substrings from the Series matching a regex pattern.
+
+
+merged['IncomeGroup'] = merged['IncomeGroup'].str.replace(' income','').str.replace(':','').str.upper()
+pv_incomes = merged.pivot_table(values ='Happiness Score', index = 'IncomeGroup')
+pv_incomes.plot(kind = 'bar', rot = 30, ylim = (0,10))
+
+In this mission, we explored the benefits of using vectorized string methods, 
+along with a couple methods that can be used to perform tasks such as finding substrings,
+extracting substrings, and removing substrings from columns. You can find the full list of 
+vectorized string methods here. We encourage you to explore more string methods or string cleaning tasks independently.
+
+In the next mission, we'll return to another important data cleaning task - how to handle missing values.
+
+https://pandas.pydata.org/pandas-docs/stable/user_guide/text.html
