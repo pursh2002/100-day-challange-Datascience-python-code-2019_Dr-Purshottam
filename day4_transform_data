@@ -35,7 +35,8 @@ mapping = {'Economy (GDP per Capita)': 'Economy', 'Health (Life Expectancy)': 'H
 
 happiness2015 = happiness2015.rename(mapping,axis =1)
 2. 
-When we reviewed happiness2015 in the last screen, you may have noticed that each of the "factor" columns consists of numbers:
+When we reviewed happiness2015 in the last screen, you may have noticed that each of the "factor" columns consists of 
+numbers:
 Recall that each number represents the extent to which each factor contributes to the happiness score.
 
 However, not only is this definition a little hard to understand, but it can also be challenging to analyze 
@@ -107,10 +108,13 @@ function.
 The function evaluates which range the value belongs to and assigns the corresponding value to the element in the new column.
 
 Update label to take in another argument named x. If the element is greater than x, return 'High'. Otherwise, return 'Low'.
-Then, use the apply method to apply label to the Economy column and set the x argument to 0.8. Save the result back to economy_impact_apply.
-Since both map and apply can apply functions element-wise to a series, you may be wondering about the difference between them. Let's start by looking at a function with arguments.
+Then, use the apply method to apply label to the Economy column and set the x argument to 0.8. Save the result back to 
+economy_impact_apply.
+Since both map and apply can apply functions element-wise to a series, you may be wondering about the difference between them. 
+Let's start by looking at a function with arguments.
 
-In the label function, we arbitrarily split the values into 'High' and 'Low'. What if instead we allowed that number to be passed into the function as an argument?
+In the label function, we arbitrarily split the values into 'High' and 'Low'. What if instead we allowed that number to be 
+passed into the function as an argument?
 
 def label(element, x):
     if element > x:
@@ -156,5 +160,125 @@ factor columns (Economy, Health, Family, Freedom, Generosity, Trust) at once.
 Fortunately, however, pandas already has a method that can apply functions element-wise to multiple columns at once - 
 the DataFrame.applymap() method.
 
+def label(element):
+    if element > 1:
+        return 'High'
+    else:
+        return 'Low'
+economy_apply = happiness2015['Economy'].apply(label)
+factors = ['Economy', 'Family', 'Health', 'Freedom', 'Trust', 'Generosity']
+
+factors_impact = happiness2015[factors].applymap(label)
+
+5. 
+Let's use the df.apply() method to calculate the number of 'High' and 'Low' values in each column of the result 
+from the last exercise, factors_impact. In order to do so, we'll apply the pd.value_counts function to all of the 
+columns in the dataframe:
+factors_impact.apply(pd.value_counts)
+
+Create a function that calculates the percentage of 'High' and 'Low' values in each column.
+Create a function named v_counts that accepts one parameter called col.
+Use the Series.value_counts() method to calculate the value counts for col. Assign the result to num.
+Use the Series.size attribute to calculate the number of rows in the column. Assign the result to den.
+Divide num by den and return the result.
+Use the df.apply() method to apply the v_counts function to all of the columns in factors_impact.
+Assign the result to v_counts_pct.
+def v_counts(col):
+    num = col.value_counts()
+    den =  col.size
+    return num/den
+v_counts_pct = factors_impact.apply(v_counts)
+
+	Economy	Family	Health	Freedom	Trust	Generosity
+High	0.417722	0.563291	0.012658	NaN	NaN	NaN
+Low	0.582278	0.436709	0.987342	1.0	1.0	1.0
+
+6.
+In general, we should only use the apply() method when a vectorized function does not exist. 
+Recall that pandas uses vectorization,
+the process of applying operations to whole series at once, to optimize performance.
+
+In general, we should only use the apply() method when a vectorized function does not exist.
+Recall that pandas uses vectorization, 
+the process of applying operations to whole series at once, to optimize performance.
+#Calculate the sum of the factor columns in each row.
+happiness2015['Factors Sum'] = happiness2015[['Economy', 
+'Family', 'Health', 'Freedom', 'Trust', 'Generosity', 'Dystopia Residual']].sum(axis=1)
+#Display the first five rows of the result and the Happiness Score column.
+happiness2015[['Happiness Score', 'Factors Sum']].head()
+
+
+Create a function that converts each of the six factor columns and the Dystopia Residual column to percentages.
+Create a function named percentages that accepts one parameter called col.
+Divide col by the Happiness Score column. Assign the result to div.
+Multiply div by 100 and return the result.
+Use the df.apply() method to apply the percentages function to all of the columns in factors.
+Assign the result to factor_percentages.
+
+def percentages(col):
+    div = col/happiness2015['Happiness Score'] 
+    return div * 100
+factor_percentages = happiness2015[factors].apply(percentages)
+
+7. 
+However, it would be easier to convert these numbers into percentages, plot the results,
+and perform other data analysis tasks if we first reshaped the dataframe so that one column
+holds the values for all six factors and the Dystopia Residual column. We can accomplish this 
+with the pd.melt() function.
+To demonstrate this function, let's just work with a subset of happiness2015 called happy_two.
+Below, we use the melt function to reshape happy_two so that the values for Economy, Family, and Health reside in the 
+same column:
+
+pd.melt(happy_two, id_vars=['Country'], value_vars=['Economy', 'Family', 'Health'])
+
+pd.melt(df,id_vars=[col1,col2],value_vars[col3,col4])
+
+Use the melt function to reshape happiness2015. The columns listed in main_cols should stay the same. The columns listed in factors should be transformed into rows. Assign the result to a variable called melt.
+Convert the value column to a percentage.
+Divide the value column by the Happiness Score column and multiply the result by 100.
+Use the round() function to round the result to 2 decimal places.
+Assign the result to a new column called Percentage.
+
+main_cols = ['Country', 'Region', 'Happiness Rank', 'Happiness Score']
+factors = ['Economy', 'Family', 'Health', 'Freedom', 'Trust', 'Generosity', 'Dystopia Residual']
+
+
+melt = pd.melt(happiness2015, id_vars= main_cols, value_vars = factors)
+ 
+melt['Percentage'] = round(melt['value']/melt['Happiness Score'] * 100, 2)
+
+tidy format = https://www.jstatsoft.org/article/view/v059i10
+
+Use the df.pivot_table() method to create a pivot table from the melt dataframe. Set the variable column as the index 
+and the value column as the values. Assign the result to pv_melt.
+Use the df.plot() method to create a pie chart of the results. Set the kind parameter to 'pie', the y parameter to 'value', 
+and the legend parameter to False, so we can better see the results.
+If we disregard Dystopia Residual, which two factors, on average, contribute the most to the happiness score?
+
+melt = pd.melt(happiness2015, id_vars = ['Country', 'Region', 'Happiness Rank', 'Happiness Score'], value_vars= ['Economy',
+'Family', 'Health', 'Freedom', 'Trust', 'Generosity', 'Dystopia Residual'])
+melt['Percentage'] = round(melt['value']/melt['Happiness Score'] * 100, 2)
+
+pv_melt = melt.pivot_table(index = 'variable',values = 'value')
+pv_melt.plot(kind='pie', y='value', legend=False)
+
+In this mission, we learned how to transform data using the Series.map(), Series.apply(), DataFrame.apply(), 
+and DataFrame.applymap() methods along with the pd.melt() function. Below is a summary chart of the differences 
+between the map(), apply(), and applymap() methods:
+
+Method
+Series or Dataframe Method	Applies Functions Element-wise?
+Map	Series	Yes
+Apply	Series	Yes
+Applymap	Dataframe	Yes
+Apply	Dataframe	No, applies functions along an axis
+As you explore pandas, you'll also find that pandas has a method to "un-melt" the data, or transform rows into columns. 
+This method is called the df.pivot() method, not to be confused with the df.pivot_table() method used to aggregate data. 
+Alhtough we couldn't cover the df.pivot() method explicitly in this mission, we encourage you to explore it on your own.
+
+In the next mission, we'll learn how to manipulate strings in pandas as we continue building on what we've learned so far.
+
+
+    
 
 
