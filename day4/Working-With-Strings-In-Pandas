@@ -1,1 +1,49 @@
+We introduced some of these methods already in the Pandas Fundamentals course when we 
+learned the following data cleaning tasks:
+
+Cleaning column names
+Extracting values from the start of strings
+Extracting values from the end of strings
+In this mission, we'll learn a couple other string cleaning tasks such as:
+
+Finding specific strings or substrings in columns
+Extracting substrings from unstructured data
+Removing strings or substrings from a series
+
+We'll work with the 2015 World Happiness Report again and additional economic data from the World Bank.
+
+Below are descriptions for the columns we'll be working with:
+
+ShortName - Name of the country
+Region - The region the country belongs to
+IncomeGroup - The income group the country belongs to, based on Gross National Income (GNI) per capita
+CurrencyUnit - Name of country's currency
+SourceOfMostRecentIncomeAndExpenditureData - The name of the survey used to collect the income and expenditure data
+SpecialNotes - Contains any miscellaneous notes about the data
+
+1. 
+We've already read World_Happiness_2015.csv into a dataframe called happiness2015 and World_dev.csv into a 
+dataframe called world_dev.
+Use the pd.merge() function to combine happiness2015 and world_dev. Save the resulting dataframe to merged. 
+As a reminder, you can use the following syntax to combine the dataframes: pd.merge(left=df1, right=df2,
+how='left', left_on='left_df_Column_Name', right_on='right_df_Column_Name').
+Set the left_on parameter to the Country column from happiness2015 and the right_on parameter to the ShortName 
+column from world_dev.
+Use the DataFrame.rename() method to rename the SourceOfMostRecentIncomeAndExpenditureData column in merged to 
+IESurvey (because we don't want to keep typing that long name!).
+We've already saved the mapping to a dictionary named col_renaming.
+Make sure to set the axis parameter to 1.
+
+world_dev = pd.read_csv("World_dev.csv")
+col_renaming = {'SourceOfMostRecentIncomeAndExpenditureData': 'IESurvey'}
+merged = pd.merge(left=happiness2015, right= world_dev, how = 'left', left_on = 'Country', right_on = 'ShortName')
+
+merged = merged.rename(col_renaming,axis = 1)
+
+Let's work with the CurrencyUnit column first. Suppose we wanted to extract the unit of currency without the 
+leading nationality. For example, instead of "Danish krone" or "Norwegian krone", we just needed "krone".
+
+If we wanted to complete this task for just one of the strings, we could use Python's string.split() method:
+
+words = 'Danish krone'
 
