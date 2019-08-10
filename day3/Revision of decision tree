@@ -1,4 +1,18 @@
 https://courses.analyticsvidhya.com/courses/take/getting-started-with-decision-trees/quizzes/8157554-terminologies-related-to-decision-trees
 best split of disession tree 
-gini 
-chi suqare sum actual-excepted ^2/excepted
+gini = 1 - ginni
+chi suqare 
+statatistic significance difference between child node and parent node 
+sum of squared standerdised difference between actual-excepted ^2/excepted
+higher the chisquared score higher the purity of the node higher the homogenisity 
+
+information gain 
+1-entropy
+
+entropy 
+p*log1p1+p- log2p2+....plogk 
+p is the percentage (e.g who play cricket)
+
+less entropy pure node 
+higher entropy less pure node higher the homoginicity 
+higher information gain higher the purity of the node higher the homogenisity (1-entropy)
