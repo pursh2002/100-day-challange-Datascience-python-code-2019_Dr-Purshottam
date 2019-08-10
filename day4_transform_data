@@ -21,3 +21,43 @@ DataFrame.applymap()
 DataFrame.apply()
 pd.melt()
 
+Recall that the 2015 World Happiness Report is saved to a variable named happiness2015. We also created a dictionary named mapping for renaming columns.
+Use the DataFrame.rename() method to change the 'Economy (GDP per Capita)', 'Health (Life Expectancy)', and 'Trust (Government Corruption)' column names to the names specified in the mapping dictionary.
+Pass the mapping dictionary into the df.rename() method and set the axis parameter to 1.
+Assign the result back to happiness2015.
+
+
+mapping = {'Economy (GDP per Capita)': 'Economy', 'Health (Life Expectancy)': 'Health', 'Trust (Government Corruption)': 'Trust' }
+
+happiness2015 = happiness2015.rename(mapping,axis =1)
+2. 
+When we reviewed happiness2015 in the last screen, you may have noticed that each of the "factor" columns consists of numbers:
+Recall that each number represents the extent to which each factor contributes to the happiness score.
+
+However, not only is this definition a little hard to understand, but it can also be challenging to analyze 
+all of these numbers across multiple columns. Instead, we can first convert these numbers to categories that indicate 
+whether the factor has a high impact on the happiness score or a low impact using the following function:
+
+def label(element):
+    if element > 1:
+        return 'High'
+    else:
+        return 'Low'
+        
+        
+Although pandas provides many built-in functions for common data cleaning tasks, in this case, the tranformation we need to perform is so specific to our data that one doesn't exist. Luckily, pandas has a couple methods that can be used to apply a custom function like the one above to our data, starting with the following two methods:
+
+Series.map() method
+Series.apply() method
+Both methods above apply a function element-wise to a column. When we say element-wise, 
+we mean that we pass the function one value in the series at a time and it performs some kind of transformation.
+
+We use the following syntax for both methods:
+series.map(Function_name)
+series.apply(Function_name)
+Note that these methods both take a function as a parameter. Because we're using the function as a parameter, we pass it into the function without the parentheses. For example, 
+if we were working with a function called transform, we'd pass it into the apply() method as follows:
+def trasnform(val)
+  return val
+series.apply(transform)
+
