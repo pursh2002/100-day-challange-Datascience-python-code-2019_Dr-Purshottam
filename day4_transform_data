@@ -7,7 +7,8 @@ Health (Life Expectancy)
 Freedom
 Trust (Government Corruption)
 Generosity
-Throughout this mission, we'll refer to the columns above as the "factor" columns. We'll work to answer the following question 
+Throughout this mission, we'll refer to the columns above as the "factor" columns. We'll work to answer the 
+following question 
 in this mission:
 
 Which of the factors above contribute the most to the happiness score?
@@ -21,13 +22,16 @@ DataFrame.applymap()
 DataFrame.apply()
 pd.melt()
 
-Recall that the 2015 World Happiness Report is saved to a variable named happiness2015. We also created a dictionary named mapping for renaming columns.
-Use the DataFrame.rename() method to change the 'Economy (GDP per Capita)', 'Health (Life Expectancy)', and 'Trust (Government Corruption)' column names to the names specified in the mapping dictionary.
+Recall that the 2015 World Happiness Report is saved to a variable named happiness2015. We also created a dictionary
+named mapping for renaming columns.
+Use the DataFrame.rename() method to change the 'Economy (GDP per Capita)', 'Health (Life Expectancy)', and 
+'Trust (Government Corruption)' column names to the names specified in the mapping dictionary.
 Pass the mapping dictionary into the df.rename() method and set the axis parameter to 1.
 Assign the result back to happiness2015.
 
 
-mapping = {'Economy (GDP per Capita)': 'Economy', 'Health (Life Expectancy)': 'Health', 'Trust (Government Corruption)': 'Trust' }
+mapping = {'Economy (GDP per Capita)': 'Economy', 'Health (Life Expectancy)': 'Health', 'Trust (Government Corruption)': 
+'Trust' }
 
 happiness2015 = happiness2015.rename(mapping,axis =1)
 2. 
@@ -45,7 +49,9 @@ def label(element):
         return 'Low'
         
         
-Although pandas provides many built-in functions for common data cleaning tasks, in this case, the tranformation we need to perform is so specific to our data that one doesn't exist. Luckily, pandas has a couple methods that can be used to apply a custom function like the one above to our data, starting with the following two methods:
+Although pandas provides many built-in functions for common data cleaning tasks, in this case, the tranformation we need to 
+perform is so specific to our data that one doesn't exist. Luckily, pandas has a couple methods that can be used to apply a 
+custom function like the one above to our data, starting with the following two methods:
 
 Series.map() method
 Series.apply() method
@@ -55,9 +61,100 @@ we mean that we pass the function one value in the series at a time and it perfo
 We use the following syntax for both methods:
 series.map(Function_name)
 series.apply(Function_name)
-Note that these methods both take a function as a parameter. Because we're using the function as a parameter, we pass it into the function without the parentheses. For example, 
+Note that these methods both take a function as a parameter. Because we're using the function as a parameter, 
+we pass it into the function without the parentheses. For example, 
 if we were working with a function called transform, we'd pass it into the apply() method as follows:
 def trasnform(val)
   return val
 series.apply(transform)
+
+Use the Series.map() method to apply the label function to the Economy column in happiness2015. Assign the result to 
+economy_impact_map.
+Use the Series.apply() method to apply the function to the Economy column. Assign the result to economy_impact_apply.
+Use the following code to check if the methods produce the same result: economy_impact_map.equals(economy_impact_apply). 
+Assign the result to a variable named equal.
+
+def label(element):
+    if element > 1:
+        return 'High'
+    else:
+        return 'Low'
+    
+    
+economy_impact_map = happiness2015['Economy'].map(label)
+
+economy_impact_apply = happiness2015['Economy'].apply(label)
+equal = economy_impact_map.equals(economy_impact_apply)
+
+3. 
+In the last exercise, we applied a function to the Economy column using the Series.map() and Series.apply() 
+methods and confirmed that both methods produce the same results.
+
+Note that these methods don't modify the original series. If we want to work with the new series in the original dataframe, 
+we must either assign the results back to the original column or 
+create a new column. We recommend creating a new column, in case you need to reference the original values. 
+Let's do that next:
+def label(element)
+    if element > 1:
+        return High
+    else:
+        return low
+happiness2015['Economy Impact'] = Happiness2015['Economy'].map(label)
+
+
+To create the Economy Impact column, map() and apply() iterate through the Economy column and pass each value into the label
+function. 
+The function evaluates which range the value belongs to and assigns the corresponding value to the element in the new column.
+
+Update label to take in another argument named x. If the element is greater than x, return 'High'. Otherwise, return 'Low'.
+Then, use the apply method to apply label to the Economy column and set the x argument to 0.8. Save the result back to economy_impact_apply.
+Since both map and apply can apply functions element-wise to a series, you may be wondering about the difference between them. Let's start by looking at a function with arguments.
+
+In the label function, we arbitrarily split the values into 'High' and 'Low'. What if instead we allowed that number to be passed into the function as an argument?
+
+def label(element, x):
+    if element > x:
+        return 'High'
+    else:
+        return 'Low'
+economy_map = happiness2015['Economy'].map(label, x = .8)
+When we try to apply the function to the Economy column with the map method, we get an error:
+
+TypeError: map() got an unexpected keyword argument 'x'
+
+def label(element):
+    if element > 1:
+        return 'High'
+    else:
+        return 'Low'
+economy_impact_apply = happiness2015['Economy'].apply(label)
+
+def label(element, x):
+    if element > x:
+        return 'High'
+    else:
+        return 'Low'
+economy_impact_apply = happiness2015['Economy'].apply(label, x= .8)
+
+4. 
+We learned in the last screen that we can only use the Series.apply() 
+method to apply a function with additional arguments element-wise - the Series.map() method will return an error.
+
+So far, we've transformed just one column at a time. If we wanted to transform more than one column, 
+we could use the Series.map() or Series.apply() method to transform them as follows:
+def label(element)
+    if elment > 1:
+        return High
+    else:
+        return low
+happiness2015["Economy Impact"] = Happiness2015['Economy'].apply(label)
+happiness2015["Health Impact"] = Happiness2015["Health"].apply(label)
+happiness2015["Family Impact"] = Happiness2015["Family"].apply(label)
+
+However, it would be easier to just apply the same function to all of the 
+factor columns (Economy, Health, Family, Freedom, Generosity, Trust) at once.
+Fortunately, however, pandas already has a method that can apply functions element-wise to multiple columns at once - 
+the DataFrame.applymap() method.
+
+
 
