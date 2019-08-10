@@ -1,1 +1,23 @@
+1. You may recall from previous missions that each of the columns below contains the estimated extent to 
+which each factor contributes to the happiness score:
+
+Economy (GDP per Capita)
+Family
+Health (Life Expectancy)
+Freedom
+Trust (Government Corruption)
+Generosity
+Throughout this mission, we'll refer to the columns above as the "factor" columns. We'll work to answer the following question 
+in this mission:
+
+Which of the factors above contribute the most to the happiness score?
+
+However, in order to answer this question, we need to manipulate our data into a format that makes it easier to analyze. 
+We'll explore the following functions and methods to perform this task:
+
+Series.map()
+Series.apply()
+DataFrame.applymap()
+DataFrame.apply()
+pd.melt()
 
