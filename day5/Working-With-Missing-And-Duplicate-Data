@@ -1,4 +1,6 @@
-Missing or duplicate data may exist in a data set for a number of different reasons. Sometimes, missing or duplicate data is introduced as we perform cleaning and transformation tasks such as:
+https://pandas.pydata.org/pandas-docs/stable/user_guide/merging.html
+Missing or duplicate data may exist in a data set for a number of different reasons. Sometimes,
+missing or duplicate data is introduced as we perform cleaning and transformation tasks such as:
 
 Combining data
 Reindexing data
@@ -122,7 +124,284 @@ combined = pd.concat([happiness2015,happiness2016,happiness2017], ignore_index =
 
 missing = combined.isnull().sum()
 
+We can learn more about where these missing values are located by visualizing them with a heatmap,
+a graphical representation of our data in which values are represented as colors. We'll use the seaborn 
+library to create the heatmap.
+
+import seaborn as sns
+combined_updated = combined.set_index('YEAR')
+sns.heatmap(combined_updated.isnull(), cbar=False)
+
+To understand this visualization, imagine we took combined, highlighted missing values in light gray and all
+vother values in black, and then shrunk it so that was could easily view the entire dataframe at once.
+
+We can make the following observations:
+No values are missing in the COUNTRY column.
+There are some rows in the 2015, 2016, and 2017 data with missing values in all columns EXCEPT the COUNTRY column.
+Some columns only have data populated for one year.
+It looks like the REGION data is missing for the year 2017.
+Confirm that the REGION column is missing from the 2017 data. Recall that there are 164 rows for the year 2017.
+Select just the rows in combined in which the YEAR column equals 2017. Then, select just the REGION column.
+Assign the result to regions_2017.
+Use the Series.isnull() and Series.sum() to calculate the total number of missing values in regions_2017, the 
+REGION column for 2017. Assign the result to missing.
+Use the variable inspector to view the results of missing. Are all 164 region values missing for the year 2017?
+
+regions_2017 = combined[combined['YEAR'] == 2017]['REGION']
 
 
+missing = regions_2017.isnull().sum()
 
+5. 
+Recall once more that each year contains the same countries. Since the regions are fixed values - 
+the region a country was assigned to in 2015 or 2016 won't change - we should be able to assign the 2015 or 
+2016 region to the 2017 row.
 
+In order to do so, we'll use the following strategy:
+
+Create a dataframe containing all of the countries and corresponding regions from the happiness2015 and 
+happiness2016 dataframes.
+Use the pd.merge() function to assign the REGION in the dataframe above to the corresponding country in combined.
+The result will have two region columns - the original column with missing values will be named REGION_x. 
+The updated column without missing values will be named REGION_y. We'll drop REGION_x to eliminate confusion.
+
+We've already created a dataframe named regions containing all of the countries and corresponding regions from the 
+happiness2015 and happiness2016 dataframes.
+Use the pd.merge() function to assign the REGION in the regions dataframe to the corresponding country in combined.
+Set the left parameter equal to combined.
+Set the right parameter equal to regions.
+Set the on parameter equal to 'COUNTRY'.
+Set the how parameter equal to 'left' to make sure we don't drop any rows from combined.
+Assign the result back to combined.
+Use the DataFrame.drop() method to drop the original region column with missing values, now named REGION_x.
+Pass 'REGION_x' into the df.drop() method.
+Set the axis parameter equal to 1.
+Assign the result back to combined.
+Use the DataFrame.isnull() and DataFrame.sum() methods to check for missing values. Assign the result to a 
+variable named missing.
+
+combined = pd.merge(left = combined, right = regions, on = 'COUNTRY', how = 'left')
+
+combined = combined.drop('REGION_x',axis = 1)
+
+missing = combined.isnull().sum()
+
+6.
+Before we decide how to handle the rest of our missing values, let's first check our dataframe for duplicate rows.
+
+We'll use the DataFrame.duplicated() method to check for duplicate values. If no parameters are specified,
+the method will check for any rows in which all columns have the same values.
+
+Since we should only have one country for each year, we can be a little more thorough by defining rows with 
+ONLY the same country and year as duplicates. To accomplish this, let's pass a list of the COUNTRY and YEAR 
+column names into the df.duplicated() method:
+
+dups = combined.duplicated(['COUNTRY', 'YEAR'])
+combined[dups]
+
+Standardize the capitalization so that all the values in the COUNTRY column in combined are uppercase.
+As an example, 'India' should be changed to 'INDIA'.
+Use the df.duplicated() method to identify any rows that have the same value in the COUNTRY and YEAR columns.
+Assign your result to dups.
+
+combined['COUNTRY']= combined['COUNTRY'].str.upper()
+dups = combined.duplicated(['COUNTRY','YEAR'])
+combined[dups]
+
+Use dups to index combined. Print the results.
+
+in the COUNTRY column and identified that we actually do have three duplicate rows!
+Let's inspect all the rows for SOMALILAND REGION in combined.
+
+combined[combined['COUNTRY'] == 'SOMALILAND REGION']
+
+Now, we can see that there are two rows for 2015, 2016, and 2017 each.
+
+Next, let's use the df.drop_duplicates() method to drop the duplicate rows. 
+Like the df.duplicated() method, the df.drop_duplicates() method will define 
+duplicates as rows in which all columns have the same values. We'll have to 
+specify that rows with the same values in only the COUNTRY and YEAR columns should be dropped.
+https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.drop_duplicates.html
+
+combined['COUNTRY'] = combined['COUNTRY'].str.upper()
+combined = combined.drop_duplicates(['COUNTRY','YEAR'])
+
+8.
+Next, we'll next consider dropping columns with missing data:
+
+Check for errors in data cleaning/transformation.
+Use data from additional sources to fill missing values.
+Drop row/column.
+Fill missing values with reasonable estimates computed from the available data.
+First, let's confirm how many missing values are now left in the dataframe:
+
+combined.isnull().sum()
+
+We can see above that a couple columns contain over 300 missing values. Let's start by analyzing these columns since 
+they account for most of the missing values left in the dataframe.
+
+When deciding if you should drop a row or column, carefully consider whether you'll lose information that could alter 
+your analysis. Instead of just saying, "If x percentage of the data is missing, we'll drop it.", it's better to also 
+ask the following questions:
+
+Is the missing data needed to accomplish our end goal?
+How will removing or replacing the missing values affect our analysis?
+To answer the first question, let's establish our end goal:
+
+End Goal: We want to analyze happiness scores and the factors that contribute to happiness scores by year and region.
+Since missing values make up more than half of the following columns and we don't need them to accomplish our end goal, 
+we'll drop them:
+
+STANDARD ERROR
+LOWER CONFIDENCE INTERVAL
+UPPER CONFIDENCE INTERVAL
+WHISKER HIGH
+WHISKER LOW
+We'll use the DataFrame.drop() method to drop them next.
+
+It's also important to note that by default, the drop_duplicates() method will only keep the first duplicate row.
+To keep the last duplicate row, set the keep parameter to 'last'. Sometimes, this will mean sorting the dataframe 
+before dropping the duplicate rows.
+
+In our case, since the second duplicate row above contains more missing values than the first row, we'll keep the 
+first row.
+
+https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.drop.html
+9
+Use the df.drop() method to drop the columns in columns_to_drop.
+Pass columns_to_drop into the df.drop() method.
+Set the axis parameter equal to 1.
+Assign the result back to combined.
+Use the df.isnull() and df.sum() methods to calculate the number of missing values for each column. 
+Assign the result to missing.
+
+columns_to_drop = ['LOWER CONFIDENCE INTERVAL', 'STANDARD ERROR', 'UPPER CONFIDENCE INTERVAL', 'WHISKER HIGH', 
+'WHISKER LOW']
+
+combined = df.drop(columns_to_drop, axis = 1)
+
+missing = df.isnull().sum()
+olumns_to_drop = ['LOWER CONFIDENCE INTERVAL', 'STANDARD ERROR', 'UPPER CONFIDENCE INTERVAL', 'WHISKER HIGH', 'WHISKER LOW']
+
+combined = combined.drop(columns_to_drop, axis = 1)
+
+missing = combined.isnull().sum()
+
+In the last exercise, we used the df.drop() method to drop columns we don't need for our analysis.
+
+However, as you start working with bigger datasets, it can sometimes be tedious to create a 
+long list of column names to drop. Instead we can use the DataFrame.dropna() method to complete the same task.
+
+By default, the dropna() method will drop rows with any missing values. To drop columns, we can set the axis 
+parameter equal to 1, just like with the df.drop() method:
+
+df.dropna(axis=1)
+https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.dropna.html
+
+However, this would result in dropping columns with any missing values - we only want to drop certain columns. 
+Instead, we can also use the thresh parameter to only drop columns if they contain below a certain number of 
+non-null values.
+https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.notnull.html
+combined.notnull().sum().sort_values()
+
+combined = combined.dropna(thresh = 159, axis = 1)
+
+missing = combined.isnull().sum()
+
+So far, we've used the df.isnull() method to confirm the number of missing values in each column.
+To confirm the number of values that are NOT missing, we can use the DataFrame.notnull()method:
+
+10.
+In the last exercise, we dropped columns we don't need for our analysis and confirmed that a couple columns still have missing values:
+
+combined.isnull().sum()
+
+COUNTRY                         0
+DYSTOPIA RESIDUAL              19
+ECONOMY GDP PER CAPITA         19
+FAMILY                         19
+FREEDOM                        19
+GENEROSITY                     19
+HAPPINESS RANK                 19
+HAPPINESS SCORE                19
+HEALTH LIFE EXPECTANCY         19
+REGION                          0
+TRUST GOVERNMENT CORRUPTION    19
+YEAR                            0
+dtype: int64
+To make a decision about how to handle the rest of the missing data, we'll analyze if it's better to just drop the rows or replace the missing values with other values.
+
+Let's return to the following questions:
+
+Is the missing data needed to accomplish our end goal?
+Yes, we need the data to accomplish our goal of analyzing happiness scores and contributing factors by region and year.
+How will removing or replacing the missing values affect our analysis?
+Let's break the second question down into a couple more specific questions:
+
+What percentage of the data is missing?
+Will dropping missing values cause us to lose valuable information in other columns?
+Can we identify any patterns in the missing data?
+Question: What percentage of the data is missing?
+
+As we saw when looking at the results of combined.isnull().sum() above, if missing values exist in a column of our dataframe, they account for about 4 percent of the total values (19 missing out of 489 values per column).
+
+Generally speaking, the lower the percentage of missing values, the less likely dropping them will significantly impact the analysis.
+
+Question: Will dropping missing values cause us to lose valuable information in other columns?
+
+To answer this question, let's visualize the the missing data once more. Note below that before we create the heatmap, we first set the index of combined to the REGION column and sort the values:
+
+sorted = combined.set_index('REGION').sort_values(['REGION', 'HAPPINESS SCORE'])
+sns.heatmap(sorted.isnull(), cbar=False)
+heatmap_regions
+As a reminder, in the heatmap above, the missing values are represented with light gray and all other values with black. From this visualization, we can confirm that if the data is missing, it's missing in almost every column. We'll conclude that dropping the missing values won't cause us to lose valuable information in other columns.
+
+Question: Can we identify any patterns in the missing data?
+
+From the visualization above, we can also identify that only three regions contain missing values:
+
+Sub-Saharan Africa
+Middle East and Northern Africa
+Latin America and Carribbean
+The Sub-Saharan Africa region contains the most missing values, accounting for about 9 percent of that regions's values. Since we'd like to analyze the data according to region, we should also think about how these values impact the analysis for this region specifically.
+10. Analyzing Missing Data
+
+11. 
+In the last screen, we confirmed:
+
+Only about 4 percent of the values in each column are missing.
+Dropping rows with missing values won't cause us to lose information in other columns.
+As a result, it may be best to drop the remaining missing values.
+
+However, before we make a decision, 
+let's consider handling the missing values by replacing them with estimated values, also called imputation.
+Check for errors in data cleaning/transformation.
+Use data from additional sources to fill missing values.
+Drop row/column.
+Fill missing values with reasonable estimates computed from the available data.
+
+There are many options for choosing the replacement value, including:
+
+A constant value
+The mean of the column
+The median of the column
+The mode of the column
+
+There are many options for choosing the replacement value, including:
+
+A constant value
+The mean of the column
+The median of the column
+The mode of the column
+For non-numeric columns, common replacement values include the the most frequent value or a string like 
+"Unknown" that is used to treat missing values as a separate category.
+
+For numeric columns, it's very common to replace missing values with the mean. Since the rest of the 
+columns in combined with missing data are all numeric, we'll explore this option next.
+First, let's build some intuition around this technique by analyzing how replacing missing values with 
+the mean affects the distribution of the data. In order to do so, we'll use the Series.fillna() method 
+to replace the missing values with the mean.
+Note that we must pass the replacement value into the Series.fillna() method. For example, if we wanted to 
+replace all of the missing values in the HAPPINESS SCORE column with 0, we'd use the following syntax:
+
+combined[`HAPPINESS SCORE`].fillna(0)
