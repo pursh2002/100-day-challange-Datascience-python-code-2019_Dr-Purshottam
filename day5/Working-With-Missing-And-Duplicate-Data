@@ -405,3 +405,27 @@ Note that we must pass the replacement value into the Series.fillna() method. Fo
 replace all of the missing values in the HAPPINESS SCORE column with 0, we'd use the following syntax:
 
 combined[`HAPPINESS SCORE`].fillna(0)
+https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.fillna.html
+https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.mean.html
+
+In the last exercise, we confirmed that replacing missing values with the Series mean doesn't change the mean of the Series.
+11.
+If we were to plot the distributions before and after replacing the missing values with the mean, 
+we'd see that the shape of the distribution changes as more values cluster around the mean. 
+Note that the mean is represented with the red and green lines in the plots below:
+
+As we decide to use this approach, we should ask the following questions - are the missing happiness scores 
+likely to be close to the mean? Or is it more likely that the scores are very high or very low? 
+If the missing values lie at extremes, the mean won't be a good estimate for them.
+
+combined.pivot_table(index='REGION', values='HAPPINESS SCORE', margins=True)
+
+12.
+Use the DataFrame.dropna() method to drop any remaining rows with missing values. 
+Assign the result back to combined.
+Use the df.isnull() and df.sum() methods to confirm there are no missing values left in combined. 
+Assign the result to missing.
+
+combined = combined.dropna()
+missing = combined.isnull().sum()
+
