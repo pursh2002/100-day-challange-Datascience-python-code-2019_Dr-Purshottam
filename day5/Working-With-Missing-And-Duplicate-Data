@@ -1,1 +1,40 @@
+Missing or duplicate data may exist in a data set for a number of different reasons. Sometimes, missing or duplicate data is introduced as we perform cleaning and transformation tasks such as:
+
+Combining data
+Reindexing data
+Reshaping data
+
+In the Pandas Fundamentals course, we learned that there are various ways to handle missing data:
+
+Remove any rows that have missing values.
+Remove any columns that have missing values.
+Fill the missing values with some other value.
+Leave the missing values as is.
+https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.shape.html
+
+1. 
+We've already read in the modified 2015, 2016, and 2017 World Happiness Reports to the variables happiness2015, happiness2016, and happiness2017, respectively. We also updated each dataframe so that each contain the same countries, as described above.
+Use the DataFrame.shape attribute to confirm the number of rows and columns for happiness2015, happiness2016, and happiness2017.
+Assign the result for happiness2015 to shape_2015.
+Assign the result for happiness2016 to shape_2016.
+Assign the result for happiness2017 to shape_2017.
+
+shape_2015 = happiness2015.shape 
+shape_2016 = happiness2016.shape
+shape_2017 = happiness2017.shape 
+
+2. 
+In pandas, missing values are generally represented by the NaN value, as seen in the dataframe above, or the None value.
+https://stackoverflow.com/questions/40011531/in-pandas-when-using-read-csv-how-to-assign-a-nan-to-a-value-thats-not-the#answer-40011736
+However, it's good to note that pandas will not automatically identify values such as n/a, -, or -- as NaN or None, 
+but they may also indicate data is missing. 
+See here for more information on how to use the pd.read_csv() function to read those values in as NaN.
+
+Once we ensure that all missing values were read in correctly, 
+we can use the Series.isnull() method to identify rows with missing values:
+
+missing = happiness2015['Happiness Score'].isnull()
+happiness2015[missing]
+happiness2015[missing].isnull()
+
 
