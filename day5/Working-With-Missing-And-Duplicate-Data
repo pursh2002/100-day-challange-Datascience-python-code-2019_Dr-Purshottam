@@ -114,6 +114,15 @@ Assign the result to combined.
 Use the DataFrame.isnull() and DataFrame.sum() methods to check for missing values. 
 Assign the result to a variable named missing.
 
+happiness2017.columns = happiness2017.columns.str.replace('.', ' ').str.replace('\s+', ' ').str.strip().str.upper()
+
+happiness2015.columns = happiness2015.columns.str.replace(r'[\(\)]', '').str.strip().str.upper()
+happiness2016.columns = happiness2016.columns.str.replace(r'[\(\)]', '').str.strip().str.upper()
+combined = pd.concat([happiness2015,happiness2016,happiness2017], ignore_index =True)
+
+missing = combined.isnull().sum()
+
+
 
 
 
