@@ -16,3 +16,19 @@ p is the percentage (e.g who play cricket)
 less entropy pure node 
 higher entropy less pure node higher the homoginicity 
 higher information gain higher the purity of the node higher the homogenisity (1-entropy)
+
+this are the algorithim used in best split 
+gini index 
+chi square 
+information gain 
+this can be used only in categorical vaiable 
+
+if its continous variable 
+redution in variable 
+Sum X-m^2/n
+
+A split = 6 variance 
+B group = 0 variane 
+
+the lowest variance is considered the best node and is selected 
+higher impure 
