@@ -1,1 +1,26 @@
+1. 
+Working on guided projects gives you hands on experience with real world examples, which also means they'll be more challenging than missions. However, keep in mind that now you have more tools you can use to clean and transform data than you did at the beginning of this course, including:
+
+Vectorized string methods to clean string columns
+The apply(), map(), and applymap() methods to transform data
+The fillna(), dropna(), and drop() methods to drop missing or unnecessary values
+The melt() function to reshape data
+The concat() and merge() functions to combine data
+
+https://en.wikipedia.org/wiki/Department_of_Education_and_Training_(Queensland)
+In this guided project, we'll work with exit surveys from employees of the Department of Education, Training and Employment 
+(DETE) and the Technical and Further 
+Education (TAFE) institute in Queensland, Australia. You can find the TAFE exit survey here and the survey for the DETE here.
+https://data.gov.au/dataset/ds-qld-89970a3b-182b-41ea-aea2-6f9f17b5907e/details?q=exit%20survey
+https://data.gov.au/dataset/ds-qld-fe96ff30-d157-4a81-851d-215f2a0fe26d/details?q=exit%20survey
+
+Are employees who only worked for the institutes for a short period of time resigning due to some kind of 
+dissatisfaction? What about employees who have been there longer?
+Are younger employees resigning due to some kind of dissatisfaction? What about older employees?
+
+In this project, we'll play the role of data analyst and pretend our stakeholders want to know the following:
+
+Are employees who only worked for the institutes for a short period of time resigning due to some kind of dissatisfaction? 
+What about employees who have been there longer?
+Are younger employees resigning due to some kind of dissatisfaction? What about older employees?
 
