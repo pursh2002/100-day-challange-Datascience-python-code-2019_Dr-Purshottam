@@ -1,1 +1,216 @@
+2.
+Often, figuring out the steps you need to take to clean and reshape your data is the hardest part. 
+If you couldn't find a clear path forward 
+in the last screen, don't worry! We'll lay out the steps for you, but give you some room to start making your own decisions.
+
+From our work in the previous screen, we can first make the following observations:
+
+The dete_survey dataframe contains 'Not Stated' values that indicate values are missing, but they aren't represented as NaN.
+Both the dete_survey and tafe_survey dataframes contain many columns that we don't need to complete our analysis.
+Each dataframe contains many of the same columns, but the column names are different.
+There are multiple columns/answers that indicate an employee resigned because they were dissatisfied.
+To start, we'll handle the first two issues. Recall that we can use the pd.read_csv() function to specify values that 
+should be represented as NaN. We'll use this function to fix the missing values first. Then, we'll drop columns we know we 
+don't need for our analysis.
+
+Start by writing a paragraph in a markdown cell introducing the project and the dataset.
+Import the pandas and NumPy libraries.
+Read the dete_survey.csv CSV file into pandas, and assign it to the variable name dete_survey.
+Read the tafe_survey.csv CSV file into pandas, and assign it to the variable name tafe_survey.
+Use the DataFrame.info() and DataFrame.head() methods to print information about both dataframes, as well as the first few rows. Use other data 
+exploration methods such as the Series.value_counts() and DataFrame.isnull() methods to explore the data and figure out some 
+next steps.
+Write a markdown cell briefly describing your observations.
+
+Often, figuring out the steps you need to take to clean and reshape your data is the hardest part. If you couldn't find a 
+clear path forward in the last screen, don't worry! We'll lay out the steps for you, but give you some room to start making 
+your own decisions.
+
+From our work in the previous screen, we can first make the following observations:
+
+The dete_survey dataframe contains 'Not Stated' values that indicate values are missing, but they aren't represented as NaN.
+Both the dete_survey and tafe_survey dataframes contain many columns that we don't need to complete our analysis.
+Each dataframe contains many of the same columns, but the column names are different.
+There are multiple columns/answers that indicate an employee resigned because they were dissatisfied.
+To start, we'll handle the first two issues. Recall that we can use the pd.read_csv() function to specify values that should 
+be represented as NaN. We'll use this function to fix the missing values first. Then, we'll drop columns we know we don't 
+need for our analysis.
+
+2.
+
+pd.options.display.max_columns = 150 # to avoid truncated output 
+dete_survey.head()
+https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.drop.html
+
+Read the dete_survey.csv CSV file into pandas again, but this time read the Not Stated values in as NaN.
+To read Not Stated in as NaN, set the na_values parameter to Not Stated in the pd.read_csv() function.
+Assign the result to the variable name dete_survey.
+Then, let's drop some columns from each dataframe that we won't use in our analysis to make the dataframes easier to work with.
+Use the DataFrame.drop() method to drop the following columns from dete_survey: dete_survey.columns[28:49]. Remember to set the axis parameter equal to 1.
+Assign the result to dete_survey_updated.
+Use the DataFrame.drop() method to drop the following columns from tafe_survey: tafe_survey.columns[17:66]. Remember to set the axis parameter equal to 1.
+Assign the result to tafe_survey_updated.
+Write a markdown cell explaining the changes you made and why.
+
+# Remove columns we don't need for our analysis
+dete_survey_updated = dete_survey.drop(dete_survey.columns[28:49], axis=1)
+tafe_survey_updated = tafe_survey.drop(tafe_survey.columns[17:66], axis=1)
+
+#Check that the columns were dropped
+print(dete_survey_updated.columns)
+print(tafe_survey_updated.columns)
+
+3. 
+Next, let's turn our attention to the column names. Each dataframe contains many of the same columns, but the column names are different. Below are some of the columns we'd like to use for our final analysis:
+
+dete_survey
+tafe_survey	Definition
+ID	Record ID	An id used to identify the participant of the survey
+SeparationType	Reason for ceasing 
+employment
+The reason why the participant's employment ended
+Cease Date	CESSATION YEAR	The year or month the participant's employment ended
+DETE Start Date		The year the participant began employment with the DETE
+LengthofServiceOverall.
+Overall Length of Service 
+at Institute (in years)
+
+The length of the person's employment (in years)
+Age	CurrentAge. 
+Current Age
+The age of the participant
+Gender	Gender. 
+What is your Gender?
+The gender of the participant
+
+Because we eventually want to combine them, we'll have to standardize the column names. 
+Recall that we can use the DataFrame.columns attribute along with vectorized string methods to update all 
+of the columns at once. Here's an example from the last mission:
+
+Rename the remaining columns in the dete_survey_updated dataframe.
+Use the following criteria to update the column names:
+Make all the capitalization lowercase.
+Remove any trailing whitespace from the end of the strings.
+Replace spaces with underscores ('_').
+As an example, Cease Date should be updated to cease_date.
+Remember you can use the DataFrame.columns attribute to print an array of the existing column names.
+Use the DataFrame.rename() method to update the columns below in tafe_survey_updated. Don't worry about the rest of the column names right now - we'll handle them later.
+'Record ID': 'id'
+'CESSATION YEAR': 'cease_date'
+'Reason for ceasing employment': 'separationtype'
+'Gender. What is your Gender?': 'gender'
+'CurrentAge. Current Age': 'age'
+'Employment Type. Employment Type': 'employment_status'
+'Classification. Classification': 'position'
+'LengthofServiceOverall. Overall Length of Service at Institute (in years)': 'institute_service'
+'LengthofServiceCurrent. Length of Service at current workplace (in years)': 'role_service'
+Use the DataFrame.head() method to look at the current state of the dete_survey_updated and tafe_survey_updated dataframes and make sure your changes look good.
+Write a markdown cell explaining the changes you made and why.
+
+Rename the remaining columns in the dete_survey_updated dataframe.
+Use the following criteria to update the column names:
+Make all the capitalization lowercase.
+Remove any trailing whitespace from the end of the strings.
+Replace spaces with underscores ('_').
+As an example, Cease Date should be updated to cease_date.
+Remember you can use the DataFrame.columns attribute to print an array of the existing column names.
+Use the DataFrame.rename() method to update the columns below in tafe_survey_updated. Don't worry about the rest of the column names right now - we'll handle them later.
+'Record ID': 'id'
+'CESSATION YEAR': 'cease_date'
+'Reason for ceasing employment': 'separationtype'
+'Gender. What is your Gender?': 'gender'
+'CurrentAge. Current Age': 'age'
+'Employment Type. Employment Type': 'employment_status'
+'Classification. Classification': 'position'
+'LengthofServiceOverall. Overall Length of Service at Institute (in years)': 'institute_service'
+'LengthofServiceCurrent. Length of Service at current workplace (in years)': 'role_service'
+Use the DataFrame.head() method to look at the current state of the dete_survey_updated and tafe_survey_updated dataframes and make sure your changes look good.
+Write a markdown cell explaining the changes you made and why.
+happiness2017.columns = happiness2017.columns.str.replace('.', ' ').str.replace('\s+', ' ').str.strip().str.upper()
+
+
+4. https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.copy.html
+In the last screen, we renamed the columns that we'll use in our analysis. Next, let's remove more of the data we don't need.
+
+Recall that our end goal is to answer the following question:
+
+Are employees who have only worked for the institutes for a short period of time resigning due to some kind of dissatisfaction? What about employees who have been at the job longer?
+If we look at the unique values in the separationtype columns in each dataframe, we'll see that each contains a couple of different separation types. For this project, we'll only analyze survey respondents who resigned, so their separation type contains the string 'Resignation'.
+
+If you're interested in a challenge, try to complete the project using all of the separation types instead - you'll find more issues to work through in the data cleaning process.
+
+Note that dete_survey_updated dataframe contains multiple separation types with the string 'Resignation':
+
+Resignation-Other reasons
+Resignation-Other employer
+Resignation-Move overseas/interstate
+Remember that we'll have to account for each of these variations so we don't unintentionally drop data!
+
+In this step, note that you may see what is known as a SettingWithCopy Warning. This won't prevent your code from running properly but it's just letting you know that whatever operation you're doing is trying to be set on a copy of a slice from a dataframe. We'll include instructions below to get around this.
+
+Use the Series.value_counts() method to review the unique values in the separationtype column in both dete_survey_updated and tafe_survey_updated.
+In each of dataframes, select only the data for survey respondents who have a Resignation separation type.
+Remember that the dete_survey_updated dataframe contains three Resignation separation types. We want to select all of them.
+Use the DataFrame.copy() method on the result to avoid the SettingWithCopy Warning.
+Assign the result for dete_survey_updated to dete_resignations.
+Assign the reuslt for tafe_survey_updated to tafe_resignations.
+Write a markdown paragraph explaining the changes you made and why.
+
+https://www.dataquest.io/blog/settingwithcopywarning/
+
+Now, before we start cleaning and manipulating the rest of our data, let's verify that the data doesn't contain any major inconsistencies (to the best of our knowledge). When you're working with real world data, don't assume that the data you're analyzing isn't corrupted in some way!
+
+It may not always be possible to catch all of these errors, but by making sure the data seems reasonable to the best of our knowledge, we can stop ourselves from completing a data analysis project that winds up being useless because of bad data.
+
+In this step, we'll focus on verifying that the years in the cease_date and dete_start_date columns make sense. However, we encourage you to check the data for other issues as well!
+
+Since the cease_date is the last year of the person's employment and the dete_start_date is the person's first year of employment, it wouldn't make sense to have years after the current date.
+Given that most people in this field start working in their 20s, it's also unlikely that the dete_start_date was before the year 1940.
+If we have many years higher than the current date or lower than 1940, we wouldn't want to continue with our analysis, because it could mean there's something very wrong with the data. If there are a small amount of values that are unrealistically high or low, we can remove them.
+
+Check the years in each dataframe for logical inconsistencies.
+First, clean the cease_date column in dete_resignations.
+Use the Series.value_counts() method to view the unique values in the cease_date column.
+Use vectorized string methods to extract the year. As a reminder, here is the full list.
+Use the Series.astype() method method to convert the type to a float.
+Use the Series.value_counts() to check the values in the cease_date and dete_start_date columns in dete_resignations and the cease_date column in tafe_resignations.
+Because Series.value_counts() returns a series, we can use Series.sort_index() method with ascending= True or False to view the highest and lowest values with their counts.
+You can also plot the values of any numeric columns with a boxplot to identify any values that look wrong.
+Write a markdown paragraph explaining your findings.
+https://pandas.pydata.org/pandas-docs/stable/user_guide/text.html
+https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.sort_index.html
+https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.boxplot.html
+
+
+6. 
+From the work we did in the last screen, we can verify:
+
+There aren't any major issues with the years.
+The years in each dataframe don't span quite the same number of years. We'll leave it up to your discretion to drop any years you don't think are needed for the analysis.
+Now that we've verified the years in the dete_resignations dataframe, we'll use them to create a new column. Recall that our end goal is to answer the following question:
+
+Are employees who have only worked for the institutes for a short period of time resigning due to some kind of dissatisfaction? What about employees who have been at the job longer?
+In the Human Resources field, the length of time an employee spent in a workplace is referred to as their years of service.
+
+You may have noticed that the tafe_resignations dataframe already contains a "service" column, which we renamed to institute_service. In order to analyze both surveys together, we'll have to create a corresponding institute_service column in dete_resignations.
+
+Do we have data that can be used to calculate the length of time the employee spent in their workplace? Take a minute to review dete_resignations once more and see if you can answer this question before moving on.
+Create an institute_service column in dete_resignations
+Create a new column named institute_service in dete_resignations.
+Subtract the dete_start_date from the cease_date. Assign the result to a new column named institute_service.
+Write a markdown paragraph explaining the changes you made and why.
+
+
+In the last screen, we created a new institute_service column that we'll use to analyze survey respondents according to their length of employment.Next, we'll identify any employees who resigned because they were dissatisfied.
+
+Below are the columns we'll use to categorize employees as "dissatisfied" from each dataframe. If you disagree, feel free to mod
+ify them! Just make sure you explain why you made that decision.
+
+In the last screen, we created a new institute_service column that we'll use to analyze survey respondents according to their length of employment.Next, we'll identify any employees who resigned because they were dissatisfied.
+
+Below are the columns we'll use to categorize employees as "dissatisfied" from each dataframe. If you disagree, feel free to modify them! Just make sure you explain why you made that decision.
+
+https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.any.html
+
+
 
