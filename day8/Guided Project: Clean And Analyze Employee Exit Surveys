@@ -1,0 +1,138 @@
+In the last screen, we created a new institute_service column that we'll use to analyze survey respondents according to their length of employment.Next, we'll identify any employees who resigned because they were dissatisfied.
+
+Below are the columns we'll use to categorize employees as "dissatisfied" from each dataframe. If you disagree, feel free to modify them! Just make sure you explain why you made that decision.
+
+tafe_survey_updated:
+Contributing Factors. Dissatisfaction
+Contributing Factors. Job Dissatisfaction
+dafe_survey_updated:
+job_dissatisfaction
+dissatisfaction_with_the_department
+physical_work_environment
+lack_of_recognition
+lack_of_job_security
+work_location
+employment_conditions
+work_life_balance
+workload
+If the employee indicated any of the factors above caused them to resign, we'll mark them as dissatisfied in a new column.
+
+To create the new column, we'll do the following:
+
+Convert the values in the 'Contributing Factors. Dissatisfaction' and 'Contributing Factors. Job Dissatisfaction' columns in the tafe_resignations dataframe to True, False, or NaN values.
+If any of the columns listed above contain a True value, we'll add a True value to a new column named dissatisfied. To accomplish this, we'll use the DataFrame.any() method to do the following:
+
+Return True if any element in the selected columns above is True
+Return False if none of the elements in the selected columns above is True
+Return NaN if the value is NaN
+Any
+Here's the syntax we can use:
+
+df.any(axis=1, skipna=False)
+After our changes, the new dissatisfied column will contain just the following values:
+
+True: indicates a person resigned because they were dissatisfied with the job
+False: indicates a person resigned because of a reason other than dissatisfaction with the job
+NaN: indicates the value is missing
+
+Use the Series.value_counts() method to view the values in the 'Contributing Factors. Dissatisfaction' and 'Contributing 
+Factors. Job Dissatisfaction' in the tafe_resignations dataframe.
+Update the values in the 'Contributing Factors. Dissatisfaction' and 'Contributing Factors. Job Dissatisfaction' 
+in the tafe_resignations dataframe so that each contains only True, False, or NaN values.
+Write a function named update_vals that makes the following changes:
+If the value is NaN, return np.nan. You can use the following criteria to check that a value is NaN: pd.isnull(val).
+If the value is '-', return False.
+For any other value, return True.
+Use the DataFrame.applymap() method to apply the function above to the 'Contributing Factors. Dissatisfaction' 
+and 'Contributing Factors. Job Dissatisfaction' in the tafe_resignations dataframe.
+Remember that we need to pass the update_vals function into the df.applymap() method without parentheses.
+Use the df.any() method as described above to create a dissatisfied column in BOTH the tafe_resignations and 
+dete_resignations dataframes.
+Use the df.copy() method to create a copy of the results and avoid the SettingWithCopy Warning. Assign the results 
+to dete_resignations_up and tafe_resignations_up.
+Write a markdown paragraph explaining the changes you made and why.
+
+Now that we've combined our dataframes, we're almost at a place where we can perform some kind of analysis! 
+First, though, we'll have to clean up the institute_service column. 
+This column is tricky to clean because it currently contains values in a couple different forms:
+NaN                   164
+Less than 1 year       77
+3-4                    72
+1-2                    68
+11-20                  49
+More than 20 years     48
+5-6                    36
+7-10                   30
+5.0                    30
+3.0                    28
+
+To analyze the data, we'll convert these numbers into categories. We'll base our anlaysis on this article, which makes the argument that understanding employee's needs according to career stage instead of age is more effective.
+
+We'll use the slightly modified definitions below:
+
+New: Less than 3 years at a company
+Experienced: 3-6 years at a company
+Established: 7-10 years at a company
+Veteran: 11 or more years at a company
+Let's categorize the values in the institute_service column using the definitions above.
+https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.astype.html
+https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.any.html
+
+https://pandas.pydata.org/pandas-docs/stable/user_guide/text.html
+
+9. First, we'll extract the years of service from each value in the institute_service column.
+Use the Series.astype() method to change the type to 'str'.
+Use vectorized string methods to extract the years of service from each pattern. You can find the full list of vectorized string methods here.
+Double check that you didn't miss extracting any digits.
+Use the Series.astype() method to change the type to 'float'.
+Next, we'll map each value to one of the career stage definitions above.
+Create a function that maps each year value to one of the career stages above.
+Remember that you'll have to handle missing values separately. You can use the following code to check if a value is NaN where val is the name of the value: pd.isnull(val).
+Use the Series.apply() method to apply the function to the institute_service column. Assign the result to a new column named service_cat.
+Write a markdown paragraph explaining the changes you made and why.
+
+10.
+In the last screen, we created a service_cat column, that categorizes employees according to the amount of years spent in their workplace:
+
+New: Less than 3 years at a company
+Experienced: 3-6 years at a company
+Established: 7-10 years at a company
+Veteran: 11 or more years at a company
+Now, let's finally do our first piece of analysis! We'll help you fill in missing values in the 
+dissatisfied column and then aggregate the data to get you started, but note that we still have 
+additional missing values left to deal with. This is meant to be an initial introduction to the 
+analysis, not the final analysis.
+
+Recall that the dissatisfied column consists of Boolean values, meaning they're either True or False. 
+Methods such as the df.pivot_table() method actually treat Boolean values as integers, so a True value is 
+considered to be 1 and a False value is considered to be 0. That means that we can aggregate the 
+dissatisfied column and calculate the number of people in each group, the percentage of people in each group, etc.
+https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.fillna.html
+
+11.
+In this guided project, we experienced that in order to extract any meaningful insights from our data, we had to perform many data cleaning tasks. In order to create one visualization (and not even the final one), we completed the following tasks:
+
+Explored the data and figured out how to prepare it for analysis
+Corrected some of the missing values
+Dropped any data not needed for our analysis
+Renamed our columns
+Verified the quality of our data
+Created a new institute_service column
+Cleaned the Contributing Factors columns
+Created a new column indicating if an employee resigned because they were dissatisfied in some way
+Combined the data
+Cleaned the institute_service column
+Handled the missing values in the dissatisfied column
+Aggregated the data
+Our work here is far from done! We recommend that you continue with the following steps:
+
+Decide how to handle the rest of the missing values. Then, aggregate the data according to the service_cat column again. How many people in each career stage resigned due to some kind of dissatisfaction?
+Clean the age column. How many people in each age group resgined due to some kind of dissatisfaction?
+Instead of analyzing the survey results together, analyze each survey separately. Did more employees in the DETE survey or TAFE survey end their employment because they were dissatisfied in some way?
+Format your project using Dataquest's project style guide.
+Guided projects can be used to build a portfolio to showcase to potential employers, so we really encourage you to keep working on this. You're welcome to keep working on the project here, but we recommend downloading it to your computer using the download icon above and working on it there.
+
+Remember - if you get stuck, don't be afraid to review previous missions or use Google and StackOverflow to search for answers. This isn't easy and will take time and practice.
+
+Congratulations on completing the course! We hope you learned a lot.
+
