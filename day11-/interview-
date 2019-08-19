@@ -1,0 +1,68 @@
+Dimensionality reduction - https://elitedatascience.com/dimensionality-reduction-algorithms
+https://www.datacamp.com/courses/dimensionality-reduction-in-python?fbclid=IwAR2ztqq_AwR2U-
+lbdr4ZfKhZh2YI--cqhn2Z9kwGFPW6wSHGm8yEEu7iMGM
+
+https://www.quora.com/What-is-the-curse-of-dimensionality
+
+Multicollinearity in Regression Analysis - https://blog.minitab.com/blog/understanding-statistics/handling-multicollinearity-in-regression-analysis
+
+
+Coefficient of Dispersion - https://www.statisticshowto.datasciencecentral.com/coefficient-of-dispersion/
+
+VIF - https://en.wikipedia.org/wiki/Variance_inflation_factor
+
+python - https://www.youtube.com/watch?v=DEwgZNC-KyE 
+contol flow , for loop , while loop, if else
+how u used a code 
+import os, glob
+
+os.chdir("....")
+for file in glob.glob("*.jpg):
+      print(file)
+      
+solve some common intervie problems - fizz buzz, fibonacchi
+
+for num in xrange(1,101):
+  if num % 5 == 0 and num % 3 == 0:
+        print 'fizz buzz'
+  elif num % 3 == 0:
+        print 'fizz'
+  elif num % 5 == 0:
+        print 'buzz'
+  else:
+        print num
+        
+  fibonacchi :
+  
+  a,b = 0,1
+  for i in xrange(0,10:
+        print a 
+        a,b = b , a+b 
+  
+google interview question 
+
+list 
+my_list = [1,2,3,4,5]
+for i in my_list:
+   print i
+tuple 
+my_tuple = (1,2,3,4,5)
+  for in in my_tuple:
+      print i 
+dictionary 
+my_dic = { "name' : " Purshottam", "Age" : '24' , "occupation" : "doctor"}
+
+for key,val in my_dic.iteritems():
+      print (key, val)
+      or 
+      print "My {} is {}".format(key,val)
+      
+      
+my_set = { 1,29,30,40,50,60,50,60}
+
+for i in my_set:
+  print i
+  
+ gives val of no duplications
+
+
