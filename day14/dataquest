@@ -1,0 +1,290 @@
+Regular expressions: 
+is something that is a worthwhile investment
+
+Once you understand how they work, complex operations with string data can be written a lot quicker, which will save you time.
+Regular expressions are often faster to execute than their manual equivalents.
+Regular expressions are supported in almost every modern programming language, as well as other places like command 
+line utilities and databases. Understanding regular expressions gives you a powerful tool that you can use wherever 
+you work with data.
+
+We'll be learning regular expressions while performing analysis on a dataset of submissions to popular technology site Hacker news
+https://news.ycombinator.com/  
+csv = https://www.kaggle.com/hacker-news/hacker-news-posts
+
+The columns in the dataset are explained below:
+
+id: The unique identifier from Hacker News for the story
+title: The title of the story
+url: The URL that the stories links to, if the story has a URL
+num_points: The number of points the story acquired, calculated as the total number of upvotes minus the total number of downvotes
+num_comments: The number of comments that were made on the story
+author: The username of the person who submitted the story
+created_at: The date and time at which the story was submitted
+
+1. Import the pandas library.
+Read the hacker_news.csv file into a pandas dataframe. Assign the result to hn.
+After you have completed the code exercise, use the variable inspector to familiarize yourself with the dataset.
+
+import pandas as pd 
+hn = pd.read_csv("hiacker_news.csv")
+
+2. 
+When working with regular expressions, we use the term pattern to describe a regular expression that we've written. 
+If the pattern is found within the string we're searching, we say that it has matched.
+
+As we previously learned, letters and numbers represent themselves in regular expressions.
+If we wanted to find the string "and" within another string, the regex pattern for that is simply and:
+
+and yes ---hand android 
+    no - Andrew because capitilized
+
+re.search()
+
+We previously used regular expressions with pandas, but Python also has a built-in module for regular expressions: 
+The re module. This module contains a number of different functions and classes for working with regular expressions. 
+One of the most useful functions from the re module is the re.search() function, which takes two required arguments:
+
+The regex pattern
+The string we want to search that pattern for
+
+
+import re
+
+m = re.search("and", "hand")
+print(m)
+
+The re.search() function will return a Match object if the pattern is found anywhere within the string.
+If the pattern is not found, re.search() returns None:
+
+m = re.search("and", "antidote")
+print(m)
+None 
+
+We'll learn more about match objects later. For now, we can use the fact that the boolean value of a match object is 
+True while None is False to easily check whether our regex matches each string in a list.
+We'll create a list of three simple strings to use while learning these concepts:
+
+string_list = ["Julie's favorite color is Blue.",
+               "Keli's favorite color is Green.",
+               "Craig's favorite colors are blue and red."]
+pattern = "Blue"
+
+for s in string_list:
+    if re.search(pattern, s):
+        print("Match")
+    else:
+        print("No Match")
+for s in string_list:
+    if re.search(pattern,s):
+          print("Match")
+    else:
+          print("No Match")
+        
+Match
+No Match
+No Match
+
+So far, we haven't done anything with regular expressions that we couldn't do using the in keyword.
+The power of regular expressions comes when we use one of the special character sequences.
+
+The first of these we'll learn is called a set. A set allows us to specify two or more characters 
+that can match in a single character's position.
+
+[msb]end
+
+We define a set by placing the characters we want to match for in square brackets:
+
+The regular expression above will match the strings mend, send, and bend.
+
+[An]nd = and, android, hand, Andrew
+
+[an]dt = hand , android , antidote
+
+string_list = ["Julie's favorite color is Blue.",
+               "Keli's favorite color is Green.",
+               "Craig's favorite colors are blue and red."]
+               
+If you look closely, you'll notice the first string contains the substring Blue with a capital letter, 
+where the third string contains the substring blue in all lowercase. We can use the set [Bb] for the 
+first character so that we can match both variations, and then use that to count how many times Blue or 
+blue occur in the list:
+
+blue_mentions = 0
+pattern = "[Bb]lue"
+
+for s in string_list:
+    if re.search(pattern, s):
+        blue_mentions += 1
+
+print(blue_mentions)
+
+blue_mentions = 0
+pattern = "[Bb]lue"
+for s in string_list:
+   if re.search(pattern,s):
+     blue_mention += 1
+ 2
+ 
+ We're going to use this technique to find out how many times Python is mentioned in the title of stories in our 
+ Hacker News dataset. 
+ We'll use a set to check for both Python with a capital 'P' and python with a lowercase 'p'.
+ 
+ We have provided code to import the re module and extract a list, titles, containing all the titles from our dataset.
+Initialize a variable python_mentions with the integer value 0.
+Create a string — pattern — containing a regular expression pattern that uses a set to match Python or python.
+Use a loop to iterate over each item in the titles list, and for each item:
+Use the re.search() function to check whether pattern matches the title.
+If re.search() returns a match object, increment (add 1 to) the python_mentions variable.
+
+import re
+
+titles = hn["title"].tolist()
+python_mentions = 0
+pattern = "[Pp]ython"
+for s in title:
+    if re.search(pattern,s):
+        python_mentions += 1
+        
+print(python_mentions)    
+
+3. 
+We've learned that we should avoid using loops in pandas, and that vectorized methods are often faster and require less code.
+Series.str.contains() 
+In the data cleaning course, we learned that the Series.str.contains() method can be used to test whether a Series of strings match a particular regex pattern. 
+Let's look at how we can replicate the example from the previous screen using pandas.
+eg_list = ["Julie's favorite color is green.",
+           "Keli's favorite color is Blue.",
+           "Craig's favorite colors are blue and red."]
+eg_series = pd.Series(eg_list)
+print(eg_series)
+
+0             Julie's favorite color is green.
+1               Keli's favorite color is Blue.
+2    Craig's favorite colors are blue and red.
+dtype: object
+
+Next, we'll create our regex pattern, and use Series.str.contains() to compare to each value in our series:
+
+pattern = "[Bb]lue"
+pattern_contained = eg_series.str.contains(pattern)
+print(pattern_contained)
+
+0    False
+1     True
+2     True
+dtype: bool
+
+The result is a boolean mask: a series of True/False values.
+
+One of the neat things about boolean masks is that you can use the Series.sum() method to sum all the values
+in the boolean mask, with each True value counting as 1, and each False as 0. This means that 
+we can easily count the number of values in the original series that matched our pattern:
+pattern_count = pattern_contained.sum()
+print(pattern_count)
+
+The result is a boolean mask: a series of True/False values.
+One of the neat things about boolean masks is that you can use the Series.sum()
+method to sum all the values in the boolean mask, with each True value counting as 1, and each False as 0
+pattern_count = pattern_contained.sum()
+print(pattern_count)
+
+2
+If we wanted, we could use method chaining to do the whole operation on one line:
+
+pattern_count = eg_series.str.contains(pattern).sum()
+print(pattern_count)
+
+Let's use this technique to replicate the analysis we did in the previous screen.
+We have provided the regex pattern from the solution to the previous screen.
+Assign the title column from the hn dataframe to the variable titles.
+Use Series.str.contains() and Series.sum() with the provided regex pattern to count how many Hacker News titles 
+contain Python or python. Assign the result to python_mentions.
+
+pattern = '[Pp]ython'
+
+titles = hn["title"].tolist()
+python_mentions = titles.str.contains(pattern).sum()
+
+3. On the previous two screens, we used regular expressions to count how many titles contain Python or python. 
+What if we wanted to view those titles?
+
+In that case, we can use the boolean array returned by Series.str.contains() to select just those rows from our series.
+Let's look at that in action, starting by creating the boolean array.
+titles = hn['title']
+
+py_titles_bool = titles.str.contains("[Pp]ython")
+print(py_titles_bool.head())
+
+0    False
+1    False
+2    False
+3    False
+4    False
+Name: title, dtype: bool
+
+Then, we can use that boolean array to select just the matching rows:
+
+py_titles = titles[py_titles_bool]
+print(py_titles.head())
+
+103                          From Python to Lua: Why We Switched
+104                    Ubuntu 16.04 LTS to Ship Without Python 2
+145      Create a GUI Application Using Qt and Python in Minutes
+197     How I Solved GCHQ's Xmas Card with Python and Pycosat...
+437  Unikernel Power Comes to Java, Node.js, Go, and Python Apps
+Name: title, dtype: object
+
+We can also do it in a streamlined, single line of code:
+py_titles = titles[titles.str.contains("[Pp]ython")]
+print(py_titles.head())
+
+py_titles = titles[py_titles_bool]
+print(py_titles.head())
+
+4. On the previous two screens, we used regular expressions to count how many titles contain Python or python. 
+What if we wanted to view those titles?
+
+In that case, we can use the boolean array returned by Series.str.contains() to select just those rows from our series. 
+Let's look at that in action, starting by creating the boolean array.
+titles = hn['title']
+
+py_titles_bool = titles.str.contains("[Pp]ython")
+print(py_titles_bool.head())
+0    False
+1    False
+2    False
+3    False
+4    False
+Name: title, dtype: bool
+Then, we can use that boolean array to select just the matching rows:
+py_titles = titles[py_titles_bool]
+print(py_titles.head())
+103                          From Python to Lua: Why We Switched
+104                    Ubuntu 16.04 LTS to Ship Without Python 2
+145      Create a GUI Application Using Qt and Python in Minutes
+197     How I Solved GCHQ's Xmas Card with Python and Pycosat...
+437  Unikernel Power Comes to Java, Node.js, Go, and Python Apps
+Name: title, dtype: object
+
+We can also do it in a streamlined, single line of code:
+
+py_titles = titles[titles.str.contains("[Pp]ython")]
+print(py_titles.head())
+
+103                          From Python to Lua: Why We Switched
+104                    Ubuntu 16.04 LTS to Ship Without Python 2
+145      Create a GUI Application Using Qt and Python in Minutes
+197     How I Solved GCHQ's Xmas Card with Python and Pycosat...
+437  Unikernel Power Comes to Java, Node.js, Go, and Python Apps
+Name: title, dtype: object
+Let's use this technique to select all titles that mention the programming language Ruby,
+using a set to account for whether the word is capitalized or not.
+
+Use Series.str.contains() to create a series of the values from titles 
+that contain Ruby or ruby. Assign the result to ruby_titles.
+titles = hn['title']
+ruby_titles = titles.str.contains("[Rr]uby")
+ruby_titles = titles[ruby_titles]
+
+
+
