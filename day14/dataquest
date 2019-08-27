@@ -286,5 +286,273 @@ titles = hn['title']
 ruby_titles = titles.str.contains("[Rr]uby")
 ruby_titles = titles[ruby_titles]
 
+5. In the data cleaning course, we learned that we could use braces ({}) to specify that a character repeats in our 
+regular expression. For instance, if we wanted 
+to write a pattern that matches the numbers in text from 1000 to 2999 we could write the regular expression below:
+[1-2][0-9]{3}
+
+The name for this type of regular expression syntax is called a quantifier. 
+Quantifiers specify how many of the previous character our pattern requires, 
+which can help us when we want to match substrings of specific lengths. As an example, 
+we might want to match both e-mail and email. To do this, we would want to specify to match - either zero or one times.
+The specific type of quantifier we saw above is called a numeric quantifier. 
+Here are the different types of numeric quantifiers we can use:
+a {3} a three time 
+a{3,5} a three, four and five  time
+a{,3} the character a zero ,one,two or three time 
+a{8,} the charater a 8 or greater time 
+
+In addition to numeric quantifiers, there are single characters in regex that specify 
+some common quantifiers that you're likely to use. A summary of them is below.
+
+a{0,} = a zero or more 
+a{1,} = a zero or more 
+a{0,1} = a zero or one time 
+On this screen, we're going to find how many titles in our dataset mention email or e-mail. To do this, 
+we'll need to use ?, the optional quantifier, to specify that the dash character - is 
+optional in our regular expression.
+email_bool = titles.str.contains("e-?mail")
+email_count = email_bool.sum()
+email_titles = titles[email_bool]
+
+6. So far, we've learned how to perform simple matches with sets, and how to use quantifiers to 
+specify when a character should repeat a certain number of times. Let's continue by looking at a more complex example.
+
+Some stories submitted to Hacker News include a topic tag in brackets, like [pdf]. 
+Here are a few examples of story titles with these tags:
+[video] Google Self-Driving SUV Sideswipes Bus
+New Directions in Cryptography by Diffie and Hellman (1976) [pdf]
+Wallace and Gromit  The Great Train Chase (1993) [video]
+
+In this screen, our task is going to be to find how many titles in our dataset have tags.
+
+Our first inclination may be to create the regex [pdf]. Unfortunately, 
+the brackets would be interpreted as a set, so our pattern would match the single characters p, d, or f
+[pdf]
+"[pdf]"
+\[pdf\]
+\[ the character escaped 
+\] the character escaped 
+pdf substring 
+The other critical part of our task of identifying how many titles have tags is knowing how to match the 
+characters between the brackets (like pdf and video) without knowing ahead of time what the different topic tags will be.
+To match unknown characters using regular expressions, we use character classes. Character classes allow us to match certain groups of characters. We've actually seen two examples of character classes already:
+
+The set notation using brackets to match any of a number of characters.
+The range notation, which we used to match ranges of digits (like [0-9]).
+
+Let's look at a summary of syntax for some of the regex character classes:
+
+set [fud] f,u,or d
+range [a-e] any of the character a to e 
+range [0-3] any number between 0 and 3
+range [A-Z] upper case numbers A to Z
+set + range [A-Za-z] any upper case or lower case letter
+There are two new things we can observe from this table:
+
+Ranges can be used for letters as well as numbers.
+Sets and ranges can be combined.
+
+Just like with quantifiers, there are some other common character classes which we'll use a lot.
+digit \d Any digit character (equilent to[0-9])
+word \w Any digit upper case ,lower case or underscore character (equivalent to [A-Za-z0-9_])
+whitespace \s any space ,tab or linebreak character 
+Dot . any character except newline 
+
+The one that we'll be using in order to match characters in tags is \w, which represents 
+any digit uppercase or lowercase letter. Each character class represents a 
+single character, so to match multiple characters (e.g. words like video and pdf), 
+we'll need to combine them with quantifiers.
+
+In order to match word characters between our brackets, we can combine the 
+word character class (\w) with the 'one or more' quantifier (+), giving us a combined pattern of \w+.
+
+This will match sequences like pdf, video, Python, and 2018 but won't match a sequence containing a space or punctuation character like PHP-DEV or XKCD Flowchart. If we wanted to match those 
+tags as well, we could use .+; however, in this case, we're just interested in single-word tags without special characters.
+et's quickly recap the concepts we learned in this screen:
+
+We can use a backslash to escape characters that have special meaning in regular expressions (e.g. \ will match an open bracket character).
+Character classes let us match certain groups of characters (e.g. \w will match any word character).
+Character classes can be combined with quantifiers when we want to match different numbers of characters.
+We'll use these concepts to count the number of titles that contain a tag.
+
+Write a regular expression, assigning it as a string to the variable pattern. The regular expression should match, in order:
+A single open bracket character.
+One or more word characters.
+A single close bracket character.
+Use the regular expression to select only items from titles that match. Assign the result to the variable tag_titles.
+Count how many matching titles there are. Assign the result to tag_count.
+
+pattern = "\[\w+\]"
+
+tag_titles = titles[titles.str.contains(pattern)]
+
+tag_count = tag_titles.shape[0]
+
+7. On the previous screen, we learned that we can use backslashes to escape the [ and ] characters.
+Backslashes are used to escape many other characters in regular expressions, as well 
+as to denote some special character sequences (like character classes).
+print('hello\b')
+hell
+The escape sequence \b represents a backspace, so the final letter from our string is removed.
+The character sequence \b has a special meaning in regular expressions 
+(which we'll learn about later), so we need a way to write these characters without triggering the escape sequence.
+
+In Python, a backslash followed by certain characters represents an escape sequence — like the \n 
+sequence — which we previously learned represents a new line. These escape sequences can result in
+unintended consequences for our regular expressions. Let's take a look at a string containing the substring \b:
+
+One way is to add an extra backslash before the "b":
+print('hello\\b')
+hello\b
+
+This can make regular expressions even more difficult to read and interpret, so instead we use raw strings, which we denote 
+by prefixing our string with the r character. Let's take a look at the code from above with a raw string:
+
+print(r'hello\b')
+hello\b
+
+We strongly recommend using raw strings for every regex you write, rather than remember 
+which sequences are escape sequences and using raw strings selectively. 
+That way, you'll never encounter a situation where you forget or overlook something which causes your regex to break.
+In the previous screen, we were able to calculate that 444 of the 20,100 Hacker News stories in our dataset contain tags. 
+What if we wanted to find out what the text of these tags were, and how many of each are in the dataset?
+
+In order to do this, we'll need to use capture groups. Capture groups allow us to specify one or more groups within our match that we can access separately. In this mission, we'll learn how to use one capture group 
+per regular expression, but in the next mission we'll learn some more complex capture group patterns.
+"capture groups"
+We specify capture groups using parentheses. Let's add an open and close parentheses to the pattern we wrote 
+in the previous screen, and break down how each character in our regular expression works:
+(\[\w+\])
+We'll learn how to access capture groups 
+in pandas by looking at just the first five matching titles from the previous exercise:
+
+tag_5 = tag_titles.head()
+print(tag_5)
+
+67      Analysis of 114 propaganda sources from ISIS, Jabhat al-Nusra, al-Qaeda [pdf]
+101                                Munich Gunman Got Weapon from the Darknet [German]
+160                                      File indexing and searching for Plan 9 [pdf]
+163    Attack on Kunduz Trauma Centre, Afghanistan  Initial MSF Internal Review [pdf]
+196                                            [Beta] Speedtest.net  HTML5 Speed Test
+Name: title, dtype: object
+
+We use the Series.str.extract() method to extract the match within our parentheses:
+
+pattern = r"(\[\w+\])"
+tag_5_matches = tag_5.str.extract(pattern)
+print(tag_5_matches)
+
+67        [pdf]
+101    [German]
+160       [pdf]
+163       [pdf]
+196      [Beta]
+Name: title, dtype: object
+
+We can move our parentheses inside the brackets to get just the text:
+
+pattern = r"\[(\w+)\]"
+tag_5_matches = tag_5.str.extract(pattern)
+print(tag_5_matches)
+
+67        pdf
+101    German
+160       pdf
+163       pdf
+196      Beta
+Name: title, dtype: object
+
+If we then use Series.value_counts() we can quickly get a frequency table of the tags:
+tag_5_freq = tag_5_matches.value_counts()
+print(tag_5_freq)
+
+pdf       3
+Beta      1
+German    1
+Name: title, dtype: int64
+
+Let's use this technique to extract all of the tags from the Hacker News titles and build a frequency table of those tags.
+
+We have provided a commented line of code with the pattern from the previous exercise.
+Uncomment the line of code and add parentheses to create a capture group inside the brackets.
+Use Series.str.extract() and Series.value_counts() with the modified regex pattern to produce a frequency 
+table of all the tags in the titles series. Assign the frequency table to tag_freq.
+
+#pattern = r"\[\w+\]"
+pattern = r"\[(\w+)\]"
+
+tag_freq = titles.str.extract(pattern).value_counts()
+
+8. 
+On the previous screens, we wrote mostly simple regular expressions. In reality, 
+regular expressions are often complex. When creating complex regular expressions, 
+you often need to work iteratively so you can find "bad" instances that match your pattern and then exclude them.
+
+In order to work faster as you build your regular expression, 
+it can be helpful to create a function that returns the first few matching strings:
+
+def first_10_matches(pattern):
+    """
+    Return the first 10 story titles that match
+    the provided regular expression
+    """
+    all_matches = titles[titles.str.contains(pattern)]
+    first_10 = all_matches.head(10)
+    return first_10
+Another useful approach is to use an online tool like RegExr that allows you to build regular 
+expressions and includes syntax highlighting, instant matches, and regex syntax reference. 
+For this screen, we'll use the first_10_matches function we just built to iteratively build a regular expression.
+
+Earlier, we counted the titles that included Python — let's write a simple regular expression to
+match Java (another popular language), and use our function to look at the matches:
+
+first_10_matches(r"[Jj]ava")
+268                                   Show HN: Hire JavaScript - Top JavaScript Talent
+437                        Unikernel Power Comes to Java, Node.js, Go, and Python Apps
+581                          Python integration for the Duktape Javascript interpreter
+812      Ask HN: Are there any projects or compilers which convert JavaScript to Java?
+1024                                                      Pippo  Web framework in Java
+1047    If you write JavaScript tools or libraries, bundle your code before publishing
+1094                            Rollup.js: A next-generation JavaScript module bundler
+1163                                              V8 JavaScript Engine: V8 Release 5.4
+1196                                                Proposed JavaScript Standard Style
+1315                                        Show HN: Design by Contract for JavaScript
+Name: title, dtype: object
+
+We can see that there are a number of matches that contain Java as part of the word JavaScript. 
+We want to exclude these titles from matching so we get an accurate count.
+
+We can see that there are a number of matches that contain Java as part of the word JavaScript. We 
+want to exclude these titles from matching so we get an accurate count.
+
+One way to do this is by using negative character classes. 
+Negative character classes are character classes that match every character except a character class. 
+Let's look at a table of the common negative character classes:
+negetive set = [^fud] any charater except f,u or d
+negetive set = [^1-3Z\s] any character except 1,2,3 z and white space
+negetive digit = \D any character except digit character 
+negetive word = \W any chaacter ecept word character 
+negeitve white space = \S
+
+Let's use the negative set [^Ss] to exclude instances like JavaScript and Javascript:
+
+Write a regular expression that will match titles containing Java.
+You might like to use the first_10_matches() function or a site like RegExr to build your regular expression.
+The regex should match whether or not the first character is capitalized.
+The regex shouldn't match where 'Java' is followed by the letter 'S' or 's'.
+Select every row from titles that match the regular expression. Assign the result to java_titles.
+
+def first_10_matches(pattern):
+    
+    all_matches = titles[titles.str.contains(pattern)]
+    first_10 = all_matches.head(10)
+    return first_10
+pattern = r"[Jj]ava[^Ss]"
+java_titles = titles[titles.str.contains(pattern)]
+
+9. 
+
+
 
 
