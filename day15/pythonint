@@ -271,3 +271,76 @@ for match in results:
    
    retunts the the word in sentince 
    '', text '', text ''
+
+1.
+   
+   Write a regular expression
+Let's write some regular expressions!
+
+Your task is to create a regular expression matching a 
+valid temperature represented either in Celsius or Fahrenheit scale (e.g. '+23.5 C', '-4 F', '0.0 C') 
+and to extract all the appearances from the given string text. Positive temperatures can be prefixed with + or 
+contain no prefix (e.g. '5 F', '+5 F'). Negative temperatures must be prefixed with -. Zero temperature should not 
+be prefixed with any symbol.
+
+The re module is already imported.
+
+Tip: the + symbol within the square brackets [] corresponds to the symbol itself (e.g. the regular 
+
+expression [1a+] matches to '1', 'a', or '+').
+Define the pattern to search for valid temperatures
+Create an object storing the matches using finditer().
+Loop over matches_storage and print out item properties: the matching sequence, its start and end index.
+
+# Define the pattern to search for valid temperatures
+pattern = re.compile(r'[+-]?\d+\.?\d* [CF]')
+
+# Print the temperatures out
+print(re.findall(pattern, text))
+
+# Create an object storing the matches using 'finditer()'
+matches_storage = re.finditer(pattern, text)
+
+# Loop over matches_storage and print out item properties
+for match in matches_storage:
+    print('matching sequence = ' + match.group())
+    print('start index = ' + str(match.start()))
+    print('end index = ' + str(match.end()))
+2.
+
+Find the incorrect pattern
+Which of the following regular expressions will precisely match the long date format 
+(for example, October 26, 1988 or Oct 26, 1988 with the first letter capitalized)?
+
+Consider only the non-negative years.
+
+The module re is already imported.
+
+Possible Answers
+\w+\s[1-3]?\d,\s\d+
+[A-Z][a-z]+\s\d{1,2},\s\d+
+ANswer [A-Z][a-z]+\s[1-3]?\d,\s\d+
+[A-Z][a-z]+\s[1-3]?\d,\s\d*
+
+Splitting by a pattern
+You are given a text stored in the text variable.
+
+Split the text in such a way that the resulting list has only words or numbers with no blank spaces or punctuation.
+
+Compile the regular expression.
+Split the text so that only words or numbers are included in the resulting list, and print the result.
+
+# Compile the regular expression
+pattern = re.compile(r'[,:\.]?\s?')
+
+# Split the text that only words or numbers are left
+words = re.split(pattern, text)
+print(words)
+
+# Define an easier way to extract words or numbers
+alt_pattern = re.compile(r'\w+')
+print(re.findall(alt_pattern, text))
+
+
+
+
