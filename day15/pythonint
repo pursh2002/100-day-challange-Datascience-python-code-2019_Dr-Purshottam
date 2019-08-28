@@ -63,4 +63,12 @@ Putting the information on sets in more mathematical terms, we can define the fo
 You are given 5 sets of integers A, B, C, D,E. What is the result of the following expression?
 (A∪(B∩C))−(D∩E)
 
+4.
+It can be described by the following equation:
+x2a2+y2a2=z
+Let's set the coefficient a to 1. Therefore, the radius at each cut will be equal to z√.
+
+Your task is to create a dictionary that stores the mapping from the pair of coordinates (x,y) 
+to the z coordinate (the lists storing considered ranges for x and y are given: range_x and range_y, respectively).
+
 
