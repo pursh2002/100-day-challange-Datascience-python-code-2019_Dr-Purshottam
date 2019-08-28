@@ -161,4 +161,113 @@ new_text = ' '.join(word_list)
 print(new_text)
 You will obtain this result in three steps.
 
+Fixing string errors in a DataFrame
+You are given the heroes dataset containing the information on different comic book heroes. 
+However, you'll need to make some refinements in order to use this dataset further.
 
+Comparing Eye color, Hair color, and Skin color columns, you can see that strings in the Hair color 
+columns are capitalized, whereas in other two the strings are lowercased.
+
+Moreover, some rows in the Gender column contain a spelling error (Fmale instead of Female).
+
+Your task is to make the strings in the Hair column lowercased and to fix the spelling error in the Gender column.
+Substitute all the appearances of Fmale with Female in the Gender column.
+
+# Make all the values in the 'Hair color' column lowercased
+heroes['Hair color'] = heroes['Hair color'].str.lower()
+  
+# Check the values in the 'Hair color' column
+print(heroes['Hair color'].value_counts())
+
+# Substitute 'Fmale' with 'Female' in the 'Gender' column
+heroes['Gender'] = heroes['Gender'].str.replace('Fmale', 'Female')
+
+# Check if there is no occurences of 'Fmale'
+print(heroes['Gender'].value_counts())
+
+7 
+
+cat in sentence 
+fit all email  simple character are not sufficient metacharater are necessary
+simple metacharacte 
+a --- a
+c ---c 
+1---1
+
+. character maps every thing 
+
+. ---- 'a','b,'1', '"','  ' ...
+
+\. ==== maps . character 
+
+\w === maps any alpha numerical letters '1', 'a', '_',....
+\d === maps to any digits 
+
+\s === maps white space 
+
+several metacharacter can be enclosed in square brackets 
+[aAbB] ==== a, A, b, B
+[a-z]
+[A-Z]
+[a-zA-Z]
+[0-9]
+
+repitation
+* == a* represent no character or repeats an undefined number of times
+a* === '','a','aa'
++ === represents the characters is present at least once 
+a+ ==='a','aa','aaa'
+a? == '','a'
+{n,m} ... represents charater is present from n to m times 
+
+a{2,4} ....'aa',aaa,aaaa
+
+mail id 
+pursh2002@gmail.com , boss@mailbox.com, jone.smith@mail.com
+
+[\w\.]+ @[a-z]+\.[a-z]+
+[\w\.]+ ... pursh2002, boss
+at least oneletter, digit , underscore , dot 
+
+[a-z]+ gamil, mailbox,mail
+
+\. = . 
+
+[a-z]+ == com
+
+
+import re 
+
+pattern = re.compile(r'[\w\.]+ @[a-z]+\.[a-z]+')
+
+text = "----"
+
+re.finditer 
+
+result = re.finditer(pattern,text)
+
+for match in results:
+        print(match)
+        
+        gives match == all emils 
+        
+        
+ other methods 
+ 
+ for match in result:
+        print(match.group())
+        print(match.start())
+        print(match.end())
+        
+        group gives the string of match = pursh2002@gmail.com
+                                      start = indicis of sentinces =0
+                                      end = indicies in sentices = 17
+    
+    i finterested in matching only substring 
+    substring = re.findall(pattern,text)
+    all mail id substring representing matches to pattern
+    
+   split =  re.split (pattern,text)
+   
+   retunts the the word in sentince 
+   '', text '', text ''
