@@ -64,11 +64,101 @@ You are given 5 sets of integers A, B, C, D,E. What is the result of the followi
 (A∪(B∩C))−(D∩E)
 
 4.
+Storing data in a dictionary
+The surface you see below is called circular paraboloid:
+
+Circular Paraboloid
+
 It can be described by the following equation:
 x2a2+y2a2=z
 Let's set the coefficient a to 1. Therefore, the radius at each cut will be equal to z√.
 
 Your task is to create a dictionary that stores the mapping from the pair of coordinates (x,y) 
 to the z coordinate (the lists storing considered ranges for x and y are given: range_x and range_y, respectively).
+
+Calculate the value for z coordinate using coordinates x and y.
+Create a new key for the dictionary circ_parab represented as a tuple containing x and y.
+Create a new key-value pair for circ_parab.
+
+circ_parab = dict()
+
+for x in range_x:
+    for y in range_y:       
+        # Calculate the value for z
+        z = x**2 + y**2
+        # Create a new key for the dictionary
+        key = (x, y)
+        # Create a new key-value pair      
+        circ_parab[(x, y)] = z
+5. 
+String indexing and concatenation
+You are presented with one of the earliest known encryption techniques - Caesar cipher. 
+It is based on a simple shift of each letter in a message by a certain number of positions down the given alphabet. 
+For example, given the English alphabet, a shift of 1 for 'xyz' would imply 'yza' and vice versa in case of decryption. 
+Notice that 'z' becomes 'a' in this case.
+Thus, encryption/decryption requires two arguments: text and an integer key denoting the shift (key = 1 
+for the example above).
+
+Your task is to create an encryption function given the English alphabet stored in the alphabet string.
+
+Fill in the blanks in the loop to create an encrypted text.
+Check the encryption function with the shift equals to 10 (it should return 'nkdkmkwz').
+
+def encrypt(text, key):
+  
+    result = ''
+
+    # Fill in the blanks to create an encrypted text
+    for char in text.lower():
+        idx = (alphabet.index(char) + key) % len(alphabet)
+        result = result + alphabet[idx]
+
+    return result
+
+# Check the encryption function with the shift equals to 10
+print(encrypt("datacamp", 10))
+
+Great! Interestingly, decryption function is only different by the line you fixed in the for loop. 
+What would be the corresponding change in the decrypt() function?
+
+def encrypt(text, key):
+  
+    result = ''
+
+    # Fill in the blanks to create an encrypted text
+    for char in text.lower():
+        idx = alphabet.index(char) - key
+        result = result + alphabet[idx]
+
+    return result
+
+# Check the encryption function with the shift equals to 10
+print(encrypt("datacamp", 10))
+tqjqsqcf
+
+6. 
+Operations on strings
+You are given the variable text storing the following string 'StRing ObJeCts haVe mANy inTEResting pROPerTies'.
+
+Your task is to modify this string in such a way that would result in 'string OBJECTS have MANY interesting 
+PROPERTIES' (every other word in text is uppercased and lowercased, otherwise). 
+
+First, create a word list from the given string.
+# Create a word list from the string stored in 'text'
+Now, make every other word uppercased and lowercased, otherwise.
+
+word_list = text.split()
+
+# Make every other word uppercased; otherwise - lowercased
+for i in range(len(word_list)):
+    if (i + 1) % 2 == 0:
+        word_list[i] = word_list[i].upper()
+    else:
+        word_list[i] = word_list[i].lower()
+        
+# Join the words back and form a new string
+new_text = ' '.join(word_list)
+print(new_text)
+You will obtain this result in three steps.
 
 
