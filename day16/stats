@@ -1,3 +1,40 @@
+import statistics 
+  # for sample variance 
+# Creating a sample of data 
+sample = [2.74, 1.23, 2.63, 2.22, 3, 1.98] 
+  
+# Prints variance of the sample set 
+  
+# Function will automatically calulate 
+# it's mean and set it as xbar 
+print("Variance of sample set is % s" 
+      %(statistics.variance(sample))) 
+      
+# population variance 
+statistics.pvaraiance 
+......
+from statistics import variance
+# data = [-14.82381293, -0.29423447, -13.56067979, -1.6288903, -0.31632439, 0.53459687, -1.34069996, -1.61042692, -4.03220519, -0.24332097]
+variance(data)
+# 32.024849178421285
+......
+import numpy as np
+
+results = [-14.82381293, -0.29423447, -13.56067979, -1.6288903, -0.31632439,
+          0.53459687, -1.34069996, -1.61042692, -4.03220519, -0.24332097]
+
+print(np.var(results))
+........
+import numpy as np
+def get_variance(xs):
+    mean = np.mean(xs)
+    summed = 0
+    for x in xs:
+        summed += (x - mean)**2
+    return summed / (len(xs) - 1)
+print(get_variance([1,2,3,4,5]))
+------
+
 Objective 
 In this challenge, we practice calculating the mean, median, and mode. Check out the Tutorial tab for learning materials and an instructional video!
 Task 
@@ -142,3 +179,202 @@ numbers = list(map(int, input().split(" ")))
 weight = list(map(int, input().split(" ")))
 
 print("%.1f" % (sum(list(map(lambda x : x[0] * x[1], zip(numbers, weight)))) / sum(weight)))
+
+
+
+------
+3.
+
+n = int(input().strip())
+X = [int(x) for x in input().strip().split()]
+
+mean = sum(X) / n
+variance = sum([((x - mean) ** 2) for x in X]) / n
+stddev = variance ** 0.5
+
+print("{0:0.1f}".format(stddev))
+
+n = int(input())
+nums = [int(x) for x in input().strip().split()]
+print(round((sum([(x-(sum(nums) / n))**2 for x in nums])/n)**.5, 1))
+
+n = int(input())
+X = list(map(int, input().split()))
+mean = sum(X)/n
+variance = sum(list(map(lambda x: (x-mean)**2, X))) / n
+print("%.1f" % (variance**0.5))
+
+----
+import math
+
+N = int(input())
+X = list(map(int, input().split()))
+
+mean = sum(X)/N
+variance = sum([((x - mean) ** 2) for x in X]) / N
+print("{0:.1f}".format(math.sqrt(variance)))
+
+----
+import statistics as stats
+
+N = int(input())
+X = list(map(int, input().split()))
+
+print("{0:.1f}".format(stats.pstdev(X)))
+
+----
+import numpy as np
+
+N = int(input())
+X = list(map(int, input().split())) # or X = np.array(input().split(), int)
+
+print("{0:.1f}".format(np.std(X)))
+
+----
+from statistics import pstdev
+n,a=input(),list(map(int,input().split()))
+print(round(pstdev(a),1))
+---
+>>> pstdev([1.5, 2.5, 2.5, 2.75, 3.25, 4.75])
+0.986893273527251
+--
+>>> stdev([1.5, 2.5, 2.5, 2.75, 3.25, 4.75])
+1.0810874155219827
+---
+import statistics as st
+
+n = int(input())
+data = list(map(int, input().split()))
+print(round(st.pstdev(data), 1))
+
+4.
+statistics import median 
+n=int(input()) 
+x=list(map(int,input().split())) 
+x.sort()
+q2=median(x) 
+print(int(median([i for i in x if iq2])))
+
+----
+from statistics import median
+n=int(input())
+arr=sorted(map(int,input().split()))
+
+print(int(median(arr[:n//2])))
+print(int(median(arr)))
+print(int(median(arr[(n+1)//2:])))
+------
+N = int(input())
+
+data = sorted([int(i) for i in input().split()])
+
+median = lambda d : (d[len(d) // 2] + d[-(len(d) // 2 + 1)]) * 0.5
+
+mid = N // 2
+
+Q1 = int(median(data[:mid]))
+Q2 = int(median(data))
+Q3 = int(median(data[-mid:]))
+
+print(Q1, Q2, Q3, sep='\n')
+-----
+import statistics as s
+
+n = input()
+
+num = sorted(list(map(int, str.rsplit(input(), " "))))
+midpoint = int(n)//2
+
+print(int(s.median(num[:midpoint])))
+print(int(s.median(num)))
+print(int(s.median(num[-midpoint:])))
+
+
+5. Day 1: Interquartile Range
+Objective 
+In this challenge, we practice calculating the interquartile range. We recommend you complete the Quartiles challenge before attempting this problem.
+Task 
+The interquartile range of an array is the difference between its first () and third () quartiles (i.e., ).
+Given an array, , of  integers and an array, , representing the respective frequencies of 's elements, construct a data set, , where each  occurs at frequency . Then calculate and print 's interquartile range, rounded to a scale of  decimal place (i.e.,  format).
+Tip: Be careful to not use integer division when averaging the middle two elements for a data set with an even number of elements, and be sure to not include the median in your upper and lower data sets.
+Input Format
+The first line contains an integer, , denoting the number of elements in arrays  and . 
+The second line contains  space-separated integers describing the respective elements of array . 
+The third line contains  space-separated integers describing the respective elements of array .
+Constraints
+
+, where  is the  element of array .
+, where  is the  element of array .
+The number of elements in  is equal to .
+Output Format
+Print the interquartile range for the expanded data set on a new line. Round your answer to a scale of  decimal place (i.e.,  format).
+Sample Input
+6
+6 12 8 10 20 16
+5 4 3 2 1 5
+Sample Output
+9.0
+Explanation
+The given data is:
+InterquartileRange
+First, we create data set  containing the data from set  at the respective frequencies specified by : 
+
+As there are an even number of data points in the original ordered data set, we will split this data set exactly in half:
+Lower half (L): 6, 6, 6, 6, 6, 8, 8, 8, 10, 10
+Upper half (U): 12, 12, 12, 12, 16, 16, 16, 16, 16, 20
+Next, we find . There are  elements in  half, so  is the average of the middle two elements:  and . Thus, .
+Next, we find .There are  elements in  half, so  is the average of the middle two elements:  and . Thus, .
+From this, we calculate the interquartile range as  and print  as our answer.
+
+import statistics as st
+
+n = int(input())
+data = list(map(int, input().split()))
+freq = list(map(int, input().split()))
+
+s = []
+for i in range(n):
+    s += [data[i]] * freq[i]
+N = sum(freq)
+s.sort()
+
+if n%2 != 0:
+    q1 = st.median(s[:N//2])
+    q3 = st.median(s[N//2+1:])
+else:
+    q1 = st.median(s[:N//2])
+    q3 = st.median(s[N//2:])
+
+ir = round(float(q3-q1), 1)
+print(ir)
+----
+from itertools import accumulate
+def getByIndex(X, F, ind):
+    for i,x in enumerate(accumulate(F)):
+        if x >= ind+1: return X[i]
+
+-----
+X, F = [list(map(int, input().split())) for _ in range(2)]
+X, F = zip(*sorted(zip(X, F)))
+----
+from itertools import accumulate
+def getByIndex(X, F, ind):
+    for i,x in enumerate(accumulate(F)):
+        if x >= ind+1: return X[i]
+        
+----
+import statistics as st
+n = int(input())
+X = [int(i) for i in input().split()]
+F = [int(i) for i in input().split()]
+
+S= []
+for i in range(n):
+    S.extend([X[i]]*F[i])
+
+S = sorted(S)
+
+
+n = len(S)
+n2 = int(n/2)
+print(round(float(st.median(S[-n2:])-st.median(S[:n2])),1))
