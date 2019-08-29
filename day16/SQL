@@ -22,9 +22,12 @@ select distinct(city) from station where city like '[a,e,i,o,u]%' AND city like 
 $			// end of string
 
 
+
+
 SELECT DISTINCT CITY FROM STATION WHERE (CITY LIKE 'a%' OR CITY LIKE 'e%' OR CITY LIKE 'i%' OR CITY LIKE 'o%' OR CITY LIKE 'u%') 
 AND (CITY LIKE '%a' OR CITY LIKE '%e' OR CITY LIKE '%i' OR CITY LIKE '%o' OR CITY LIKE '%u');
 
+2. 
 
 Let  be the number of CITY entries in STATION, and let  be the number of distinct CITY names in STATION; query the value of  from STATION. In other words, find the difference between the total number of CITY entries in the table and the number of distinct CITY entries in the table.
 Input Format
@@ -32,3 +35,92 @@ The STATION table is described as follows:
 
 SELECT count(city) - count( distinct city) AS N
 FROM STATION
+
+
+
+3. 
+Query the two cities in STATION with the shortest and longest CITY names, as well as their respective lengths (i.e.: number of characters in the name). If there is more than one smallest or largest city, choose the one that comes first when ordered alphabetically.
+Input Format
+The STATION table is described as follows:
+Station.jpg
+where LAT_N is the northern latitude and LONG_W is the western longitude.
+Sample Input
+Let's say that CITY only has four entries: DEF, ABC, PQRS and WXY
+Sample Output
+ABC 3
+PQRS 4
+Explanation
+When ordered alphabetically, the CITY names are listed as ABC, DEF, PQRS, and WXY, with the respective lengths and . The longest-named city is obviously PQRS, but there are  options for shortest-named city; we choose ABC, because it comes first alphabetically.
+Note 
+You can write two separate queries to get the desired output. It need not be a single query.
+Current Buffer (saved locally, editable)    
+ 
+
+
+Select City,char_LENGTH(City) from Station Order By Length(City) desc, City asc limit 1;
+
+
+(SELECT CITY, LENGTH(CITY) FROM STATION ORDER BY LENGTH(CITY), CITY LIMIT 1) UNION (SELECT CITY, LENGTH(CITY) FROM STATION ORDER BY LENGTH(CITY) DESC, CITY ASC LIMIT 1)
+
+for min, .... order by len(city), city
+for max, ... order by len(city) desc, city
+
+select distinct top 1 city,LEN(city) from station order by len(city);select distinct top 1 city,LEN(city) from station order by len(city) desc;
+
+select CITY, length(CITY) 
+from station 
+order by length(CITY), city limit 1; 
+select CITY, length(CITY) 
+from station 
+order by length(CITY) 
+desc, city limit 1;
+
+
+4. 
+select distinct city from station where (city like "a%") or (city like "e%") or (city like "i%") or (city like "o%") or (city like "u%");
+Select distinct city from station where substring(city,1,1) in ('a','e','i','o','u');
+SELECT DISTINCT CITY FROM STATION
+WHERE REGEXP_LIKE(CITY,'^[aeiou]','i');
+
+select CITY from STATION where CITY like '[aeiou]%'
+
+5.
+
+SELECT DISTINCT CITY FROM STATION
+WHERE CITY REGEXP '^[^aeiou]';
+Putting a ^ inside the closed bracket means something completely different than putting it outside the brackets. Putting it inside the brackets makes it match all 
+characters EXCEPT the ones inside the bracket. So instead of writing [bcdfghjklmnpqrstvwxyz], we can write [^aeiou]
+
+6. 
+https://www.guru99.com/regular-expressions.html
+select DISTINCT city from STATION where city NOT REGEXP '[aeiou]$'
+
+
+
+
+Char	Description	Example  
+*	The asterisk (*) metacharacter is used to match zero (0) or more instances of the strings preceding it	SELECT * FROM movies WHERE title REGEXP 'da*'; will give all movies containing characters "da" .For Example, Da Vinci Code , Daddy's Little Girls.
++	The plus (+) metacharacter is used to match one or more instances of strings preceding it.	SELECT * FROM `movies` WHERE `title` REGEXP 'mon+'; will give all movies containing characters "mon" .For Example, Angels and Demons.
+?	The question(?) metacharacter is used to match zero (0) or one instances of the strings preceding it.	SELECT * FROM `categories` WHERE `category_name` REGEXP 'com?';  will give all the categories containing string com .For Example, comedy , romantic comedy .
+.	The dot (.) metacharacter is used to match any single character in exception of a new line.	SELECT * FROM movies WHERE `year_released` REGEXP '200.'; will give all the movies released in the years starting with characters "200" followed by any single character .For Example, 2005,2007,2008 etc.
+[abc]	The charlist [abc] is used to match any of the enclosed characters.	SELECT * FROM `movies` WHERE `title` REGEXP '[vwxyz]'; will give all the movies containing any single character in "vwxyz" .For Example, X-Men, Da Vinci Code, etc.  
+[^abc]	The charlist [^abc] is used to match any characters excluding the ones enclosed.	SELECT * FROM `movies` WHERE `title` REGEXP '^[^vwxyz]'; will give all the movies containing characters other than the ones in "vwxyz".
+[A-Z]	The [A-Z] is used to match any upper case letter.	SELECT * FROM `members` WHERE `postal_address` REGEXP '[A-Z]'; will give all the members that have postal address containing any character from A to Z. .For Example, Janet Jones with membership number 1.
+[a-z]	The [a-z] is used to match any lower case letter	SELECT * FROM `members` WHERE `postal_address` REGEXP '[a-z]'; will give all the members that have postal addresses containing any character from  a to z. .For Example, Janet Jones with membership number 1.
+[0-9]	The [0-9] is used to match any digit from 0 through to 9.	SELECT * FROM `members` WHERE `contact_number` REGEXP '[0-9]'  will give all the members have submitted contact numbers containing characters "[0-9]" .For Example, Robert Phil.
+^	The caret (^) is used to start the match at beginning.	SELECT * FROM `movies` WHERE `title` REGEXP '^[cd]'; gives all the movies with the title starting with any of the characters in "cd" .For Example, Code Name Black, Daddy's Little Girls and Da Vinci Code.
+|	The vertical bar (|) is used to isolate alternatives.	SELECT * FROM `movies` WHERE `title` REGEXP '^[cd]|^[u]'; gives all the movies with the title starting with any of the characters in "cd"  or "u" .For Example, Code Name Black, Daddy's Little Girl, Da Vinci Code and Underworld - Awakening.
+[[:<:]]	The[[:<:]] matches the beginning of words.	SELECT * FROM `movies` WHERE `title` REGEXP '[[:<:]]for'; gives all the movies with titles starting with the characters. For Example:  Forgetting Sarah Marshal.
+[[:>:]]	The [[:>:]] matches the end of words.	SELECT * FROM `movies` WHERE `title` REGEXP 'ack[[:>:]]';  gives all the movies with titles ending with the characters "ack" .For Example, Code Name Black.
+[:class:]	The [:class:] matches a character class i.e. [:alpha:] to match letters, [:space:] to match white space, [:punct:] is match punctuations and [:upper:] for upper class letters.	SELECT * FROM `movies` WHERE `title` REGEXP '[:alpha:]'; gives all the movies with titles contain letters only .For Example, Forgetting Sarah Marshal, X-Men etc. Movie like Pirates of the Caribbean 4 will be omitted by this query.
+ 
+
+The backslash (\) is used to as an escape character. If we want to use it as part of the pattern in a regular expression, we should use double backslashes (\\)
+
+Summary
+
+Regular expressions provide a powerful and flexible pattern match that can help us implement power search utilities for our database systems.
+REGEXP is the operator used when performing regular expression pattern matches. RLIKE is the synonym
+Regular expressions support a number of metacharacters which allow for more flexibility and control when performing pattern matches.
+The backslash is used as an escape character in regular expressions. It's only considered in the pattern match if double backslashes have used.
+Regular expressions are not case sensitive.
