@@ -1,3 +1,3 @@
 # 100-days-of-python-code-
 
-## Worked from open web,hackerranks,leetcode,codeacademy,www.w3resource, Dataquest, project euler Data scientist exercises 
+## Worked exercise from open web for practice and revision from ,hackerranks,leetcode,codeacademy,www.w3resource, Dataquest, project euler Data scientist exercises 
