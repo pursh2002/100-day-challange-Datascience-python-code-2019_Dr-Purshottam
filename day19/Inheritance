@@ -1,0 +1,90 @@
+class Student(Person):
+    def __init__(self, firstName, lastName, idNumber, scores):
+        super().__init__(firstName, lastName, idNumber)
+        self.scores = scores
+    def calculate(self):
+        avg = sum(self.scores)/len(self.scores)
+        if avg>=90 and avg<=100:
+            return 'O'
+        elif avg>=80 and avg<90:
+            return 'E'
+        elif avg>=70 and avg <80:
+            return 'A'
+        elif avg>=55 and avg<70:
+            return 'P'
+        elif avg>=40 and avg<55:
+            return 'D'
+        elif avg<40:
+            return 'T'
+            
+  ------
+  I did a little funky thing to avoid a long chain of if-else statements:
+# version 0
+def calculate(self):
+    grades = 'OEAPDT'
+    condition = lambda a: [
+        90 <= a <= 100, 80 <= a < 90, 70 <= a < 80, 
+        55 <= a < 70, 40 <= a < 55, a < 40
+    ]
+    a = sum(self.scores)/len(self.scores)
+    for i, c in enumerate(condition(a)):
+        if c: return grades[i]
+Edit: It could be done without using the lambda expression as follows:
+# version 1
+def calculate(self):
+    grades = 'OEAPDT'
+    
+    a = sum(self.scores) / len(self.scores)
+    
+    conditions = [
+        90 <= a <= 100, 80 <= a < 90, 70 <= a < 80, 
+        55 <= a < 70, 40 <= a < 55, a < 40
+    ]
+    
+    for i, c in enumerate(conditions):
+        if c: return grades[i]
+And the following version uses zip instead of enumerate:
+# version 2
+def calculate(self):
+    grades = 'OEAPDT'
+    
+    a = sum(self.scores) / len(self.scores)
+    
+    conditions = [
+        90 <= a <= 100, 80 <= a < 90, 70 <= a < 80, 
+        55 <= a < 70, 40 <= a < 55, a < 40
+    ]
+    
+    for c, g in zip(conditions, grades):
+        if c: return g
+And to make the for loop even more readable ...
+# version 3
+def calculate(self):
+    grades = 'OEAPDT'
+    
+    a = sum(self.scores) / len(self.scores)
+    
+    conditions = [
+        90 <= a <= 100, 80 <= a < 90, 70 <= a < 80, 
+        55 <= a < 70, 40 <= a < 55, a < 40
+    ]
+    
+    for (condition, grade) in zip(conditions, grades):
+        if condition is True: return grade
+        
+        
+        
+        =========
+        
+        Even shorter version:
+class Student(Person):
+    def __init__(self, firstName, lastName, idNumber, scores):
+        Person.__init__(self, firstName, lastName, idNumber)
+        self.scores = scores
+    def calculate(self):
+        mean = sum(self.scores)/len(self.scores)
+        return 'O'*(90<=mean<=100)+'E'*(80<=mean<90)+'A'*(70<=mean<80)+'P'*(55<=mean<70)+'D'*(40<=mean<55)+'T'*(mean<40)
+        
+        ======
+        
+  
