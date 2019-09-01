@@ -1,0 +1,97 @@
+res = []
+
+for x in range(0, 4):
+    for y in range(0, 4):
+        s = sum(arr[x][y:y+3]) + arr[x+1][y+1] + sum(arr[x+2][y:y+3])
+        res.append(s)
+
+print(max(res))
+
+----
+max = -100
+for i in range(4):
+    for j in range(4):
+        sum = arr[i+1][j+1]
+        for x in range(3):
+            sum += arr[i][j+x] + arr[i+2][j+x]
+        if sum > max:
+            max = sum              
+print(max)
+
+-----
+my_hourglasses = list()
+
+for i in range(0,4):
+    for j in range(0,4):
+        hourglass = list()
+        hourglass += arr[i][j:j+3]
+        hourglass.append(arr[i+1][j+1])
+        hourglass += arr[i+2][j:j+3]
+        my_hourglasses.append(hourglass)
+
+hourglasses_sums = [sum(item) for item in my_hourglasses]
+
+print(max(hourglasses_sums))
+----
+if name == 'main': arr = []
+for _ in range(6):
+    arr.append(list(map(int, input().rstrip().split())))
+
+m = []
+for i in range(len(arr)):
+    for j in range(len(arr[i])):
+        try:
+            m.append(sum([arr[i][j],arr[i][j+1],arr[i][j+2],arr[i+1][j+1],arr[i+2][j],arr[i+2][j+1],arr[i+2][j+2]]))
+        except IndexError as e:
+            continue
+print(max(m))
+
+----
+a = [map(int, raw_input().split()) for i in xrange(6)]
+print max(a[i][j]+a[i][j+1]+a[i][j+2]+a[i+1][j+1]+a[i+2][j]+a[i+2][j+1]+a[i+2][j+2] for i in xrange(4) for j in xrange(4))
+--
+My Python solution is similar, also in size (including the comments, which I think are a fair handicap) and speed, slightly faster in the input part (one list instead of seven), slightly* slower in calculating the sums (sum(a[i+k]) with k iterating over the hourglass pattern, instead of the explicit additions).
+*) slightly for CPython 3 (measured), much for PyPy (guessed).
+a = [*map(int,sys.stdin.read().split())] # 1d array
+print(max([
+    sum([a[i+k] for k in (0,1,2,7,12,13,14)]) # 1d hour glass
+    for i in range(0,22) if i%6 < 4])) # 4x4 positions
+Edits for a 15% increase in speed:
+max(.) --> max([.]) and sum(.) --> sum([.]) to avoid the generator overhead -- the intermediate list is no obstacle since its length is not huge (where huge starts around 1E5 in CPython and with decent sized L2 cache),
+k now iterates over a tuple (built at compile time) instead of a list,
+single loop with condition on i instead of nested loops (for i in range(0,24,6) for j in range(4)).
+A merged version (1D, explicit sum) is even 33% faster:
+a = [*map(int,sys.stdin.read().split())] # 1d array
+print(max([a[i]+a[i+1]+a[i+2]+a[i+7]+a[i+12]+a[i+13]+a[i+14] for i in range(0,22) if i%6 < 4 ]))
+---
+res = []
+
+for x in range(0, 4):
+    for y in range(0, 4):
+        s = sum(arr[x][y:y+3]) + arr[x+1][y+1] + sum(arr[x+2][y:y+3])
+        res.append(s)
+
+print(max(res))
+---
+prod = []
+
+for i in range(1,5):
+    for j in range(1,5):
+        hsum = sum(arr[i-1][j-1: j+2] + arr[i+1][j-1: j+2]) + arr[i][j]
+        prod.append(hsum)
+
+print (max(prod))
+Hello to everyone! Can somebody explain this code? (it is hard for me to understand how this code is working) prod = [] - we created list for i in range(1,5): - maybe moving through martrix (rows) for j in range(1,5): - cols
+hsum = sum(arr[i -1] - difficult for me to understand
+
+Not sure why it's range(1,5), I would use range(0,4) to move from row1 to row3, and col1 to col3
+Try breaking the code into little chunks first so yu can see what's happening, for example: i, j = 0 select top of the hourglass (row1, cols 1,2,3) --> top = arr[0][0:3] or -->
+top = arr[i][j+3]
+middle = arr[i+1][j+1]  # (e.g. row2, col2)
+bottom = arr[i+2][j:j+3]   # e.g. row3,cols 1,2,3)
+Then we do their sum, that's the "hsum" variable above
+And you iterate
+for i in range (0,4):
+    for j in range (0,4):
+---
+
