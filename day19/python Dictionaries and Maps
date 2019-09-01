@@ -1,0 +1,71 @@
+n = int(input())
+name_numbers = [input().split() for _ in range(n)]
+phone_book = {k: v for k,v in name_numbers}
+while True:
+    try:
+        name = input()
+        if name in phone_book:
+            print('%s=%s' % (name, phone_book[name]))
+        else:
+            print('Not found')
+    except:
+        break
+        
+----
+phone_book = {}
+
+for i in range(num):
+    input_line = str(input())
+    input_line = input_line.split(" ") #by default split by SPACE
+
+    name = input_line[0]
+    phone = int(input_line[1]) 
+    phone_book[name] = phone
+    
+
+for j in range(num):
+    name = str(input())
+    
+    if name in phone_book:
+        phone = phone_book[name]
+        print(name + "=" + str(phone))
+    else:
+        print("Not found")
+        
+ou can also combine lines 2 and 3 of your code by passing the pairs from input().split() to the dict() function, which is more pythonic in my opinion:
+phone_book = dict(input().split() for _ in range(n))
+
+Also, the whole try/except block can be replaced with a one-liner using ternary operator:
+
+print('%s=%s' % (key, phonebook[key]) if phonebook.get(key) else 'Not found')
+
+----
+input_count = int(input())
+people = dict((k,v) for k,v in [input().split() for i in range(input_count)])
+look_for = [input() for i in range(input_count)]
+
+for item in look_for:
+    if item in people:
+        print("%s=%s" %(item, people[item]))
+    else:
+        print("Not found")
+ ----
+ import sys
+n = input()
+name_numbers = [raw_input().split() for _ in range(n)]
+phone_book = {k: v for k,v in name_numbers}
+ls = map(lambda x: x.strip(),sys.stdin.readlines())
+for name in ls:
+    if name in phone_book:
+        print('%s=%s' % (name, phone_book[name]))
+    else:
+        print('Not found')
+        
+----
+for line in sys.stdin.readlines():
+        line = line.strip()
+        result = phoneBook.get(line, 'Not found')
+        if result == 'Not found':
+            print(result)
+        else:
+            print(line+'='+result)
