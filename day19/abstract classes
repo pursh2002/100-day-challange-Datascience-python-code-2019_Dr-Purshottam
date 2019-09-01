@@ -1,0 +1,31 @@
+class MyBook(Book):
+    price = 0
+    def __init__(self, title, author, price):
+        super(Book, self).__init__()
+        self.price = price 
+
+    def display(self):
+        print("Title: "+ title)
+        print("Author: "+ author)
+        print("Price: "+ str(price))
+        
+        
+        ====
+        
+        Yes to your second statement.
+Take note of this discussion on Stackoverflow:
+http://stackoverflow.com/questions/576169/understanding-python-super-with-init-methods
+and of the docs:
+https://docs.python.org/2/library/functions.html#super
+Iirc every good IDE will scream (not only in python) about your approach.
+
+====
+class MyBook(Book):
+    def __init__(self, title, author, price):
+        super().__init__(title, author)
+        self.price = price
+    
+    def display(self):
+        print("Title: {}".format(super().__dict__.get('title')))
+        print("Author: {}".format(super().__dict__.get('author')))
+        print("Price: {}".format(self.price))
