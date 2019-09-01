@@ -1,0 +1,2 @@
+def computeDifference(self):
+    self.maximumDifference = max([abs(x1 - x2)] for x1 in self.__elements for x2 in self.__elements)[0]
