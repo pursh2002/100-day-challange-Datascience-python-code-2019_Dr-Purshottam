@@ -1,0 +1,52 @@
+On the previous screen, we used a negative set to find all of the mentions of "Java" in our dataset:
+
+first_10_matches(r"[Jj]ava[^Ss]")
+
+437                       Unikernel Power Comes to Java, Node.js, Go, and Python Apps
+812     Ask HN: Are there any projects or compilers which convert JavaScript to Java?
+1841                                                Adopting RxJava on the Airbnb App
+1973                                      Node.js vs. Java: Which Is Faster for APIs?
+2094                                                Java EE and Microservices in 2016
+2368    Code that is valid in both PHP and Java, and produces the same output in both
+2494      Ask HN: I've been a java dev for a couple of years, should I move langauge?
+2752                                            Eventsourcing for Java 0.4.0 released
+2911                                            2016 JavaOne Intel Keynote  32mn Talk
+3453      What are the Differences Between Java Platforms from Desktops to Wearables?
+Name: title, dtype: object
+While the negative set was effective in removing any bad matches that mention JavaScript, it also had the side-effect of removing any titles where Java occurs at the end of the string, like this title:
+
+Pippo  Web framework in Java
+This is because the negative set [^Ss] must match one character, so instances at the end of a string do not match.
+
+A different approach to take in cases like these is to use the word boundary anchor, specified using the syntax \b. A word boundary matches the position between a word character and a non-word character, or a word character and the start/end of a string. The diagram below shows all the word boundaries in an example string:
+
+word boundaries
+Let's look at how using a word boundary changes the match from the string in the example above:
+
+string = "Sometimes people confuse JavaScript with Java"
+pattern_1 = r"Java[^S]"
+​
+m1 = re.search(pattern_1, string)
+print(m1)
+
+None
+The regular expression returns None, because there is no substring that contains Java followed by a character that isn't S.
+
+Let's instead use word boundaries in our regular expression:
+
+pattern_2 = r"\bJava\b"
+​
+m2 = re.search(pattern_2, string)
+print(m2)
+
+_sre.SRE_Match object; span=(41, 45), match='Java'
+With the word boundary, our pattern matches the Java at the end of the string.
+
+Let's use the word boundary anchor as part of our regular expression to select the titles that mention Java.
+Instructions
+
+Write a regular expression that will match titles containing Java.
+You might like to use the first_10_matches() function or a site like RegExr to build your regular expression.
+The regex should match whether or not the first character is capitalized.
+The regex should match only where 'Java' is preceded and followed by a word boundary.
+Select from titles only the items that match the regular expression. Assign the result to java_titles.
