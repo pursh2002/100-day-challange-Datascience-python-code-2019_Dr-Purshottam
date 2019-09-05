@@ -3,3 +3,24 @@ Version control with Git
 Tools & Languages:
 Databases and ORM using PostgreSQL and Hibernate Refactoring and Test-Driven Development
 Building an API Backend
+
+If you are doing hashtag#softwaredevelopment the only thing that has value is code running in production.
+
+If you are doing hashtag#datascience the only thing that has value is code that produces useful insight.
+
+Sometimes these two worlds meet. More now than ever hashtag#artificialintelligence and hashtag#machinelearning 
+models need to be integrated into products. This is typically done, in practice, through a hashtag#microservice / API.
+Here are some resources to get you started building them yourself.
+
+Carnegie Mellon University course by Christian Kastner website (17.445) -> https://lnkd.in/e_SrYDb
+
+Deploy an ML model ( hashtag#python scikit-learn ) as a REST API -> https://lnkd.in/esyH863
+
+Deploy a Keras model ( hashtag#python keras ) -> https://lnkd.in/eSyvcg6
+
+Deploy a Keras model repo -> https://lnkd.in/ev9iAzP
+
+Deploy an R model using Docker -> https://lnkd.in/eSEAwYk
+
+Deploy a tensorflow model on Android -> https://lnkd.in/eDG8ejM
+
