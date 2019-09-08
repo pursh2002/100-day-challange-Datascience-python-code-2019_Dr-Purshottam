@@ -1,0 +1,76 @@
+https://courses.edx.org/courses/course-v1:MITx+6.00.1x+2T2019a/courseware/fc8f42302c644118adfcfa720f9f403e/221a4c17dba341d6a970a0d80343253c/1?activate_block_id=block-v1%3AMITx%2B6.00.1x%2B2T2019a%2Btype%40vertical%2Bblock%402fcf0daa9d1346509ce4954eb3ec1c16
+
+dat structur 
+iteration and recurssion (tools )
+abstraction an 
+organise and moduluarization object class and method 
+diff calsses of algorithims 
+complixicity algorithms 
+
+
+what does computer do ?
+calcualtion (billion calcualtion per second )
+100 gigabits of storage 1.5 million books
+
+Type of Knowledge 
+Delerative & Imperative 
+deledative - true knowledge , statment of fact 
+Imperative - a recipe , 'how to '
+face the student 
+go three steps down 
+
+So imperative knowledge is importent 
+
+what is A recipe 
+steps in sqquence (check list)
+flow of control 
+when to stop
+
+steps 1+2+3 = algorithims 
+
+
+How do we capture recipe 
+
+Fixed program
+computer 
+calculator 
+turing 
+
+stored programed computer 
+computer 
+machine store and executes instruction 
+
+Basic machine architurture 
+
+memory --- data or sequence of insturuction program 
+
+control unit(program counter) load the program in machine location of instruction in memory  <-----> ALU - Arithmetic logic unit (do premitive opr)(store stuff in memory)
+
+video 4
+once we have the recipe programing language - the set of primetive operation
+next step is hwo do we put tham to gether - to do that we use expression(legal combinition of primitives in porgramng language )
+expressiona dn compution have value which have soome meaning 
+
+aspects 
+language : eniglosh 
+programing language - numbers , strings , simple operators (addition,sub,div)
+SYNTAX - BOY DO CAT , THIS NOT VALID 
+boy has cat , valid
+programing - hi*5 , not valid 
+5*4 = valid 
+
+sementic - 
+
+where things can go wrong
+ synaptic error 
+static semantic error 
+no sementic error but different programing meaning then we intended 
+
+video 5
+
+
+
+
+
+
+
