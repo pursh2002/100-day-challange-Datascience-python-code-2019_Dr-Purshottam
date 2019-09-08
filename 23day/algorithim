@@ -1,0 +1,70 @@
+following https://www.coursera.org/learn/algorithmic-thinking-1/lecture/X7Wpl/what-is-algorithmic-thinking
+
+graph
+Whats is algorithmic thinking ?
+Algorithmic thinking is a way of getting to a solution through the clear definition of the steps needed 
+For example, we all learn algorithms for doing multiplication at school. If we (or a computer) follow the rules we were 
+taught precisely we can get the answer to any multiplication problem. Once we have the algorithm 
+we don’t have to work out how to do multiplication from scratch every time we are faced with a new problem.
+
+The power of algorithmic thinking is that it allows solutions to be automated.
+
+Input and output e.g graph of input 1, 2, 3, 4 people in network 
+
+Understanding the problem is the first. Formulating the problem is the second. Developing an algorithm is the third. 
+Implementing the algorithm is the fourth. And then the fifth one is running it on the data and answering the 
+original question.
+ 
+ motivates the use of discrete math and algorithms in computer science 
+ 
+ Class notes
+
+This page contains written material that is crucial to your understanding of the class material. Please make sure that you have reviewed the slides for the video lectures and reviewed the math material for Algorithmic Thinking if necessary. The last section contains math material from Principles of Computing that you are welcome to consult if your math background is in need of supplement.
+
+Slides
+
+Module 1 - What is Algorithmic Thinking? https://storage.googleapis.com/codeskulptor-alg/pdf/WhatIsAlgThink.pdf
+Module 1 - Graph basics https://storage.googleapis.com/codeskulptor-alg/pdf/GraphBasics.pdf
+Module 1 - Brute force algorithms https://storage.googleapis.com/codeskulptor-alg/pdf/BruteForceAlgorithms.pdf
+Module 1 - Algorithm efficiency https://storage.googleapis.com/codeskulptor-alg/pdf/AlgorithmEfficiency.pdf
+Module 2 - Graph exploration and BFS https://storage.googleapis.com/codeskulptor-alg/pdf/GraphExploration.pdf
+
+Math material for Algorithmic Thinking
+
+Entering math expressions in homework https://www.coursera.org/learn/algorithmic-thinking-1/resources/g4XDi
+Sets and set notation https://storage.googleapis.com/codeskulptor-alg/pdf/Sets.pdf
+Matrices and matrix notation https://storage.googleapis.com/codeskulptor-alg/pdf/Matrices.pdf
+Functions and functional notation https://storage.googleapis.com/codeskulptor-alg/pdf/Functions.pdf
+Pseudo-code syntax: PDF, Tex source https://storage.googleapis.com/codeskulptor-alg/pdf/PseudoCodeLibrary.pdf
+https://storage.googleapis.com/codeskulptor-alg/pdf/PseudoCodeLibrary.tex
+LaTeX Guide https://www.coursera.org/learn/algorithmic-thinking-1/resources/8AsqF
+Paths and matrices in graphs https://storage.googleapis.com/codeskulptor-alg/pdf/PathsAndMatrices.pdf
+Illustration of asymptotic notation https://storage.googleapis.com/codeskulptor-alg/pdf/Asymptotics.pdf
+
+
+Supplementary math material from Principles of Computing
+
+The class pages linked below cover a selected set of math topics associated with the course. 
+For students whose math background may be in need of supplement, we have also included links to related material
+from two sections of the Khan Academy: Algebra 2 https://www.khanacademy.org/math/algebra2
+(specifically functions and their graphs, polynomial and rational functions, exponential and 
+logarithmic functions) and Pre-calculus  https://www.khanacademy.org/math/precalculus 
+(specifically probability and combinatorics as well as series, sequences and induction).
+
+Overall - Entering math expressions in homework https://www.coursera.org/learn/algorithmic-thinking-1/resources/g4XDi
+Week 1 - Functions - supplemental material at the Khan Academy https://www.coursera.org/learn/algorithmic-thinking-1/resources/VElFd
+https://www.khanacademy.org/math/algebra/algebra-functions
+Week 2 - Grid representations https://www.coursera.org/learn/algorithmic-thinking-1/resources/qTWc9
+Week 3 - Basic probability https://www.coursera.org/learn/algorithmic-thinking-1/resources/KtbW2- 
+supplemental material at the Khan Academy https://www.khanacademy.org/math/precalculus/prob_comb
+Week 3 - Expected value https://www.coursera.org/learn/algorithmic-thinking-1/resources/wuy6E
+- supplemental material at the Khan Academy https://www.khanacademy.org/math/precalculus/prob_comb
+Week 4 - Enumeration https://www.coursera.org/learn/algorithmic-thinking-1/resources/NqbbL
+Week 4 - Permutations and combinations https://www.coursera.org/learn/algorithmic-thinking-1/resources/IYtq9
+- supplemental material at the Khan Academy https://www.khanacademy.org/math/precalculus/prob_comb
+Week 5 - Arithmetic sums https://www.coursera.org/learn/algorithmic-thinking-1/resources/uatWL
+- supplemental material at the Khan Academy https://www.khanacademy.org/math/precalculus/seq_induction/geometric-sequence-series/v/sigma-notation-sum
+Week 5 - Logarithms and exponentialshttps://www.coursera.org/learn/algorithmic-thinking-1/resources/yX5Yl
+- supplemental material at the Khan Academy https://www.khanacademy.org/math/algebra2/exponential_and_logarithmic_func
+Week 5 - Growth rates of functions https://www.coursera.org/learn/algorithmic-thinking-1/resources/VnEZn
+- supplemental material at the Khan Academy https://www.khanacademy.org/math/algebra2/exponential_and_logarithmic_func/exp_growth_decay/v/exponential-growth-functions
