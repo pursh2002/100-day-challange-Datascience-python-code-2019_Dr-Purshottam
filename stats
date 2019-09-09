@@ -8,3 +8,21 @@ curve-auc.html?fbclid=IwAR2NmguvPWQp0CWoA-cA6jJxHedgkZWp_O4Uxav4UF34HmoTCl5zVKem
 
 - https://www.khanacademy.org/math/probability
 https://revisionmaths.com/advanced-level-maths-revision/statistics/continuous-random-variables
+
+
+#49: Probability Mass Function(PMF) & Probability Density Function (PDF)
+-----------------------------------------------------------------
+The probability that a discrete random variable X takes on a particular value x, i.e., P(X = x), 
+denoted as f(x), is called the probability mass function. This function gives the probability that a 
+discrete random variable is exactly equal to some value. It is often the primary means of defining a 
+discrete probability distribution, and such functions exist for either scalar or multivariate random 
+variables whose domain is discrete.
+
+The probability that a continuous random variable X takes on a range (a,b), i.e., f(a,b)=P(a<X<b) is 
+called the probability density function. It is a statistical expression that defines a probability 
+distribution for a continuous random variable. When the PDF is graphically portrayed, the area under 
+the curve will indicate the interval in which the variable will fall. The total area in this interval 
+of the graph equals the probability of a continuous random variable occurring. 
+
+E.g. the probability that today's temperature will be 80 degrees (80 degrees exactly) is measured by 
+PMF and the probability that the temperature will be between 80 and 85 degrees is measured by PDF.
