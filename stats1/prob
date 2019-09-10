@@ -28,3 +28,18 @@ E.g. the probability that today's temperature will be 80 degrees (80 degrees exa
 PMF and the probability that the temperature will be between 80 and 85 degrees is measured by PDF.
 
 https://machinelearningmastery.com/probability-resources-for-machine-learning/
+
+
+#50: Sampling with replacement and without replacement
+-----------------------
+Sampling 'with replacement' means that when a unit selected at random from the population, it is returned to the 
+population (replaced), and then a second element is selected at random. Here, the two sample values are independent 
+i.e. what we get on the first one doesn't affect what we get on the second. The covariance between the two is zero.
+Sampling 'without replacement' means when a unit selected at random from the population, it is not returned to the 
+population (replaced), and then a second element is selected at random. Each sample unit of the population has only 
+one chance to be selected in the sample. Here, the two sample values aren't independent i.e. what we got on the for 
+the first one affects what we can get for the second one. The covariance between the two isn't zero. Here, the covariance 
+depends on the population size. If the population is very large, this covariance is very close to zero. In that case, 
+sampling with replacement isn't much different from sampling without replacement. sometimes, this difference is described 
+as 
+sampling from an infinite population (sampling with replacement) vs sampling from a finite population (without replacement). 
