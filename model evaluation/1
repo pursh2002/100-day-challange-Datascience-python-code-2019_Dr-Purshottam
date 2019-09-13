@@ -9,3 +9,12 @@ Regression Metrics: https://lnkd.in/eRWvRVc
 Classification Metrics: https://lnkd.in/dpYnvGh
 
 Evaluating Machine Learning Models (open-access book): https://lnkd.in/dHcfZdP
+
+https://media.licdn.com/dms/document/C4E1FAQFHpKnjgdNQrg/feedshare-document-pdf-analyzed/0?e=1568451600&v=beta&t=q6_VBqTUA1mUKyuFpu-KfidLyFtU3PdLOkKCApnIUjs
+
+Indeed, often you see miss judgment of AUC ROC. A high level of AUC could be worthless in many scenarios. 
+For example, a model with a constant prediction that nobody dies due to Ebola will have AUC > 0.9999 but is wrong. 
+Here are three of the essential things to evaluate: Model performance in different deciles of risk should be assessed 
+(e.g., Hosmer–Lemeshow statistics),  precision and recall graph should be observed,   Matthews correlation coefficient(MCC) 
+chart of all thresholds should be evaluated. 
+MCC is a better measure of performance than F1 score especially in the imbalanced populations 
