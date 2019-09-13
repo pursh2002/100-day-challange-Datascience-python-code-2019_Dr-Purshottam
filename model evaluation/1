@@ -1,0 +1,11 @@
+Has Area Under the ROC Curve (AUC-ROC) become Data Science & AI/ML community’s P-Value?
+
+Just returned from day 1 of Intelligent Health AI conference - and while there were some great speakers & talks - one thing stood out. Of the multiple talks reporting machine learning model performance, all except one talk reported AUC-ROC as the only metric - even for unbalanced datasets. It appears that the AUC-ROC metric is being misused similar to how the P-value has been misused & misinterpreted.
+
+There is more to model evaluation than a single number. In addition to AUC-ROC, we have the Precision-Recall (PR) curve, Sensitivity (Recall), Specificity, F1-score, Positive/Negative Predictive Values, Matthews Correlation Coefficient, Calibration, and many other metrics. The graphic below presents a good summary of the various model performance / evaluation metrics (see articles & book for more details):
+
+Regression Metrics: https://lnkd.in/eRWvRVc
+
+Classification Metrics: https://lnkd.in/dpYnvGh
+
+Evaluating Machine Learning Models (open-access book): https://lnkd.in/dHcfZdP
