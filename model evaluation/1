@@ -18,3 +18,11 @@ Here are three of the essential things to evaluate: Model performance in differe
 (e.g., Hosmer–Lemeshow statistics),  precision and recall graph should be observed,   Matthews correlation coefficient(MCC) 
 chart of all thresholds should be evaluated. 
 MCC is a better measure of performance than F1 score especially in the imbalanced populations 
+
+For imbalanced datasets, the best metric is the average precision, which essentially 
+translates to the precision-recall curve. Unfortunately, this is not used by the majority.
+In saying this, if one compares previous performances, then, one is not able to because they haven't 
+used the metric. Unless, one goes back and actually performs evaluation using this metric, then comes back and 
+compares, accordingly. This is unfortunately not possible most times. 
+
+Nice post!
