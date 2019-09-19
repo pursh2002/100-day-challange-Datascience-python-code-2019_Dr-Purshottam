@@ -62,3 +62,16 @@ z = (x – μ) / σ
 
 This means that your score is 2.67 away from mean. This illustrates that you have very high score 
 and you are one of the toppers in the test. This again depends on the population size. This also has to be kept in mind.
+
+
+#59: Principle of Least Square 
+-------------------------------
+The least squares principle states that the Sample Regression Function (SRF) should be constructed (with the constant and slope values such as Y=aX+b ) so that the sum of the squared distance between the observed values of the dependent variable and the values estimated from SRF is minimized (the smallest possible value).
+
+Let (xi,yi) be the observed data points and (x'i,y'i) is estimated data point(data point on regression line corresponding to xi,yi i.e. vertical deviation from data point to the regression line), then least square principal says that  ∑ (xi-x'i)^2+(yi-y'i)^2 has to be minimized to get best fit regression line. 
+
+Least squares principle is a widely used method for obtaining the estimates of the parameters in a statistical model based on observed data.
+ 
+Other techniques, including generalized method of moments (GMM) and maximum likelihood (ML) estimation, can be used to estimate regression functions, but they require more mathematical sophistication and more computing power.
+
+Least squares is sensitive to outliers. A strange value will pull the line towards i
