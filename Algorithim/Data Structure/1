@@ -1,1 +1,35 @@
+Data structre are rewuired to design efficient software 
+
+e.g english discionary is exmple of sorted words 
+- map data 
+- cash transaction accounts example of tabular data 
+
+def - is a way to store and organise data in acomputer so tha it can be effectivelly used 
+
+1. Mathametical /Logical world or abstract data structure  e.g telivision recives signals, on and of, audio or video
+abstract data type is the list (ADT) in form of arrays ,concret implementation 
+store a given number of element 
+read the eleament by position
+modify element at position 
+
+List ATD as linked data structure 
+
+some of the ADT's 
+Arrays 
+Linked list 
+stack
+queue 
+tree
+graph
+
+
+we look at 
+logical view 
+operation
+costs of operations 
+Implementations 
+
+
+
+
 
