@@ -75,3 +75,12 @@ Least squares principle is a widely used method for obtaining the estimates of t
 Other techniques, including generalized method of moments (GMM) and maximum likelihood (ML) estimation, can be used to estimate regression functions, but they require more mathematical sophistication and more computing power.
 
 Least squares is sensitive to outliers. A strange value will pull the line towards i
+
+
+Dear Aspiring Data Scientists and (Bio)statisticians. I am often asked, whether it's allowed to analyse ordinal data with parametric methods, e.g. by assigning to it numbers (1,2,3, etc.). My answer is: *technically* you can do everything. But does it REALLY make any sense? Think about it.
+
+Do you understand, what "ordinal" means? Only the order between the levels is defined. A>B>C>D. There's no numerical distance between the levels, no subtraction, no division. You cannot say: Good-Average=Bad, or Good-Average=Average-Bad. Sure, you can assign {1,2,3,4} to your items and treat as numbers (pretending it's even continuous, normal), calculate your regression or t-test. Now try to interpret it. What does 1.43 maps to? "Good"? "0.43*Bad"? What is "the mean of {bad=1,good=4}? 2.?
+
+You assigned numerical values to levels (subjectively) and made a STRONG assumption about the equality of distances. Can you do that? If so (e.g. Likert scale with many levels, combined into the final score) - maybe(!) it's OK (people vary in opinions)
+
+In R, you have plenty of options to handle it properly. The best way is the ordinal logit/probit (proportional odds) model (ordinal logistic regression). Then you have, ATS/WTS, ART, GEE.
