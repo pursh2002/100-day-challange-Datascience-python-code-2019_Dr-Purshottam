@@ -1,0 +1,66 @@
+https://classroom.udacity.com/courses/ud513/lessons/7174469398/concepts/71212749920923
+
+efficience to solve program 
+resourses --
+algorithim to solve interview -- perform the trick 
+Syntax ...
+
+Big O notation
+
+o(n)
+
+o(log(n)
+o(n^1)
+o(1)
+
+n is the length of the input 
+
+funtion decode(input):
+create output string 
+for each letter in input 
+  get new_letter from letter location in ciper 
+  add new_letter to output 
+return output 
+
+take a strig input 
+iterate through it 
+and change each letter through ciper 
+and out put 
+
+o(2n+ 2)   2 steps ,  2 letters 
+
+if you input have 10 letters 
+o(10)*2 = 22
+so you can take 22 and multiple the time it takes to multiply one line of code 
+if input string was 1 million 
+it is 2 million and the amount of time ittakes the computer to do computation
+
+for the loop to work u need to do a computatinon each time to get the next letter in this string 
+since this happens once for every one input letter add 1 end up 
+O(3n+2)
+its diff to predict how much computaion time it take for this piece of code 
+A= k B=H c = L at least 26 time to check each letter in alpabehet 
+in an alpabhet the worst is to go through 26 letter 
+A=1 best case      Avg = 13  z= 26 worst case
+O(16n+2)
+O(29n+2) worst case
+for this to work 
+O(B+26)n+2) = O(29n+2)
+
+n = 10 
+29(10)+2
+292 computations 
+
+n= 1million
+29(1million)+2
+29 million steps 
+
+approximation 
+O(2n+2)
+
+sapce effeciency 
+copy over 3 time 
+O(3n)
+http://bigocheatsheet.com
+
+collections 
