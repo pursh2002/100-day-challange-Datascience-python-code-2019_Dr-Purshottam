@@ -20,3 +20,39 @@ we can create arrays of any data types
 int[10],
 A[0] = 2 ; modify elements 
 read element at some position - print(A[i]);
+
+list - 
+insert 
+remove 
+count
+read/modify element at position 
+specify data type 
+
+dat asturcture of dynamic list how do we get that
+implemt arrays and operation on top of arrays 
+e.g int list 
+int A[max size];
+int end = -1 ;
+insert(2) //0
+insert(3) //1
+insert(4)//2
+insert(5, 2)//3
+
+remove the element at 0
+remove(0)
+when array is full , cret a new larger array , copy previous array into new array free the memory of previous array 
+1. access/- read/write element at an index constant time (it takes constant time )
+in arrays it is arranged in blocks 
+Big o used to time complexity of operaation for constant time 0(1)
+
+2. Insert - at the end of list that will be constant instert some position then we have to shift he 
+t @n
+0(n)
+insertation at end - if full creat new array adding will tke additional time 
+add will be 0(n)
+remove = 0(n)
+add = 0(n)
+
+linked list 
+
+2. 
