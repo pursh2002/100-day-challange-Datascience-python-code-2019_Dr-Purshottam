@@ -77,10 +77,36 @@ Other techniques, including generalized method of moments (GMM) and maximum like
 Least squares is sensitive to outliers. A strange value will pull the line towards i
 
 
-Dear Aspiring Data Scientists and (Bio)statisticians. I am often asked, whether it's allowed to analyse ordinal data with parametric methods, e.g. by assigning to it numbers (1,2,3, etc.). My answer is: *technically* you can do everything. But does it REALLY make any sense? Think about it.
+ I am often asked, whether it's allowed to analyse ordinal data with 
+parametric methods, e.g. by assigning to it numbers (1,2,3, etc.). My answer is: *technically* you can do everything. 
+But does it REALLY make any sense? Think about it.
 
-Do you understand, what "ordinal" means? Only the order between the levels is defined. A>B>C>D. There's no numerical distance between the levels, no subtraction, no division. You cannot say: Good-Average=Bad, or Good-Average=Average-Bad. Sure, you can assign {1,2,3,4} to your items and treat as numbers (pretending it's even continuous, normal), calculate your regression or t-test. Now try to interpret it. What does 1.43 maps to? "Good"? "0.43*Bad"? What is "the mean of {bad=1,good=4}? 2.?
+Do you understand, what "ordinal" means? Only the order between the levels is defined. A>B>C>D. There's no numerical 
+distance between the levels, no subtraction, no division. You cannot say: Good-Average=Bad, or Good-Average=Average-Bad. 
+Sure, you can assign {1,2,3,4} to your items and treat as numbers (pretending it's even continuous, normal), 
+calculate your regression or t-test. Now try to interpret it. What does 1.43 maps to? "Good"? "0.43*Bad"? 
+What is "the mean of {bad=1,good=4}? 2.?
 
-You assigned numerical values to levels (subjectively) and made a STRONG assumption about the equality of distances. Can you do that? If so (e.g. Likert scale with many levels, combined into the final score) - maybe(!) it's OK (people vary in opinions)
+You assigned numerical values to levels (subjectively) and made a STRONG assumption about the equality of distances.
+Can you do that? If so (e.g. Likert scale with many levels, combined into the final score) - maybe(!) it's OK (people 
+vary in opinions)
 
-In R, you have plenty of options to handle it properly. The best way is the ordinal logit/probit (proportional odds) model (ordinal logistic regression). Then you have, ATS/WTS, ART, GEE.
+In R, you have plenty of options to handle it properly. The best way is the ordinal logit/probit (proportional odds) 
+model (ordinal logistic regression). Then you have, ATS/WTS, ART, GEE.
+
+
+#62: Linear Regression
+-----------------
+Linear regression (LR) attempts to model the relationship between two variables by fitting a linear equation to observed data. 
+One variable is considered as an explanatory variable, and the others as dependent variables. E.g., relating the weights of 
+individuals to their heights using a LR model.
+An LR line has an equation of the form Y = a + bX, where X is the explanatory variable and Y is the dependent variable. 
+The slope of the line is b, and a is the intercept.
+We should determine a relationship between the variables before attempting to fit an LR model to observed data. Significant
+association may not necessarily imply that one variable causes the other (e.g., higher SAT scores do not cause higher college
+grades). A scatterplot helps determine the strength of the association between two variables. If there appears to be no 
+association
+between the proposed explanatory and dependent variables, then fitting a linear regression model to the data probably 
+will not provide a useful model. A useful numerical measure of association between two variables is the correlation 
+coefficient, 
+which is a value between -1 and 1 indicating the strength of the association of the observed data for the two variables. 
