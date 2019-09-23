@@ -1,0 +1,22 @@
+Two types 
+Maths model 
+ADT
+concrete implementation 
+
+
+define ADT 
+possible implementation 
+
+list = collection of objects of real world
+
+define a list 
+
+store ad given a number of list of a given data type 
+write and modify element at position at aparticular position 
+read element a postion 
+
+Are we taking about array ?
+we can create arrays of any data types 
+int[10],
+A[0] = 2 ; modify elements 
+read element at some position - print(A[i]);
